@@ -1,0 +1,1092 @@
+{
+  "slug": "linear",
+  "schema_version": 1,
+  "generated_at": "2026-11-07T04:51:41.570Z",
+  "generation_seconds": 120,
+  "models": {
+    "research": "gpt-5.5",
+    "writer": "gpt-5.5"
+  },
+  "input": "Linear",
+  "app": {
+    "name": "Linear",
+    "provider": "Linear Orbit, Inc.",
+    "website": "https://linear.app",
+    "category": "issue tracking / product development",
+    "developer_portal_url": "https://linear.app/settings/api/applications/new",
+    "one_liner": "Straightforward OAuth setup; main friction is workspace admin consent, not provider review."
+  },
+  "oauth_supported": "yes",
+  "headline": "Linear OAuth is relatively easy: an admin in a Linear workspace can create an OAuth app, set it to public, and test authorization-code OAuth without a documented production review gate. Plan on a few hands-on hours; wait time is usually 0 unless you also want a Linear integration-directory listing, whose timeline is not published.",
+  "factors": {
+    "production_review": {
+      "value": "optional_listing",
+      "detail": "Linear documents public OAuth apps as installable by other workspaces and the reviewed docs do not state that Linear must approve the app before external workspaces can authorize it. Directory submission is separate: Linear’s agent guide says to submit agents to the integration directory to make them available to other workspaces, and the directory has acceptance criteria, but that is not documented as a technical OAuth authorization gate.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S4",
+          "S5"
+        ]
+      }
+    },
+    "review_wait": {
+      "min_days": 0,
+      "max_days": 0,
+      "detail": "No required OAuth production review was found, so the production-review wait is 0. If you voluntarily submit to the Linear integration directory, no official review SLA was found.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S5"
+        ]
+      }
+    },
+    "security_assessment": {
+      "value": "none",
+      "detail": "The reviewed OAuth app and directory docs did not state a CASA, third-party audit, pentest, or formal security assessment requirement for creating a Linear OAuth app.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S5"
+        ]
+      }
+    },
+    "business_verification": {
+      "value": "no",
+      "detail": "No legal-entity, publisher, or domain verification requirement was found for OAuth app registration. Directory listing is different: Linear says it generally accepts integrations useful to the community and built by formal companies, but that is listing criteria, not an OAuth production gate.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S5"
+        ]
+      }
+    },
+    "gated_access": {
+      "value": "none",
+      "detail": "Creating and developing Linear agents does not cost anything, and no partner program or API-product application was found for OAuth app creation. You do need admin permissions in a Linear workspace to reach Settings > Administration > API.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S4"
+        ]
+      }
+    },
+    "dev_mode_limits": {
+      "value": "none",
+      "detail": "No provider-enforced dev-mode user cap was found. The important setting is distribution: OAuth apps can be `private` to the current workspace or `public` and installable by other workspaces; the manifest default is `private`.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    },
+    "customer_admin_approval": {
+      "value": "usually",
+      "detail": "For AI-agent apps using `actor=app`, Linear says admin permissions are required because the app is installed with workspace scope. In paid workspaces with third-party application approvals enabled, non-admin installers see an approval-request screen and must wait for an approver.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4",
+          "S5",
+          "S6"
+        ]
+      }
+    }
+  },
+  "effort": {
+    "time_to_first_test_minutes": 45,
+    "active_hours_min": 2,
+    "active_hours_max": 5,
+    "production_days_min": 0,
+    "production_days_max": 1,
+    "explanation": "Fast path: create a Linear workspace or use one where you are admin, create the OAuth app, add one HTTPS redirect URI, request minimal scopes, and run authorization-code + PKCE. Extra time comes from deciding `actor=user` versus `actor=app`, handling refresh-token rotation, webhook HTTPS setup, and customer-admin consent flows. Calendar waiting is 0 because no required Linear review was found; directory listing, if desired, is outside that estimate and has no published SLA."
+  },
+  "start_here": {
+    "action": "Create or choose a Linear workspace where you are an admin, then open the OAuth application creation page.",
+    "url": "https://linear.app/settings/api/applications/new",
+    "why": "OAuth apps are created under a Linear workspace, and admin permissions are required to view the API page."
+  },
+  "phases": [
+    {
+      "name": "Prepare",
+      "goal": "Decide the app shape before touching the Linear console.",
+      "steps": [
+        {
+          "title": "Choose the owning Linear workspace",
+          "detail": "Use a dedicated Linear workspace if possible. Linear recommends creating a workspace specifically to manage the OAuth2 application because each admin user in that workspace can access it.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-2-0-authentication",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Decide whether the integration acts as the user or as the app",
+          "detail": "Use normal authorization-code OAuth for user-delegated actions. For an AI agent installed into a workspace, use `actor=app` so actions are performed by the app identity; note that `actor=app` changes identity, not refresh-token behavior.",
+          "owner": "you",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-actor-authorization",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Pick the minimum scopes",
+          "detail": "Start with `read`, then add only the write or agent scopes you need. Avoid `admin`; Linear warns not to request it unless absolutely needed, and `actor=app` integrations cannot request `admin`.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-2-0-authentication",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1",
+              "S4"
+            ]
+          }
+        },
+        {
+          "title": "Prepare HTTPS callback URLs",
+          "detail": "Create at least one absolute HTTP or HTTPS redirect URI for OAuth. For production, use HTTPS; redirect URIs must be unique and Linear allows up to 32.",
+          "owner": "agent",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-app-manifests",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register the app",
+      "goal": "Create the OAuth app in Linear and make it installable by the right workspaces.",
+      "steps": [
+        {
+          "title": "Open Linear’s OAuth application form",
+          "detail": "Sign in to Linear as a workspace admin and go to Settings > Administration > API, or open the workspace-agnostic new app URL directly.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://linear.app/settings/api/applications/new",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P4"
+            ]
+          }
+        },
+        {
+          "title": "Enter the required app identity fields",
+          "detail": "Fill in developer name, OAuth client name, client URI, and at least one redirect URI. These are required for a complete OAuth app setup.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-app-manifests",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Set distribution intentionally",
+          "detail": "Set distribution to `public` if end-user Linear workspaces need to install it. If you leave the default `private`, the app is only available in the current workspace.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-app-manifests",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Enable the grant types you use",
+          "detail": "Use `authorization_code` for user or app installation flows; Linear says this grant type is always required. Enable `client_credentials` only if you specifically need app-actor tokens without refresh tokens.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-app-manifests",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3",
+              "S1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Configure OAuth implementation",
+      "goal": "Wire your backend to Linear’s endpoints and token rules.",
+      "steps": [
+        {
+          "title": "Use Linear’s authorization endpoint",
+          "detail": "Send users to `GET https://linear.app/oauth/authorize` with `client_id`, `redirect_uri`, `response_type=code`, comma-separated `scope`, `state`, and PKCE parameters.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-2-0-authentication",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P1",
+              "P2"
+            ]
+          }
+        },
+        {
+          "title": "Require PKCE S256 in your client",
+          "detail": "Generate a `code_verifier`, send a SHA-256 `code_challenge`, and set `code_challenge_method=S256`. Linear’s discovery metadata reports only `S256`, and Linear’s changelog says explicit S256 is required for PKCE authorization requests.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://api.linear.app/.well-known/oauth-authorization-server",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P1"
+            ]
+          }
+        },
+        {
+          "title": "Exchange codes at the token endpoint",
+          "detail": "POST the authorization code to `https://api.linear.app/oauth/token`. For PKCE token exchange, include `code_verifier`; Linear says `client_secret` is optional for PKCE.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-2-0-authentication",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Implement refresh-token rotation",
+          "detail": "Authorization-code grants return an access token and refresh token. Access tokens are valid for 24 hours; each refresh token expires 30 days after issuance, and a successful refresh returns a new access token plus a new refresh token.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-2-0-authentication",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Store the complete granted scope set",
+          "detail": "If you later change scopes for authorization-code app installations, repeat the authorization flow with `update_scopes_on_existing_token=true` and request the complete resulting scope set, not just the new scopes.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-actor-authorization",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Test with your own account",
+      "goal": "Confirm install, token exchange, refresh, and API calls before inviting customers.",
+      "steps": [
+        {
+          "title": "Authorize with your admin test workspace",
+          "detail": "Run the authorization URL against a Linear workspace where you are admin, especially for `actor=app` agent installs because workspace-scope installation requires admin permissions.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/agents",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S4"
+            ]
+          }
+        },
+        {
+          "title": "Verify token-error handling",
+          "detail": "Confirm your code handles Linear token failures. A fake-client probe returned HTTP 400 with `{\"error\":\"invalid_client\",\"error_description\":\"Invalid client: client is invalid\"}` from the token endpoint.",
+          "owner": "agent",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://api.linear.app/oauth/token",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P3"
+            ]
+          }
+        },
+        {
+          "title": "Call a minimal Linear API operation",
+          "detail": "Use the granted access token for a read-only GraphQL query first, then test each requested write scope only if the user granted it.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://linear.app/docs/api-and-webhooks",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2",
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Test refresh before access-token expiry",
+          "detail": "Force or simulate expiry and verify that your app replaces both stored tokens after a successful refresh. Do not keep using the old refresh token after Linear returns a new one.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-2-0-authentication",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Launch and maintain",
+      "goal": "Make the app usable by customer workspaces and handle admin controls.",
+      "steps": [
+        {
+          "title": "Publish your install link with admin guidance",
+          "detail": "Tell customers that a Linear workspace admin usually needs to install the integration. If their paid workspace has third-party application approvals enabled, non-admin users can request approval and must wait for an approver.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://linear.app/docs/third-party-application-approvals",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5",
+              "S6"
+            ]
+          }
+        },
+        {
+          "title": "Subscribe to permission changes if you use webhooks",
+          "detail": "Workspace admins can change or revoke an app’s team access at any time. If your app depends on team permissions, subscribe to `PermissionChange` webhooks and degrade gracefully.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/agents",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S4"
+            ]
+          }
+        },
+        {
+          "title": "Use HTTPS webhook URLs only",
+          "detail": "If configuring webhooks for the OAuth app, use an absolute HTTPS URL. Linear disallows loopback hosts, private-network hosts, and `linear.app` for OAuth app webhook URLs.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://linear.app/developers/oauth-app-manifests",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Optionally submit to Linear’s integration directory",
+          "detail": "If you want marketplace-style discovery, fill out Linear’s integration-directory submission form and provide app assets such as icons and showcase images. This is separate from OAuth app creation, and no official review timeline was found.",
+          "owner": "you",
+          "effort_minutes": 120,
+          "wait_days_max": null,
+          "url": "https://linear.app/docs/integration-directory",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "item": "Linear workspace admin access",
+      "detail": "OAuth applications are created and managed under Settings > Administration > API, and admin permissions are required to view that page.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2"
+        ]
+      }
+    },
+    {
+      "item": "Developer and app metadata",
+      "detail": "A complete OAuth app setup requires developer name, OAuth client name, client URI, and at least one redirect URI.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    },
+    {
+      "item": "Redirect URI",
+      "detail": "Redirect URIs must be absolute HTTP or HTTPS URLs, unique, and limited to 32 values.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    },
+    {
+      "item": "Public distribution for external installs",
+      "detail": "Set the app distribution to `public` if other Linear workspaces need to install it; the default is `private`.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    },
+    {
+      "item": "Workspace-admin installer for AI agent apps",
+      "detail": "For `actor=app` AI-agent installations, admin permissions are required because the app is installed with workspace scope.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "item": "HTTPS webhook URL, if used",
+      "detail": "Webhook URLs for OAuth apps must be absolute HTTPS URLs and cannot use loopback hosts, private-network hosts, or `linear.app`.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    },
+    {
+      "item": "Directory assets and formal-company posture",
+      "detail": "For a Linear integration-directory listing, prepare the submission form content plus app assets such as icons and showcase images. Linear says it generally accepts useful integrations built by formal companies and generally does not accept scripts, low-effort/vibe-coded apps, or hobbyist apps.",
+      "when": "for_listing",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "scope": "read",
+      "purpose": "Read Linear data for the connected account or workspace; Linear says this is the default and always present.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "scope": "write",
+      "purpose": "General write access where issue/comment-specific scopes are not enough.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "scope": "issues:create",
+      "purpose": "Create Linear issues without requesting broader write access than necessary.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "scope": "comments:create",
+      "purpose": "Create comments, useful for an agent posting updates or answers.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "scope": "app:assignable",
+      "purpose": "Allow an `actor=app` AI agent to be assigned as a delegate on issues.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "scope": "app:mentionable",
+      "purpose": "Allow an `actor=app` AI agent to be mentioned in issues, documents, and editor surfaces.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "scope": "customer:read",
+      "purpose": "Read customer entities if your agent needs customer context.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "scope": "customer:write",
+      "purpose": "Read and write customer data if the agent updates customer entities.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "scope": "initiative:read",
+      "purpose": "Read initiative entities for planning and roadmap context.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "scope": "initiative:write",
+      "purpose": "Read and write initiative entities if the agent modifies initiatives.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "scope": "customView:read",
+      "purpose": "For app-actor OAuth apps, read custom views shared with the whole workspace.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S8"
+        ]
+      }
+    },
+    {
+      "scope": "admin",
+      "purpose": "Full access to admin-level endpoints; avoid unless absolutely required, and do not use with `actor=app`.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S4"
+        ]
+      }
+    }
+  ],
+  "gotchas": [
+    {
+      "title": "Directory listing is not the same as OAuth production access",
+      "detail": "Linear documents public OAuth apps installable by other workspaces, and no reviewed doc says OAuth authorization is blocked until directory review. But the agent guide also says to submit agents to Linear’s integration directory to make them available to other workspaces, so treat the directory as the path for discoverability and Linear endorsement, not as a clearly documented OAuth gate.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S4",
+          "S5"
+        ]
+      }
+    },
+    {
+      "title": "The default distribution is private",
+      "detail": "OAuth app manifests default to `private`. If you forget to set `public`, external customer workspaces will not be the intended install target.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    },
+    {
+      "title": "`actor=app` cannot request `admin`",
+      "detail": "Linear’s agent docs state that integrations using `actor=app` cannot also request the `admin` scope. Design your AI agent around non-admin scopes or use a different integration mode for admin endpoints.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "title": "PKCE must use explicit S256",
+      "detail": "Linear’s discovery metadata advertises `S256`, and Linear’s changelog says it required an explicit S256 method for PKCE authorization requests in October 2026. Do not rely on a default or `plain` challenge method.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "tested",
+        "refs": [
+          "P1"
+        ]
+      }
+    },
+    {
+      "title": "Refresh tokens rotate and expire after 30 days",
+      "detail": "Every successful refresh returns a new access token and a new refresh token with a new 30-day lifetime. Persist the new refresh token atomically or users can be disconnected.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "title": "Customer workspaces may add their own approval gate",
+      "detail": "Paid Linear workspaces can enable third-party application approvals. In that case, a member attempting install sees an approval-request screen and an approver can approve or deny it.",
+      "impact": "delay",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6",
+          "S8"
+        ]
+      }
+    },
+    {
+      "title": "Client-credentials tokens behave differently",
+      "detail": "Client-credentials tokens use the app actor, last 30 days, and do not include refresh tokens. The app must have client-credentials tokens toggled on.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    }
+  ],
+  "blockers": [
+    {
+      "symptom": "Token exchange returns HTTP 400 with `{\"error\":\"invalid_client\",\"error_description\":\"Invalid client: client is invalid\"}`",
+      "likely_cause": "Wrong client ID, wrong client secret, using credentials from another Linear app, or token request not matching the registered app.",
+      "what_to_do": "Check the Linear OAuth app credentials, redirect URI, and whether your PKCE flow should omit `client_secret`. Retry against `https://api.linear.app/oauth/token`.",
+      "evidence": {
+        "type": "tested",
+        "refs": [
+          "P3"
+        ]
+      }
+    },
+    {
+      "symptom": "Customer cannot complete an `actor=app` install",
+      "likely_cause": "The installer is not a Linear workspace admin, but app-actor agent installs require admin permissions because they are workspace-scoped.",
+      "what_to_do": "Ask a Linear workspace admin to install, or have the user request approval if their workspace has third-party application approvals enabled.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4",
+          "S6"
+        ]
+      }
+    },
+    {
+      "symptom": "An installer sees an approval-request screen instead of immediate install",
+      "likely_cause": "The customer’s paid Linear workspace has third-party application approvals enabled.",
+      "what_to_do": "Tell the user to submit the request from that screen and ask a workspace approver/admin to approve the app in Linear.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    {
+      "symptom": "Authorization fails or does not grant expected app-agent permissions when requesting `admin` with `actor=app`",
+      "likely_cause": "Linear does not allow `admin` scope for integrations using `actor=app`.",
+      "what_to_do": "Remove `admin` and request narrower scopes such as `read`, `write`, `issues:create`, `comments:create`, `app:assignable`, and `app:mentionable`, or redesign the feature.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4",
+          "S1"
+        ]
+      }
+    },
+    {
+      "symptom": "External workspaces cannot install or find the app",
+      "likely_cause": "The OAuth app may still be configured as `private`, or you are expecting directory discoverability without a directory listing.",
+      "what_to_do": "Set distribution to `public` for external installs. If you need discovery inside Linear’s integration directory, submit the separate directory form and assets.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S5"
+        ]
+      }
+    },
+    {
+      "symptom": "Webhook configuration is rejected",
+      "likely_cause": "The webhook URL is not absolute HTTPS, uses a loopback/private-network host, or uses `linear.app`.",
+      "what_to_do": "Use a public HTTPS endpoint that is not a loopback, private-network, or `linear.app` host.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    }
+  ],
+  "agent_split": {
+    "agent_can": [
+      "Draft the minimum scope set and one-line justifications for your review or customer-facing docs.",
+      "Generate the authorization URL builder with `state`, comma-separated scopes, and PKCE S256.",
+      "Create backend code for code exchange, refresh-token rotation, revocation, and token-error handling.",
+      "Validate redirect URI formats and flag private/loopback webhook URLs before you paste them into Linear.",
+      "Prepare install documentation for customer workspace admins, including third-party approval guidance.",
+      "Draft Linear integration-directory copy and asset checklist if you choose to submit for listing."
+    ],
+    "you_must": [
+      "Sign in to Linear and create the OAuth app, because this requires a real Linear account and workspace admin permissions.",
+      "Decide the legal owner/developer name and client URI shown to customers.",
+      "Copy client credentials out of Linear and store them in your secret manager.",
+      "Choose whether the app should be public and accept any Linear terms shown in the console.",
+      "Install the app in your own test workspace and approve any admin consent screens.",
+      "Submit the optional integration-directory form, because it involves company representation, assets, and provider-facing claims."
+    ]
+  },
+  "artifacts": [
+    {
+      "title": ".env template",
+      "kind": "env",
+      "content": "LINEAR_CLIENT_ID=<CLIENT_ID>\nLINEAR_CLIENT_SECRET=<CLIENT_SECRET_IF_USED>\nLINEAR_REDIRECT_URI=https://<YOUR_APP_DOMAIN>/oauth/linear/callback\nLINEAR_AUTHORIZE_URL=https://linear.app/oauth/authorize\nLINEAR_TOKEN_URL=https://api.linear.app/oauth/token\nLINEAR_REVOKE_URL=https://api.linear.app/oauth/revoke\nLINEAR_SCOPES=read,issues:create,comments:create,app:assignable,app:mentionable\nLINEAR_ACTOR=app\nOAUTH_STATE_SECRET=<RANDOM_32_BYTE_SECRET>",
+      "note": "For PKCE, `client_secret` is optional in the token exchange, but keep it if your server-side implementation uses confidential-client auth."
+    },
+    {
+      "title": "Scope justification list for an AI agent",
+      "kind": "text",
+      "content": "read — Read issues, teams, users, and workspace context needed to answer questions and decide actions.\nissues:create — Create Linear issues when the user asks the agent to file work.\ncomments:create — Post agent replies, summaries, or status updates as comments.\napp:assignable — Allow the app actor to be assigned as a delegate on issues.\napp:mentionable — Allow users to mention the app in issues, documents, and editor surfaces.\ncustomer:read — Optional; read customer entities when the agent needs customer context.\ninitiative:read — Optional; read initiative entities for roadmap or planning workflows.\ncustomView:read — Optional for app-actor apps; read custom views shared with the whole workspace.\nadmin — Avoid; Linear warns not to request it unless absolutely needed and it cannot be used with actor=app.",
+      "note": "Linear does not document sensitivity tiers for these scopes in the reviewed sources; use least privilege."
+    },
+    {
+      "title": "Example authorization URL with PKCE S256",
+      "kind": "url",
+      "content": "https://linear.app/oauth/authorize?client_id=<CLIENT_ID>&redirect_uri=https%3A%2F%2F<YOUR_APP_DOMAIN>%2Foauth%2Flinear%2Fcallback&response_type=code&scope=read%2Cissues%3Acreate%2Ccomments%3Acreate%2Capp%3Aassignable%2Capp%3Amentionable&state=<OPAQUE_STATE>&actor=app&code_challenge=<BASE64URL_SHA256_CODE_CHALLENGE>&code_challenge_method=S256",
+      "note": "Use `actor=app` only for app-actor installations. Generate a fresh `state`, `code_verifier`, and S256 `code_challenge` per authorization attempt."
+    },
+    {
+      "title": "Linear OAuth app manifest starting point",
+      "kind": "json",
+      "content": "{\n  \"developerName\": \"<YOUR_COMPANY>\",\n  \"clientName\": \"<YOUR_APP_NAME>\",\n  \"clientUri\": \"https://<YOUR_APP_DOMAIN>\",\n  \"redirectUris\": [\n    \"https://<YOUR_APP_DOMAIN>/oauth/linear/callback\"\n  ],\n  \"distribution\": \"public\",\n  \"grantTypes\": [\n    \"authorization_code\"\n  ],\n  \"scope\": \"read,issues:create,comments:create,app:assignable,app:mentionable\"\n}",
+      "note": "Linear supports pre-populating the app creation form with a JSON manifest. Keep `distribution` as `public` for external workspace installs; add `client_credentials` only if needed."
+    }
+  ],
+  "oauth": {
+    "authorize_url": "https://linear.app/oauth/authorize",
+    "token_url": "https://api.linear.app/oauth/token",
+    "pkce": "supported",
+    "refresh_tokens": "Authorization-code exchanges return refresh tokens. Refresh tokens expire 30 days after issuance; each successful refresh returns a new access token and a new refresh token with a new 30-day lifetime.",
+    "access_token_lifetime": "Authorization-code access tokens are valid for 24 hours by default. Client-credentials tokens are valid for 30 days and do not include refresh tokens.",
+    "evidence": {
+      "type": "tested",
+      "refs": [
+        "P1"
+      ]
+    }
+  },
+  "uncertainties": [
+    "The reviewed official docs do not explicitly say, in one sentence, that a public OAuth app can be authorized by external workspaces before Linear integration-directory review. The manifest docs imply public installability; confirm by creating a `public` test app and installing it into a second Linear workspace you control.",
+    "No official SLA was found for Linear integration-directory submissions. If directory presence matters for launch, ask Linear through the submission process before committing a date.",
+    "No official OIDC/RFC 8414 discovery URL was found in the reviewed docs, but a probe found metadata at `https://api.linear.app/.well-known/oauth-authorization-server`. Treat it as useful but verify in your own integration tests.",
+    "No official requirement was found for privacy policy URL, ToS URL, demo video, domain verification, publisher verification, CASA, or pentest for OAuth app registration; confirm in the Linear app form because console requirements can change before docs do."
+  ],
+  "score": {
+    "total": 2,
+    "max": 15,
+    "level": 2,
+    "label": "Moderate",
+    "blurb": "Self-serve with a few settings or limits to plan around.",
+    "breakdown": [
+      {
+        "key": "production_review",
+        "label": "Provider review before external users",
+        "value": "optional_listing",
+        "points": 1
+      },
+      {
+        "key": "review_wait",
+        "label": "Approval wait",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "security_assessment",
+        "label": "Security assessment",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "business_verification",
+        "label": "Business / identity verification",
+        "value": "no",
+        "points": 0
+      },
+      {
+        "key": "gated_access",
+        "label": "Gated API access",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "dev_mode_limits",
+        "label": "Limits before approval",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "customer_admin_approval",
+        "label": "Customer admin approval",
+        "value": "usually",
+        "points": 1
+      }
+    ]
+  },
+  "confidence": {
+    "level": "high",
+    "supported_pct": 100,
+    "official_sources": 9,
+    "tested": 7,
+    "sourced": 54,
+    "inferred": 0,
+    "downgraded": 0
+  },
+  "composio": {
+    "in_catalog": true,
+    "managed": true,
+    "toolkit": "linear",
+    "name": "Linear",
+    "logo": "https://logos.composio.dev/api/linear",
+    "tool_count": 48
+  },
+  "research": {
+    "searches": 2,
+    "pages_read": 8,
+    "facts": 40,
+    "open_questions": [
+      "The official docs reviewed do not explicitly state whether a public OAuth app can be authorized by external workspaces before Linear integration-directory review; the manifest docs imply public installability, while the agents guide says to submit agents to the integration directory to make them available to other workspaces.",
+      "No official OAuth app review/approval timeline or SLA was found for Linear integration-directory submissions.",
+      "No official requirement was found for domain verification, business/publisher verification, privacy policy URL, ToS URL, demo video, CASA/security assessment, or pentest for Linear OAuth app registration or directory listing.",
+      "No OIDC/RFC 8414 discovery metadata URL was found in the docs reviewed."
+    ]
+  },
+  "probes": [
+    {
+      "id": "P1",
+      "kind": "discovery",
+      "target": "https://api.linear.app/.well-known/oauth-authorization-server",
+      "ok": true,
+      "summary": "Metadata published. PKCE methods: S256.",
+      "data": {
+        "issuer": "https://api.linear.app",
+        "authorization_endpoint": "https://linear.app/oauth/authorize",
+        "token_endpoint": "https://api.linear.app/oauth/token",
+        "code_challenge_methods_supported": [
+          "S256"
+        ],
+        "grant_types_supported": [
+          "authorization_code",
+          "refresh_token",
+          "client_credentials",
+          "urn:ietf:params:oauth:grant-type:jwt-bearer"
+        ],
+        "scopes_supported_count": null
+      },
+      "at": "2026-11-07T04:50:28.117Z"
+    },
+    {
+      "id": "P2",
+      "kind": "authorize_endpoint",
+      "target": "https://linear.app/oauth/authorize",
+      "ok": true,
+      "summary": "Endpoint is live and handles an unregistered client: HTTP 200.",
+      "data": {
+        "status": 200,
+        "location": null,
+        "body_excerpt": "Linear Loading…"
+      },
+      "at": "2026-11-07T04:50:28.117Z"
+    },
+    {
+      "id": "P3",
+      "kind": "token_endpoint",
+      "target": "https://api.linear.app/oauth/token",
+      "ok": true,
+      "summary": "Token endpoint is live and rejects fake credentials: HTTP 400 \"invalid_client\".",
+      "data": {
+        "status": 400,
+        "error": "invalid_client",
+        "body_excerpt": "{\"error\":\"invalid_client\",\"error_description\":\"Invalid client: client is invalid\"}"
+      },
+      "at": "2026-11-07T04:50:28.117Z"
+    },
+    {
+      "id": "P4",
+      "kind": "developer_portal",
+      "target": "https://linear.app/settings/api/applications/new",
+      "ok": true,
+      "summary": "Portal is reachable (HTTP 200).",
+      "data": {
+        "status": 200,
+        "final_url": "https://linear.app/settings/api/applications/new"
+      },
+      "at": "2026-11-07T04:50:28.117Z"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://linear.app/developers/oauth-2-0-authentication",
+      "title": "linear.app",
+      "kind": "official_docs",
+      "id": "S1",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://linear.app/docs/api-and-webhooks",
+      "title": "linear.app",
+      "kind": "official_docs",
+      "id": "S2",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://linear.app/developers/oauth-app-manifests",
+      "title": "linear.app",
+      "kind": "official_docs",
+      "id": "S3",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://linear.app/developers/agents",
+      "title": "linear.app",
+      "kind": "official_docs",
+      "id": "S4",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://linear.app/docs/integration-directory",
+      "title": "linear.app",
+      "kind": "official_docs",
+      "id": "S5",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://linear.app/docs/third-party-application-approvals",
+      "title": "linear.app",
+      "kind": "official_docs",
+      "id": "S6",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://linear.app/developers/oauth-actor-authorization",
+      "title": "linear.app",
+      "kind": "official_docs",
+      "id": "S7",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://linear.app/changelog",
+      "title": "linear.app",
+      "kind": "official_docs",
+      "id": "S8",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://linear.app/docs/security-and-access",
+      "title": "Security &amp; Access – Linear Docs",
+      "kind": "official_docs",
+      "id": "S9",
+      "http_status": 200,
+      "reachable": "yes"
+    }
+  ]
+}

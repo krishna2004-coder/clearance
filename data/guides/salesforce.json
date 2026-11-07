@@ -1,0 +1,1084 @@
+{
+  "slug": "salesforce",
+  "schema_version": 1,
+  "generated_at": "2026-11-07T04:53:58.703Z",
+  "generation_seconds": 136,
+  "models": {
+    "research": "gpt-5.5",
+    "writer": "gpt-5.5"
+  },
+  "input": "Salesforce (Connected App / External Client App)",
+  "app": {
+    "name": "Salesforce",
+    "provider": "Salesforce",
+    "website": "https://www.salesforce.com",
+    "category": "CRM / enterprise SaaS platform API",
+    "developer_portal_url": "https://help.salesforce.com/s/articleView?id=sf.create_a_local_external_client_app.htm&language=en_US&type=5",
+    "one_liner": "OAuth works, but 2026 distribution favors External Client Apps, packaging, and customer-admin control."
+  },
+  "oauth_supported": "yes",
+  "headline": "First OAuth test is straightforward if you have a Salesforce Developer Edition org: create an External Client App, add callback URLs/scopes, and use the hostname-specific OAuth endpoints. Production for end-customer orgs is harder: local apps are own-org only, Salesforce now steers ISVs to packaged External Client Apps, and public AppExchange listing adds Security Review that Salesforce says to budget 4–6 weeks for.",
+  "factors": {
+    "production_review": {
+      "value": "optional_listing",
+      "detail": "Salesforce does not publish a single Google-style OAuth verification gate for every external OAuth app. AppExchange Security Review is required to publicly list an app or trial template on AppExchange, but the research does not prove that every unlisted/private Salesforce OAuth integration is technically blocked until Salesforce approves it.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4",
+          "S5",
+          "S6"
+        ]
+      }
+    },
+    "review_wait": {
+      "min_days": 0,
+      "max_days": 0,
+      "detail": "No mandatory OAuth-app review wait was confirmed for all Salesforce OAuth apps. If you choose public AppExchange listing, Salesforce says to plan 4–6 weeks after a complete Security Review submission.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4",
+          "S5"
+        ]
+      }
+    },
+    "security_assessment": {
+      "value": "none",
+      "detail": "None for distributing an External Client App outside AppExchange. AppExchange Security Review (plan 4–6 weeks) applies only if you list publicly.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4",
+          "S5",
+          "S6"
+        ]
+      }
+    },
+    "business_verification": {
+      "value": "no",
+      "detail": "No legal-entity or publisher verification gate was confirmed for simply creating and testing an External Client App in your own org. AppExchange solutions require Partner Program enrollment/contracting, but that is tied to listing/security review rather than basic OAuth app creation.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S5"
+        ]
+      }
+    },
+    "gated_access": {
+      "value": "none",
+      "detail": "You can create External Client Apps in supported Salesforce editions, including Developer Edition, if your user has the “Create, edit, and delete External Client Apps” permission. This is an org permission/edition requirement, not a separate API-product approval gate.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2"
+        ]
+      }
+    },
+    "dev_mode_limits": {
+      "value": "own_org_only",
+      "detail": "A local External Client App is available only in the org where you create it. For distribution to other Salesforce orgs, Salesforce documents packageable External Client Apps and says the Distribution State must be set to Packaged.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S3"
+        ]
+      }
+    },
+    "customer_admin_approval": {
+      "value": "usually",
+      "detail": "Salesforce’s default Connected App policy historically allowed users to self-authorize, but Salesforce also supports and recommends admin-preapproved access. A 2026 community report says uninstalled Connected Apps/External Client Apps can be blocked unless the user has “Approve Uninstalled Connected Apps” or an admin installs the app first, so plan for customer-admin involvement.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S11",
+          "S13",
+          "S14",
+          "S15"
+        ]
+      }
+    }
+  },
+  "effort": {
+    "time_to_first_test_minutes": 60,
+    "active_hours_min": 8,
+    "active_hours_max": 40,
+    "production_days_min": 1,
+    "production_days_max": 42,
+    "explanation": "A same-day test is realistic in a Developer Edition org because app creation and OAuth endpoints are documented. The low production estimate assumes private/customer-admin installation without AppExchange listing and no complex package automation. The high estimate includes packaging work, security hardening, customer-admin documentation, and optional public AppExchange Security Review, which Salesforce says to plan 4–6 weeks for after submission."
+  },
+  "start_here": {
+    "action": "Create a Salesforce Developer Edition org and build a local External Client App first, not a legacy Connected App.",
+    "url": "https://help.salesforce.com/s/articleView?id=sf.create_a_local_external_client_app.htm&language=en_US&type=5",
+    "why": "Creating new Connected Apps is restricted as of Spring ’26, and Salesforce says new integrations must use External Client Apps."
+  },
+  "phases": [
+    {
+      "name": "Prepare",
+      "goal": "Decide the OAuth shape before touching Setup, especially hostname, scopes, and distribution path.",
+      "steps": [
+        {
+          "title": "Choose the Salesforce hostname your app will authorize against",
+          "detail": "Use the customer’s Salesforce login hostname in production, such as `https://login.salesforce.com`, `https://test.salesforce.com`, or a customer My Domain hostname. Salesforce OAuth endpoints are hostname-specific: `/services/oauth2/authorize` and `/services/oauth2/token`.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_endpoints.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Pick the minimum OAuth scopes",
+          "detail": "For an AI agent that reads/writes Salesforce data through REST APIs, start with `api` plus `refresh_token offline_access` if the agent must keep working after the browser session. Add `id` only if you need identity claims/user info for account linking.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=remoteaccess_oauth_tokens_scopes.htm&language=en_US",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S12"
+            ]
+          }
+        },
+        {
+          "title": "Decide local test app versus distributable packaged app",
+          "detail": "Use a local External Client App for first testing because it exists only in your development org. For customer org distribution, plan a packageable External Client App with Distribution State set to `Packaged`; Salesforce documents 2GP managed packages through a Salesforce DX project.",
+          "owner": "you",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.create_a_local_external_client_app.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2",
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Require PKCE in your implementation plan",
+          "detail": "Implement authorization-code flow with PKCE from the start. Salesforce recommends Web Server Flow with PKCE and its 2026 guidance says PKCE is required for ISV Salesforce client apps using flows that support PKCE.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_web_server_flow.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S8",
+              "S10"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register the app",
+      "goal": "Create a working External Client App in Salesforce Setup.",
+      "steps": [
+        {
+          "title": "Open App Manager in Lightning Setup",
+          "detail": "Sign in to your Salesforce org with a user that has `Create, edit, and delete External Client Apps`. In Setup, use Quick Find for `App Manager`, then select App Manager.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.create_a_local_external_client_app.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Create a New External Client App",
+          "detail": "In App Manager, choose `New External Client App`. Enter the app name, API name/contact fields, and basic metadata your Salesforce org requires.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.create_a_local_external_client_app.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Set the distribution state for your target",
+          "detail": "For first test, keep the app local. For a customer-distributable app, create/configure a packageable External Client App and set `Distribution State` to `Packaged`.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.create_a_local_external_client_app.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Capture the generated client credentials",
+          "detail": "Copy the consumer key/client ID and any client secret Salesforce displays into your secret manager. Do not paste secrets into source control or agent prompts.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": null,
+          "evidence": {
+            "type": "inferred",
+            "refs": [
+              "S2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Configure OAuth",
+      "goal": "Make the app compatible with a secure, long-running agent integration.",
+      "steps": [
+        {
+          "title": "Add callback URLs exactly",
+          "detail": "Add your redirect URI, for example `https://app.example.com/oauth/salesforce/callback`, and a localhost callback only if needed for development. The redirect URI used in the authorization request must match the app configuration.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": null,
+          "evidence": {
+            "type": "inferred",
+            "refs": [
+              "S8"
+            ]
+          }
+        },
+        {
+          "title": "Enable the OAuth flows your app uses",
+          "detail": "Configure the app for authorization-code/web-server OAuth. Avoid username-password and user-agent flows for a new integration; Salesforce recommends the web server flow with PKCE for special scenarios instead.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_web_server_flow.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S8"
+            ]
+          }
+        },
+        {
+          "title": "Turn on PKCE support or requirement",
+          "detail": "For External Client Apps, Salesforce can require PKCE for web server, hybrid web server, and code-and-credentials flows; flows that do not implement PKCE are blocked when that setting is enabled. Treat PKCE as required for ISV apps.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.configure_external_client_app_oauth_settings.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S9",
+              "S10"
+            ]
+          }
+        },
+        {
+          "title": "Configure refresh-token behavior deliberately",
+          "detail": "Request `refresh_token offline_access` only if the agent needs background access. External Client Apps have a 30-day idle refresh-token TTL, and refresh-token rotation can invalidate the old refresh token after use.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.configure_external_client_app_oauth_settings.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S9",
+              "S12"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Test with your own Salesforce account",
+      "goal": "Prove authorization, token exchange, refresh, and one API call before distribution work.",
+      "steps": [
+        {
+          "title": "Build the authorization URL",
+          "detail": "Use `https://<hostname>/services/oauth2/authorize` with `response_type=code`, your `client_id`, exact `redirect_uri`, space-delimited `scope`, and PKCE `code_challenge`/`code_challenge_method=S256`.",
+          "owner": "agent",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_endpoints.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S7",
+              "S8"
+            ]
+          }
+        },
+        {
+          "title": "Authorize with a Salesforce test user",
+          "detail": "Open the authorization URL in a browser, sign in to the same org/hostname, and approve the app. For Connected Apps, the default policy is `All users may self-authorize`, but your org may use admin-preapproved access.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/articleView?id=connected_app_manage_oauth.htm",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S11"
+            ]
+          }
+        },
+        {
+          "title": "Exchange the code at the token endpoint",
+          "detail": "POST to `https://<hostname>/services/oauth2/token` with the authorization code, exact redirect URI, client credentials as configured, and PKCE `code_verifier`. Store `access_token`, `refresh_token` if returned, `instance_url`, and user/org identifiers.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_endpoints.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S7",
+              "S8"
+            ]
+          }
+        },
+        {
+          "title": "Verify refresh-token handling",
+          "detail": "Force an access-token refresh in a non-production test. If refresh-token rotation is enabled, atomically replace the stored refresh token with the newly returned one and treat reuse failures as a reconnect condition.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.configure_external_client_app_oauth_settings.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S9"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Package and prepare customer rollout",
+      "goal": "Make the app installable/approvable in customer Salesforce orgs.",
+      "steps": [
+        {
+          "title": "Create a Salesforce DX packaging project if you need a managed package",
+          "detail": "For a second-generation managed package containing an External Client App, Salesforce says you must use a Salesforce DX project. Put the packageable External Client App metadata under source control and build repeatable package creation/release scripts.",
+          "owner": "you",
+          "effort_minutes": 240,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/s/articleView?id=sf.configure_packageable_external_client_apps.htm&language=en_US&type=5",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Write customer-admin installation instructions",
+          "detail": "Tell admins whether they must install the package, assign profiles/permission sets, or allow users to approve the app. Include the exact scopes requested and the Salesforce objects your agent accesses.",
+          "owner": "agent",
+          "effort_minutes": 90,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/articleView?id=connected_app_manage_oauth.htm",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S11",
+              "S13",
+              "S15"
+            ]
+          }
+        },
+        {
+          "title": "Prepare for admin-preapproved orgs",
+          "detail": "Support the case where the customer sets `Admin approved users are pre-authorized`; only users with assigned profiles or permission sets can access the app. Surface a clear error telling the user to contact their Salesforce admin.",
+          "owner": "agent",
+          "effort_minutes": 120,
+          "wait_days_max": null,
+          "url": "https://help.salesforce.com/articleView?id=connected_app_manage_oauth.htm",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S11",
+              "S13"
+            ]
+          }
+        },
+        {
+          "title": "Document object access and external data storage",
+          "detail": "Create a review/customer packet listing whether your service stores Salesforce customer data outside Force.com, which objects are accessed, and which external services/API endpoints are involved.",
+          "owner": "agent",
+          "effort_minutes": 120,
+          "wait_days_max": null,
+          "url": "https://appexchange.my.salesforce-sites.com/appexchange/resource/help/Content/appexchange_publish_register.htm",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S4",
+              "S5"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Optional: list publicly on AppExchange",
+      "goal": "Get public AppExchange distribution if you need marketplace discoverability and Salesforce-reviewed trust signals.",
+      "steps": [
+        {
+          "title": "Enroll and contract through the AppExchange Partner Program path",
+          "detail": "Salesforce’s Security Review guidance tells partners to confirm the solution is fully enrolled and contracted into the AppExchange Partner Program before Security Review.",
+          "owner": "you",
+          "effort_minutes": 240,
+          "wait_days_max": null,
+          "url": "https://partners.salesforce.com/s/education/appinnovators/Security_Review?language=en",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5"
+            ]
+          }
+        },
+        {
+          "title": "Run required security preparation",
+          "detail": "Run Checkmarx for Salesforce package components, run Chimera or ZAP for external web components, and perform manual testing. Include every external website, API endpoint, mobile app, browser extension, or desktop/client app integrated with the offering.",
+          "owner": "you",
+          "effort_minutes": 960,
+          "wait_days_max": null,
+          "url": "https://partners.salesforce.com/s/education/appinnovators/Security_Review?language=en",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5",
+              "S17"
+            ]
+          }
+        },
+        {
+          "title": "Submit the AppExchange Security Review package",
+          "detail": "In the Partner/AppExchange publishing flow, disclose external web services, whether Salesforce credentials or customer data are stored outside Force.com, and which Salesforce objects are accessed.",
+          "owner": "you",
+          "effort_minutes": 240,
+          "wait_days_max": null,
+          "url": "https://appexchange.my.salesforce-sites.com/appexchange/resource/help/Content/appexchange_publish_register.htm",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S4"
+            ]
+          }
+        },
+        {
+          "title": "Wait for Salesforce Security Review",
+          "detail": "Salesforce says to plan 4–6 weeks from submission if the app is complete. Paid apps have a stated initial Security Review fee of $2,700 USD; free apps have no review fee, plus Salesforce states a $150 USD annual listing fee.",
+          "owner": "provider",
+          "effort_minutes": null,
+          "wait_days_max": 42,
+          "url": "https://partners.salesforce.com/s/education/appinnovators/Security_Review?language=en",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "item": "Salesforce org in a supported edition",
+      "detail": "External Client Apps are available in Professional, Enterprise, Performance, Unlimited, and Developer Editions.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2"
+        ]
+      }
+    },
+    {
+      "item": "Permission to manage External Client Apps",
+      "detail": "The creating user needs `Create, edit, and delete External Client Apps`.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2"
+        ]
+      }
+    },
+    {
+      "item": "External Client App instead of new legacy Connected App",
+      "detail": "Creating new Connected Apps is restricted as of Spring ’26, and Salesforce’s 2026 guidance says new integrations must use ECAs instead of Connected Apps.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S6"
+        ]
+      }
+    },
+    {
+      "item": "PKCE implementation",
+      "detail": "Salesforce recommends Web Server Flow with PKCE and says PKCE is required for ISV Salesforce client apps using flows that support PKCE.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S8",
+          "S10"
+        ]
+      }
+    },
+    {
+      "item": "Packageable app for distribution",
+      "detail": "Local External Client Apps are available only in the creating org; distribution to other orgs uses packageable External Client Apps, with Distribution State set to `Packaged`.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S3"
+        ]
+      }
+    },
+    {
+      "item": "Security Review materials",
+      "detail": "For public AppExchange listing, prepare security scans, architecture/details for external endpoints, object access, and data-storage disclosures.",
+      "when": "for_listing",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4",
+          "S5"
+        ]
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "scope": "api",
+      "purpose": "Access Salesforce REST API resources for reading/writing CRM data the agent is authorized to use.",
+      "tier": "basic",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S12"
+        ]
+      }
+    },
+    {
+      "scope": "refresh_token offline_access",
+      "purpose": "Receive and use refresh tokens so the agent can continue operating after the user’s browser session ends.",
+      "tier": "basic",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S8",
+          "S12"
+        ]
+      }
+    },
+    {
+      "scope": "id",
+      "purpose": "Identify the Salesforce user/org during account linking; request only if your app needs identity claims.",
+      "tier": "basic",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S12"
+        ]
+      }
+    },
+    {
+      "scope": "web",
+      "purpose": "Salesforce examples include it for web access; most API-only agents should avoid it unless a specific Salesforce flow requires it.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S12"
+        ]
+      }
+    }
+  ],
+  "gotchas": [
+    {
+      "title": "Local External Client Apps do not distribute to customer orgs",
+      "detail": "A local External Client App is only available in the org where it is created. If your AI agent serves many customers, plan packageable External Client App work rather than assuming a local app behaves like a universal OAuth app registration.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S3"
+        ]
+      }
+    },
+    {
+      "title": "Connected App instructions are becoming stale for new apps",
+      "detail": "Many older Salesforce OAuth tutorials say to create a Connected App. Salesforce says creating new Connected Apps is restricted as of Spring ’26 and new integrations must use External Client Apps.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S6"
+        ]
+      }
+    },
+    {
+      "title": "AppExchange review is for public listing, not confirmed as universal OAuth verification",
+      "detail": "Salesforce requires Security Review to publicly list on AppExchange or provide a public trial template. The research did not confirm a universal pre-approval gate for all private/unlisted OAuth apps, so do not treat AppExchange listing as mandatory unless your distribution strategy requires it.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4",
+          "S5"
+        ]
+      }
+    },
+    {
+      "title": "Customer admins may block self-authorization",
+      "detail": "Salesforce has `All users may self-authorize` and `Admin approved users are pre-authorized` policies, while Salesforce security guidance recommends the admin-approved model. Build an admin handoff path into onboarding.",
+      "impact": "delay",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S11",
+          "S13",
+          "S14"
+        ]
+      }
+    },
+    {
+      "title": "Refresh tokens are not forever for External Client Apps",
+      "detail": "External Client Apps require a 30-day idle refresh-token TTL, and refresh-token rotation can invalidate old tokens after use. Your token store must update refresh tokens atomically and reconnect users after idle expiry.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S9"
+        ]
+      }
+    }
+  ],
+  "blockers": [
+    {
+      "symptom": "You cannot find the old “New Connected App” path or your org blocks creation of a new Connected App.",
+      "likely_cause": "Salesforce restricted creation of new Connected Apps as of Spring ’26.",
+      "what_to_do": "Create an External Client App from Setup → App Manager → New External Client App, and migrate implementation assumptions from Connected App docs where needed.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S2",
+          "S6"
+        ]
+      }
+    },
+    {
+      "symptom": "A customer user cannot authorize the app even though the OAuth URL is correct.",
+      "likely_cause": "The customer org may require admin-preapproved access, or the app may be uninstalled/unapproved in that org.",
+      "what_to_do": "Ask the customer’s Salesforce admin to install/approve the package/app and assign the relevant profile or permission set. If relying on user self-approval, confirm the user has any required permission such as “Approve Uninstalled Connected Apps”; this specific 2026 behavior is based on a community report and should be confirmed in the customer org.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S11",
+          "S13",
+          "S15"
+        ]
+      }
+    },
+    {
+      "symptom": "Authorization-code exchange or later authentication fails after Salesforce OAuth security changes.",
+      "likely_cause": "The implementation may not be sending PKCE parameters, or it may mishandle refresh-token rotation.",
+      "what_to_do": "Use authorization-code flow with `code_challenge_method=S256` and send the matching `code_verifier` at token exchange. If refresh-token rotation is enabled, replace the stored refresh token every time Salesforce returns a new one.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S9",
+          "S10",
+          "S16"
+        ]
+      }
+    },
+    {
+      "symptom": "Security Review rejects or stalls the AppExchange submission.",
+      "likely_cause": "The submission may omit external endpoints, data-storage disclosures, object access, scan results, or testing consent for third-party-owned components.",
+      "what_to_do": "Disclose every external service, website, API endpoint, and data store; run Checkmarx and web scans where applicable; get third-party testing consent if needed; resubmit complete evidence.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4",
+          "S5",
+          "S17"
+        ]
+      }
+    },
+    {
+      "symptom": "The app works in your development org but customer org users cannot see/use it.",
+      "likely_cause": "You built a local External Client App, which is available only in the org where it was created.",
+      "what_to_do": "Create a packageable External Client App, set Distribution State to `Packaged`, and use Salesforce DX/2GP packaging for managed package distribution if needed.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S3"
+        ]
+      }
+    }
+  ],
+  "agent_split": {
+    "agent_can": [
+      "Draft the minimum scope list and one-line justifications for `api`, `refresh_token offline_access`, and optional `id`.",
+      "Generate PKCE-capable OAuth authorize/token exchange code and a refresh-token-rotation-safe token store test.",
+      "Validate that configured redirect URIs exactly match the authorization request URLs.",
+      "Prepare customer-admin installation instructions and troubleshooting copy for admin-preapproved orgs.",
+      "Draft AppExchange Security Review answers about external endpoints, object access, and Salesforce data stored outside Force.com."
+    ],
+    "you_must": [
+      "Sign in to Salesforce Setup and create the External Client App because console access and org permissions are human-controlled.",
+      "Copy client credentials into your secret manager; an agent should not receive real secrets.",
+      "Choose and confirm your legal/privacy posture for storing Salesforce customer data outside Force.com.",
+      "Create/package/release Salesforce DX managed packages if your org credentials and release authority are required.",
+      "Enroll/contract in the AppExchange Partner Program and submit Security Review if you want public AppExchange listing."
+    ]
+  },
+  "artifacts": [
+    {
+      "title": "Environment variables",
+      "kind": "env",
+      "content": "SALESFORCE_CLIENT_ID=<CONSUMER_KEY_OR_CLIENT_ID>\nSALESFORCE_CLIENT_SECRET=<CLIENT_SECRET_IF_USED>\nSALESFORCE_REDIRECT_URI=https://app.example.com/oauth/salesforce/callback\nSALESFORCE_LOGIN_HOST=https://login.salesforce.com\nSALESFORCE_AUTHORIZATION_URL=${SALESFORCE_LOGIN_HOST}/services/oauth2/authorize\nSALESFORCE_TOKEN_URL=${SALESFORCE_LOGIN_HOST}/services/oauth2/token\nSALESFORCE_SCOPES=\"api refresh_token offline_access id\"",
+      "note": "Use `https://test.salesforce.com` for sandbox login or a customer My Domain hostname when appropriate."
+    },
+    {
+      "title": "Review/customer-ready scope justification",
+      "kind": "text",
+      "content": "api — Allows the agent to call Salesforce APIs for CRM records the connected user is authorized to access.\nrefresh_token offline_access — Allows the agent to refresh access without asking the user to reconnect after every browser session; required for background automations.\nid — Used only for account linking and displaying the connected Salesforce user/org identity.\n\nData handling summary: The app stores OAuth tokens and the minimum Salesforce record data needed to complete user-requested agent tasks. Salesforce customer data stored outside Force.com: <YES/NO + DETAILS>. Salesforce objects accessed: <OBJECT_LIST>. External services/API endpoints: <ENDPOINT_LIST>.",
+      "note": "Use this as the starting point for customer admin docs or AppExchange Security Review disclosures."
+    },
+    {
+      "title": "Example authorization URL with PKCE",
+      "kind": "url",
+      "content": "https://login.salesforce.com/services/oauth2/authorize?response_type=code&client_id=<CLIENT_ID>&redirect_uri=https%3A%2F%2Fapp.example.com%2Foauth%2Fsalesforce%2Fcallback&scope=api%20refresh_token%20offline_access%20id&code_challenge=<BASE64URL_SHA256_CODE_VERIFIER>&code_challenge_method=S256&state=<CSRF_STATE>",
+      "note": "Replace the hostname with the customer’s correct Salesforce hostname and generate a fresh PKCE verifier/challenge per authorization attempt."
+    },
+    {
+      "title": "Token exchange request template",
+      "kind": "text",
+      "content": "POST https://<hostname>/services/oauth2/token\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=authorization_code&code=<AUTHORIZATION_CODE>&client_id=<CLIENT_ID>&redirect_uri=https%3A%2F%2Fapp.example.com%2Foauth%2Fsalesforce%2Fcallback&code_verifier=<ORIGINAL_PKCE_CODE_VERIFIER>",
+      "note": "Include client authentication exactly as configured for your External Client App. Store returned refresh tokens atomically if rotation is enabled."
+    }
+  ],
+  "oauth": {
+    "authorize_url": "https://<hostname>/services/oauth2/authorize",
+    "token_url": "https://<hostname>/services/oauth2/token",
+    "pkce": "required",
+    "refresh_tokens": "Request `refresh_token offline_access`. External Client Apps require a 30-day idle refresh-token TTL; refresh-token rotation can invalidate the old token after use.",
+    "access_token_lifetime": "Controlled by Salesforce session/org/app policies; no stable universal lifetime was confirmed in the provided research.",
+    "evidence": {
+      "type": "sourced",
+      "refs": [
+        "S7",
+        "S8",
+        "S9",
+        "S10",
+        "S12"
+      ]
+    }
+  },
+  "uncertainties": [
+    "The exact 2026 mechanics for external end-users authorizing an unpackaged/uninstalled External Client App remain unclear from official public docs. Confirm in a real customer sandbox whether admin installation or the “Approve Uninstalled Connected Apps” permission is required.",
+    "Several Salesforce Help OAuth pages were not fully fetchable in the research pass even though snippets were available. Recheck OAuth endpoint, PKCE, refresh-token rotation, and External Client App settings in a browser before final implementation.",
+    "The OIDC discovery/metadata endpoint was not confirmed for Salesforce hostnames. Use the documented OAuth endpoints directly unless you verify discovery for the specific issuer/hostname.",
+    "A universal default Salesforce access-token lifetime was not confirmed. Treat access-token expiry as org-policy controlled and rely on refresh-token handling."
+  ],
+  "score": {
+    "total": 3,
+    "max": 15,
+    "level": 2,
+    "label": "Moderate",
+    "blurb": "Self-serve with a few settings or limits to plan around.",
+    "breakdown": [
+      {
+        "key": "production_review",
+        "label": "Provider review before external users",
+        "value": "optional_listing",
+        "points": 1
+      },
+      {
+        "key": "review_wait",
+        "label": "Approval wait",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "security_assessment",
+        "label": "Security assessment",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "business_verification",
+        "label": "Business / identity verification",
+        "value": "no",
+        "points": 0
+      },
+      {
+        "key": "gated_access",
+        "label": "Gated API access",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "dev_mode_limits",
+        "label": "Limits before approval",
+        "value": "own_org_only",
+        "points": 1
+      },
+      {
+        "key": "customer_admin_approval",
+        "label": "Customer admin approval",
+        "value": "usually",
+        "points": 1
+      }
+    ]
+  },
+  "confidence": {
+    "level": "high",
+    "supported_pct": 96,
+    "official_sources": 14,
+    "tested": 0,
+    "sourced": 50,
+    "inferred": 2,
+    "downgraded": 0
+  },
+  "composio": {
+    "in_catalog": true,
+    "managed": true,
+    "toolkit": "salesforce",
+    "name": "Salesforce",
+    "logo": "https://logos.composio.dev/api/salesforce",
+    "tool_count": 325
+  },
+  "research": {
+    "searches": 2,
+    "pages_read": 8,
+    "facts": 37,
+    "open_questions": [
+      "The exact 2026 mechanics for external end-users authorizing an unpackaged/uninstalled External Client App are partly unclear from official public docs; community reports mention the “Approve Uninstalled Connected Apps” permission or admin installation, but a directly citable official article should be confirmed before relying on that as a hard requirement.",
+      "Salesforce Help pages for OAuth endpoints, OAuth settings, PKCE requirements, and 2026 security-control locking were visible in search snippets but not fully fetchable through the provided fetch tool because the pages returned a loading/CSS placeholder; claims based on those pages should be rechecked manually in a browser before implementation.",
+      "Salesforce does not appear to publish a single universal OAuth app “verification” process analogous to Google OAuth verification for all Salesforce OAuth apps; requirements are primarily AppExchange Security Review, packaging, partner enrollment, security scans, and customer-admin policies, but domain/privacy-policy/ToS/demo-video requirements may vary by listing type and Partner Security Portal wizard.",
+      "The exact default access-token lifetime is controlled by Salesforce session policies and org/app settings; no stable official value was confirmed in the fetched sources.",
+      "The OIDC discovery/metadata endpoint was not confirmed from official Salesforce docs during this pass; use null until verified for the specific Salesforce hostname/My Domain/Experience Cloud issuer being used."
+    ]
+  },
+  "probes": [
+    {
+      "id": "P1",
+      "kind": "error",
+      "ok": false,
+      "summary": "TypeError: Invalid URL",
+      "at": "2026-11-07T04:52:36.338Z"
+    },
+    {
+      "id": "P2",
+      "kind": "token_endpoint",
+      "target": "https://<hostname>/services/oauth2/token",
+      "ok": false,
+      "summary": "Could not reach endpoint: invalid URL",
+      "at": "2026-11-07T04:52:36.338Z"
+    },
+    {
+      "id": "P3",
+      "kind": "developer_portal",
+      "target": "https://help.salesforce.com/s/articleView?id=sf.create_a_local_external_client_app.htm&language=en_US&type=5",
+      "ok": true,
+      "summary": "Portal is reachable (HTTP 200).",
+      "data": {
+        "status": 200,
+        "final_url": "https://help.salesforce.com/s/articleView?id=sf.create_a_local_external_client_app.htm&language=en_US&type=5"
+      },
+      "at": "2026-11-07T04:52:36.338Z"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://developer.salesforce.com/docs/platform/api-rest/guide/intro-oauth-and-connected-apps.html",
+      "title": "developer.salesforce.com",
+      "kind": "official_docs",
+      "id": "S1",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/s/articleView?id=sf.create_a_local_external_client_app.htm&language=en_US&type=5",
+      "title": "help.salesforce.com",
+      "kind": "official_docs",
+      "id": "S2",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/s/articleView?id=sf.configure_packageable_external_client_apps.htm&language=en_US&type=5",
+      "title": "help.salesforce.com",
+      "kind": "official_docs",
+      "id": "S3",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://appexchange.my.salesforce-sites.com/appexchange/resource/help/Content/appexchange_publish_register.htm",
+      "title": "appexchange.my.salesforce-sites.com",
+      "kind": "official_docs",
+      "id": "S4",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://partners.salesforce.com/s/education/appinnovators/Security_Review?language=en",
+      "title": "partners.salesforce.com",
+      "kind": "official_docs",
+      "id": "S5",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/s/articleView?id=005318040&language=en_US&type=1",
+      "title": "help.salesforce.com",
+      "kind": "official_docs",
+      "id": "S6",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_endpoints.htm&language=en_US&type=5",
+      "title": "help.salesforce.com",
+      "kind": "official_docs",
+      "id": "S7",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_web_server_flow.htm&language=en_US&type=5",
+      "title": "help.salesforce.com",
+      "kind": "official_docs",
+      "id": "S8",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/s/articleView?id=sf.configure_external_client_app_oauth_settings.htm&language=en_US&type=5",
+      "title": "help.salesforce.com",
+      "kind": "official_docs",
+      "id": "S9",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/s/articleView?id=005316703&language=en_US&type=1",
+      "title": "help.salesforce.com",
+      "kind": "official_docs",
+      "id": "S10",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/articleView?id=connected_app_manage_oauth.htm",
+      "title": "help.salesforce.com",
+      "kind": "official_docs",
+      "id": "S11",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/s/articleView?id=remoteaccess_oauth_tokens_scopes.htm&language=en_US",
+      "title": "help.salesforce.com",
+      "kind": "official_docs",
+      "id": "S12",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/s/articleView?id=xcloud.shr_manage_oauth_access_policies_for_a_connected_app_admin_approved_users_are_pre_authorized.htm&language=en_US&type=5",
+      "title": "help.salesforce.com",
+      "kind": "official_docs",
+      "id": "S13",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://admin.salesforce.com/blog/2025/get-ready-for-changes-to-connected-app-usage-restrictions",
+      "title": "admin.salesforce.com",
+      "kind": "official_blog_or_forum",
+      "id": "S14",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://www.reddit.com/r/salesforce/comments/1otmk17",
+      "title": "reddit.com",
+      "kind": "community_report",
+      "id": "S15",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://www.reddit.com/r/salesforce/comments/1tyk7a8/vendors_connected_app_unable_to_authenticate/",
+      "title": "reddit.com",
+      "kind": "community_report",
+      "id": "S16",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://www.reddit.com/r/salesforce/comments/1t7iznz/the_honest_2026_guide_to_listing_on_salesforce/",
+      "title": "reddit.com",
+      "kind": "community_report",
+      "id": "S17",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://help.salesforce.com/s/articleView?id=005433465&language=en_US&type=1",
+      "title": "Salesforce Help",
+      "kind": "official_docs",
+      "id": "S18",
+      "http_status": 200,
+      "reachable": "yes"
+    }
+  ],
+  "editorial": [
+    {
+      "path": "app.name",
+      "from": "Salesforce Connected App / External Client App",
+      "to": "Salesforce",
+      "reason": "Display name"
+    },
+    {
+      "path": "factors.security_assessment",
+      "from": "conditional",
+      "to": "none",
+      "reason": "Rubric scores the minimum path to production; this requirement only applies to the optional listing."
+    }
+  ],
+  "reviewed_at": "2026-11-07T04:58:59.657Z"
+}

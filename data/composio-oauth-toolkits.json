@@ -1,0 +1,4543 @@
+[
+{
+"slug": "infisical",
+"name": "Infisical",
+"logo": "https://logos.composio.dev/api/infisical",
+"category": "security & identity tools",
+"authSchemes": [
+"OAUTH2",
+"BEARER_TOKEN"
+],
+"managed": false,
+"toolCount": 905
+},
+{
+"slug": "github",
+"name": "GitHub",
+"logo": "https://logos.composio.dev/api/github",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 899
+},
+{
+"slug": "send_pulse",
+"name": "SendPulse",
+"logo": "https://logos.composio.dev/api/sendpulse",
+"category": "marketing automation",
+"authSchemes": [
+"API_KEY",
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 617
+},
+{
+"slug": "workday",
+"name": "Workday",
+"logo": "https://logos.composio.dev/api/workday",
+"category": "human resources",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 588
+},
+{
+"slug": "servicetitan",
+"name": "ServiceTitan",
+"logo": "https://logos.composio.dev/api/servicetitan",
+"category": "scheduling & booking",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 585
+},
+{
+"slug": "canvas",
+"name": "Canvas",
+"logo": "https://logos.composio.dev/api/canvas",
+"category": "online courses",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 574
+},
+{
+"slug": "googlesuper",
+"name": "Google Super",
+"logo": "https://logos.composio.dev/api/googlesuper",
+"category": "file management & storage",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 559
+},
+{
+"slug": "highlevel_location",
+"name": "HighLevel Location",
+"logo": "https://logos.composio.dev/api/highlevel",
+"category": "crm",
+"authSchemes": [
+"OAUTH2",
+"BEARER_TOKEN"
+],
+"managed": false,
+"toolCount": 555
+},
+{
+"slug": "zoho_projects",
+"name": "Zoho Projects",
+"logo": "https://logos.composio.dev/api/zoho_projects",
+"category": "project management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 542
+},
+{
+"slug": "mongodb",
+"name": "MongoDB",
+"logo": "https://logos.composio.dev/api/mongodb",
+"category": "databases",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 496
+},
+{
+"slug": "clickfunnels",
+"name": "ClickFunnels 2.0",
+"logo": "https://logos.composio.dev/api/clickfunnels",
+"category": "marketing automation",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 476
+},
+{
+"slug": "zendesk",
+"name": "Zendesk",
+"logo": "https://logos.composio.dev/api/zendesk",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 457
+},
+{
+"slug": "twilio",
+"name": "Twilio",
+"logo": "https://logos.composio.dev/api/twilio",
+"category": "communication",
+"authSchemes": [
+"API_KEY",
+"BASIC",
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 454
+},
+{
+"slug": "deel",
+"name": "Deel",
+"logo": "https://logos.composio.dev/api/deel",
+"category": "hr talent & recruitment",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 436
+},
+{
+"slug": "stripe",
+"name": "Stripe",
+"logo": "https://logos.composio.dev/api/stripe",
+"category": "payment processing",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 435
+},
+{
+"slug": "databricks",
+"name": "Databricks",
+"logo": "https://logos.composio.dev/api/databricks",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 427
+},
+{
+"slug": "salesforce_data_360",
+"name": "Salesforce Data 360",
+"logo": "https://logos.composio.dev/api/salesforce_data_360",
+"category": "business intelligence",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 424
+},
+{
+"slug": "linode",
+"name": "Linode",
+"logo": "https://logos.composio.dev/api/linode",
+"category": "it operations",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 418
+},
+{
+"slug": "vercel",
+"name": "Vercel",
+"logo": "https://logos.composio.dev/api/vercel",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 414
+},
+{
+"slug": "shopify",
+"name": "Shopify",
+"logo": "https://logos.composio.dev/api/shopify",
+"category": "ecommerce",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 407
+},
+{
+"slug": "pipedrive",
+"name": "Pipedrive",
+"logo": "https://logos.composio.dev/api/pipedrive",
+"category": "crm",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 406
+},
+{
+"slug": "tiktok_ads",
+"name": "TikTok Ads",
+"logo": "https://logos.composio.dev/api/tiktok_ads",
+"category": "marketing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 404
+},
+{
+"slug": "coupa",
+"name": "Coupa",
+"logo": "https://logos.composio.dev/api/coupa",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 384
+},
+{
+"slug": "datadog_mcp",
+"name": "Datadog MCP",
+"logo": "https://logos.composio.dev/api/datadog_mcp",
+"category": "server monitoring",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 370
+},
+{
+"slug": "pagerduty",
+"name": "PagerDuty",
+"logo": "https://logos.composio.dev/api/pagerduty",
+"category": "server monitoring",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 368
+},
+{
+"slug": "docusign",
+"name": "DocuSign",
+"logo": "https://logos.composio.dev/api/docusign",
+"category": "signatures",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 338
+},
+{
+"slug": "hubspot",
+"name": "HubSpot",
+"logo": "https://logos.composio.dev/api/hubspot",
+"category": "crm",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 336
+},
+{
+"slug": "sign_now",
+"name": "SignNow",
+"logo": "https://logos.composio.dev/api/signnow",
+"category": "signatures",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 333
+},
+{
+"slug": "outlook",
+"name": "Outlook",
+"logo": "https://logos.composio.dev/api/outlook",
+"category": "email",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": true,
+"toolCount": 331
+},
+{
+"slug": "trello",
+"name": "Trello",
+"logo": "https://logos.composio.dev/api/trello",
+"category": "project management",
+"authSchemes": [
+"OAUTH1"
+],
+"managed": true,
+"toolCount": 331
+},
+{
+"slug": "salesforce",
+"name": "Salesforce",
+"logo": "https://logos.composio.dev/api/salesforce",
+"category": "crm",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": true,
+"toolCount": 325
+},
+{
+"slug": "gitlab",
+"name": "GitLab",
+"logo": "https://logos.composio.dev/api/gitlab",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 316
+},
+{
+"slug": "blackboard",
+"name": "Blackboard",
+"logo": "https://logos.composio.dev/api/blackboard",
+"category": "education",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 314
+},
+{
+"slug": "bexio",
+"name": "bexio",
+"logo": "https://logos.composio.dev/api/bexio",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2",
+"BEARER_TOKEN"
+],
+"managed": false,
+"toolCount": 309
+},
+{
+"slug": "box",
+"name": "Box",
+"logo": "https://logos.composio.dev/api/box",
+"category": "file management & storage",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 286
+},
+{
+"slug": "teamleader",
+"name": "Teamleader Focus",
+"logo": "https://logos.composio.dev/api/teamleader",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 278
+},
+{
+"slug": "mailchimp",
+"name": "Mailchimp",
+"logo": "https://logos.composio.dev/api/mailchimp",
+"category": "email newsletters",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 277
+},
+{
+"slug": "zoho_books",
+"name": "Zoho Books",
+"logo": "https://logos.composio.dev/api/zoho_books",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 270
+},
+{
+"slug": "freee",
+"name": "freee",
+"logo": "https://logos.composio.dev/api/freee",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 267
+},
+{
+"slug": "datadog",
+"name": "Datadog",
+"logo": "https://logos.composio.dev/api/datadog",
+"category": "server monitoring",
+"authSchemes": [
+"OAUTH2",
+"API_KEY",
+"BEARER_TOKEN"
+],
+"managed": false,
+"toolCount": 249
+},
+{
+"slug": "launch_darkly",
+"name": "LaunchDarkly",
+"logo": "https://logos.composio.dev/api/launch_darkly",
+"category": "developer tools",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 248
+},
+{
+"slug": "deputy",
+"name": "Deputy",
+"logo": "https://logos.composio.dev/api/deputy",
+"category": "human resources",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 247
+},
+{
+"slug": "microsoft_teams",
+"name": "Microsoft Teams",
+"logo": "https://logos.composio.dev/api/microsoft_teams",
+"category": "team chat",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": true,
+"toolCount": 246
+},
+{
+"slug": "planetscale",
+"name": "PlanetScale",
+"logo": "https://logos.composio.dev/api/planetscale",
+"category": "databases",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 245
+},
+{
+"slug": "supabase",
+"name": "Supabase",
+"logo": "https://logos.composio.dev/api/supabase",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 235
+},
+{
+"slug": "klaviyo",
+"name": "Klaviyo",
+"logo": "https://logos.composio.dev/api/klaviyo",
+"category": "marketing automation",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 233
+},
+{
+"slug": "crowdin",
+"name": "Crowdin",
+"logo": "https://logos.composio.dev/api/crowdin",
+"category": "developer tools",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 233
+},
+{
+"slug": "zoho_work_drive",
+"name": "Zoho WorkDrive",
+"logo": "https://logos.composio.dev/api/zoho_workdrive",
+"category": "file management & storage",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 220
+},
+{
+"slug": "atlassian_mcp",
+"name": "Atlassian MCP",
+"logo": "https://logos.composio.dev/api/atlassian_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 213
+},
+{
+"slug": "getresponse",
+"name": "GetResponse",
+"logo": "https://logos.composio.dev/api/getresponse",
+"category": "marketing automation",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 213
+},
+{
+"slug": "ramp_mcp",
+"name": "Ramp MCP",
+"logo": "https://logos.composio.dev/api/ramp_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 213
+},
+{
+"slug": "sentry",
+"name": "Sentry",
+"logo": "https://logos.composio.dev/api/sentry",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 211
+},
+{
+"slug": "clover",
+"name": "Clover",
+"logo": "https://logos.composio.dev/api/clover",
+"category": "commerce",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 209
+},
+{
+"slug": "dialpad",
+"name": "Dialpad",
+"logo": "https://logos.composio.dev/api/dialpad",
+"category": "communication",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 192
+},
+{
+"slug": "gusto",
+"name": "Gusto",
+"logo": "https://logos.composio.dev/api/gusto",
+"category": "human resources",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 192
+},
+{
+"slug": "sharepoint_graph",
+"name": "SharePoint Graph",
+"logo": "https://logos.composio.dev/api/share_point",
+"category": "documents",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 189
+},
+{
+"slug": "smartsheet",
+"name": "Smartsheet",
+"logo": "https://logos.composio.dev/api/smartsheet",
+"category": "project management",
+"authSchemes": [
+"OAUTH2",
+"BEARER_TOKEN"
+],
+"managed": false,
+"toolCount": 185
+},
+{
+"slug": "front",
+"name": "Front",
+"logo": "https://logos.composio.dev/api/front",
+"category": "customer support",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 180
+},
+{
+"slug": "dropbox",
+"name": "Dropbox",
+"logo": "https://logos.composio.dev/api/dropbox",
+"category": "file management & storage",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 178
+},
+{
+"slug": "cal",
+"name": "Cal",
+"logo": "https://logos.composio.dev/api/cal",
+"category": "scheduling & booking",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 175
+},
+{
+"slug": "rillet",
+"name": "Rillet",
+"logo": "https://logos.composio.dev/api/rillet",
+"category": "accounting",
+"authSchemes": [
+"API_KEY",
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 174
+},
+{
+"slug": "slack",
+"name": "Slack",
+"logo": "https://logos.composio.dev/api/slack",
+"category": "team chat",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 171
+},
+{
+"slug": "servicenow",
+"name": "ServiceNow",
+"logo": "https://logos.composio.dev/api/servicenow",
+"category": "it operations",
+"authSchemes": [
+"BASIC",
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 171
+},
+{
+"slug": "dynatrace",
+"name": "Dynatrace",
+"logo": "https://logos.composio.dev/api/dynatrace",
+"category": "analytics",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 170
+},
+{
+"slug": "discordbot",
+"name": "Discord Bot",
+"logo": "https://logos.composio.dev/api/discordbot",
+"category": "team chat",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 169
+},
+{
+"slug": "smokeball",
+"name": "Smokeball",
+"logo": "https://logos.composio.dev/api/smokeball",
+"category": "project management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 168
+},
+{
+"slug": "clickup",
+"name": "ClickUp",
+"logo": "https://logos.composio.dev/api/clickup",
+"category": "productivity",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 165
+},
+{
+"slug": "longbridge_mcp",
+"name": "Longbridge MCP",
+"logo": "https://logos.composio.dev/api/longbridge_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 161
+},
+{
+"slug": "zoho_people",
+"name": "Zoho People",
+"logo": "https://logos.composio.dev/api/zoho_people",
+"category": "human resources",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 160
+},
+{
+"slug": "asana",
+"name": "Asana",
+"logo": "https://logos.composio.dev/api/asana",
+"category": "project management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 157
+},
+{
+"slug": "borneo",
+"name": "Borneo",
+"logo": "https://logos.composio.dev/api/borneo",
+"category": "security & identity tools",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 153
+},
+{
+"slug": "mail_up",
+"name": "MailUp",
+"logo": "https://logos.composio.dev/api/mailup",
+"category": "email",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 151
+},
+{
+"slug": "share_point",
+"name": "SharePoint",
+"logo": "https://logos.composio.dev/api/share_point",
+"category": "documents",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": true,
+"toolCount": 149
+},
+{
+"slug": "disqus",
+"name": "Disqus",
+"logo": "https://logos.composio.dev/api/disqus",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 148
+},
+{
+"slug": "wix",
+"name": "Wix",
+"logo": "https://logos.composio.dev/api/wix",
+"category": "website builders",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 146
+},
+{
+"slug": "wrike",
+"name": "Wrike",
+"logo": "https://logos.composio.dev/api/wrike",
+"category": "project management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 144
+},
+{
+"slug": "snapchat",
+"name": "Snapchat",
+"logo": "https://logos.composio.dev/api/snapchat",
+"category": "marketing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 144
+},
+{
+"slug": "podio",
+"name": "Podio",
+"logo": "https://logos.composio.dev/api/podio",
+"category": "project management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 143
+},
+{
+"slug": "basecamp",
+"name": "Basecamp",
+"logo": "https://logos.composio.dev/api/basecamp",
+"category": "project management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 142
+},
+{
+"slug": "zoho_invoice",
+"name": "Zoho Invoice",
+"logo": "https://logos.composio.dev/api/zoho_invoice",
+"category": "proposal & invoice management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 137
+},
+{
+"slug": "ahrefs_mcp",
+"name": "Ahrefs MCP",
+"logo": "https://logos.composio.dev/api/ahrefs_mcp",
+"category": "analytics",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 135
+},
+{
+"slug": "hugging_face",
+"name": "Hugging Face",
+"logo": "https://logos.composio.dev/api/hugging_face",
+"category": "artificial intelligence",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 135
+},
+{
+"slug": "greenhouse",
+"name": "Greenhouse",
+"logo": "https://logos.composio.dev/api/greenhouse",
+"category": "hr talent & recruitment",
+"authSchemes": [
+"S2S_OAUTH2",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 134
+},
+{
+"slug": "polar",
+"name": "Polar",
+"logo": "https://logos.composio.dev/api/polar",
+"category": "payment processing",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 134
+},
+{
+"slug": "vantage_mcp",
+"name": "Vantage MCP",
+"logo": "https://logos.composio.dev/api/vantage_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 134
+},
+{
+"slug": "intercom",
+"name": "Intercom",
+"logo": "https://logos.composio.dev/api/intercom",
+"category": "customer support",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 133
+},
+{
+"slug": "twitch",
+"name": "Twitch",
+"logo": "https://logos.composio.dev/api/twitch",
+"category": "video & audio",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 131
+},
+{
+"slug": "help_scout",
+"name": "Help Scout",
+"logo": "https://logos.composio.dev/api/help_scout",
+"category": "customer support",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 129
+},
+{
+"slug": "monday",
+"name": "Monday",
+"logo": "https://logos.composio.dev/api/monday",
+"category": "project management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 126
+},
+{
+"slug": "photon_mcp",
+"name": "Photon MCP",
+"logo": "https://logos.composio.dev/api/photon_mcp",
+"category": "communication",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 126
+},
+{
+"slug": "jira",
+"name": "Jira",
+"logo": "https://logos.composio.dev/api/jira",
+"category": "project management",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 125
+},
+{
+"slug": "excel",
+"name": "Excel",
+"logo": "https://logos.composio.dev/api/excel",
+"category": "spreadsheets",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": true,
+"toolCount": 125
+},
+{
+"slug": "contentful",
+"name": "Contentful",
+"logo": "https://logos.composio.dev/api/contentful",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 124
+},
+{
+"slug": "glide_mcp",
+"name": "Glide MCP",
+"logo": "https://logos.composio.dev/api/glide_mcp",
+"category": "developer tools",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 124
+},
+{
+"slug": "google_merchant",
+"name": "Google Merchant Center",
+"logo": "https://logos.composio.dev/api/google_merchant",
+"category": "ecommerce",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 123
+},
+{
+"slug": "square",
+"name": "Square",
+"logo": "https://logos.composio.dev/api/square",
+"category": "payment processing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 122
+},
+{
+"slug": "stack_exchange",
+"name": "Stack Exchange",
+"logo": "https://logos.composio.dev/api/stack_exchange",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 121
+},
+{
+"slug": "dynamics365",
+"name": "Dynamics 365",
+"logo": "https://logos.composio.dev/api/dynamics365",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 119
+},
+{
+"slug": "bitbucket",
+"name": "Bitbucket",
+"logo": "https://logos.composio.dev/api/bitbucket",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 118
+},
+{
+"slug": "grafana_cloud_mcp",
+"name": "Grafana Cloud MCP",
+"logo": "https://logos.composio.dev/api/grafana_cloud_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 118
+},
+{
+"slug": "better_stack_mcp",
+"name": "Better Stack MCP",
+"logo": "https://logos.composio.dev/api/better_stack_mcp",
+"category": "server monitoring",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 116
+},
+{
+"slug": "microsoft_power_bi",
+"name": "Microsoft Power Bi",
+"logo": "https://logos.composio.dev/api/microsoft_power_bi",
+"category": "business intelligence",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 116
+},
+{
+"slug": "attio",
+"name": "Attio",
+"logo": "https://logos.composio.dev/api/attio",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 114
+},
+{
+"slug": "close_mcp",
+"name": "Close MCP",
+"logo": "https://logos.composio.dev/api/close_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 114
+},
+{
+"slug": "daytona",
+"name": "Daytona",
+"logo": "https://logos.composio.dev/api/daytona",
+"category": "developer tools",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 114
+},
+{
+"slug": "quickbooks",
+"name": "QuickBooks",
+"logo": "https://logos.composio.dev/api/quickbooks",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 114
+},
+{
+"slug": "resend",
+"name": "Resend",
+"logo": "https://logos.composio.dev/api/resend",
+"category": "email",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 113
+},
+{
+"slug": "aha",
+"name": "Aha!",
+"logo": "https://logos.composio.dev/api/aha",
+"category": "product management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 112
+},
+{
+"slug": "follow_up_boss",
+"name": "Follow Up Boss",
+"logo": "https://logos.composio.dev/api/follow_up_boss",
+"category": "crm",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 112
+},
+{
+"slug": "livechat",
+"name": "LiveChat",
+"logo": "https://logos.composio.dev/api/livechat",
+"category": "customer support",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 111
+},
+{
+"slug": "ramp",
+"name": "Ramp",
+"logo": "https://logos.composio.dev/api/ramp",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 111
+},
+{
+"slug": "neon",
+"name": "Neon",
+"logo": "https://logos.composio.dev/api/neon",
+"category": "databases",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 110
+},
+{
+"slug": "capsule_crm",
+"name": "Capsule CRM",
+"logo": "https://logos.composio.dev/api/capsule_crm",
+"category": "crm",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 109
+},
+{
+"slug": "imply_polaris",
+"name": "Imply Polaris",
+"logo": "https://logos.composio.dev/api/imply_polaris",
+"category": "analytics",
+"authSchemes": [
+"API_KEY",
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 108
+},
+{
+"slug": "googledrive",
+"name": "Google Drive",
+"logo": "https://logos.composio.dev/api/googledrive",
+"category": "file management & storage",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 105
+},
+{
+"slug": "zoom",
+"name": "Zoom",
+"logo": "https://logos.composio.dev/api/zoom",
+"category": "video conferencing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 105
+},
+{
+"slug": "slackbot",
+"name": "Slackbot",
+"logo": "https://logos.composio.dev/api/slackbot",
+"category": "team chat",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 104
+},
+{
+"slug": "freshsales",
+"name": "Freshsales",
+"logo": "https://logos.composio.dev/api/freshsales",
+"category": "crm",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 104
+},
+{
+"slug": "neon_mcp",
+"name": "Neon MCP",
+"logo": "https://logos.composio.dev/api/neon_mcp",
+"category": "databases",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 104
+},
+{
+"slug": "zoho",
+"name": "Zoho",
+"logo": "https://logos.composio.dev/api/zoho",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 103
+},
+{
+"slug": "resend_mcp",
+"name": "Resend MCP",
+"logo": "https://logos.composio.dev/api/resend_mcp",
+"category": "email",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 103
+},
+{
+"slug": "one_drive",
+"name": "OneDrive",
+"logo": "https://logos.composio.dev/api/one_drive",
+"category": "file management & storage",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": true,
+"toolCount": 102
+},
+{
+"slug": "cloud_66",
+"name": "Cloud 66",
+"logo": "https://logos.composio.dev/api/cloud_66",
+"category": "it operations",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 102
+},
+{
+"slug": "quire",
+"name": "Quire",
+"logo": "https://logos.composio.dev/api/quire",
+"category": "project management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 102
+},
+{
+"slug": "higgsfield_mcp",
+"name": "Higgsfield MCP",
+"logo": "https://logos.composio.dev/api/higgsfield_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 101
+},
+{
+"slug": "alpaca",
+"name": "Alpaca",
+"logo": "https://logos.composio.dev/api/alpaca",
+"category": "commerce",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 100
+},
+{
+"slug": "productboard",
+"name": "Productboard",
+"logo": "https://logos.composio.dev/api/productboard",
+"category": "product management",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 99
+},
+{
+"slug": "clio_manage",
+"name": "Clio Manage",
+"logo": "https://logos.composio.dev/api/clio_manage",
+"category": "legal & public records",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 99
+},
+{
+"slug": "frame_io_v4",
+"name": "Frame.io V4",
+"logo": "https://logos.composio.dev/api/frame_io_v4",
+"category": "video & audio",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 97
+},
+{
+"slug": "airops_mcp",
+"name": "AirOps MCP",
+"logo": "https://logos.composio.dev/api/airops_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 96
+},
+{
+"slug": "monday_mcp",
+"name": "Monday MCP",
+"logo": "https://logos.composio.dev/api/monday_mcp",
+"category": "project management",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 96
+},
+{
+"slug": "x_mcp",
+"name": "X MCP",
+"logo": "https://logos.composio.dev/api/x_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 96
+},
+{
+"slug": "metaads",
+"name": "Meta Ads",
+"logo": "https://logos.composio.dev/api/metaads",
+"category": "ads & conversion",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 95
+},
+{
+"slug": "eventbrite",
+"name": "Eventbrite",
+"logo": "https://logos.composio.dev/api/eventbrite",
+"category": "event management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 95
+},
+{
+"slug": "shippo",
+"name": "Shippo",
+"logo": "https://logos.composio.dev/api/shippo",
+"category": "ecommerce",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 95
+},
+{
+"slug": "constant_contact",
+"name": "Constant Contact",
+"logo": "https://logos.composio.dev/api/constant_contact",
+"category": "marketing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 93
+},
+{
+"slug": "statsig_mcp",
+"name": "Statsig MCP",
+"logo": "https://logos.composio.dev/api/statsig_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 93
+},
+{
+"slug": "miro",
+"name": "Miro",
+"logo": "https://logos.composio.dev/api/miro",
+"category": "team collaboration",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 89
+},
+{
+"slug": "spotify",
+"name": "Spotify",
+"logo": "https://logos.composio.dev/api/spotify",
+"category": "news & lifestyle",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 88
+},
+{
+"slug": "cleverreach",
+"name": "CleverReach",
+"logo": "https://logos.composio.dev/api/cleverreach",
+"category": "marketing automation",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 87
+},
+{
+"slug": "onenote",
+"name": "Microsoft OneNote",
+"logo": "https://logos.composio.dev/api/onenote",
+"category": "productivity",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 87
+},
+{
+"slug": "netsuite",
+"name": "Netsuite",
+"logo": "https://logos.composio.dev/api/netsuite",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 86
+},
+{
+"slug": "bitly",
+"name": "Bitly",
+"logo": "https://logos.composio.dev/api/bitly",
+"category": "url shortener",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 85
+},
+{
+"slug": "halopsa",
+"name": "HaloPSA",
+"logo": "https://logos.composio.dev/api/halopsa",
+"category": "customer support",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 85
+},
+{
+"slug": "twitter",
+"name": "Twitter",
+"logo": "https://logos.composio.dev/api/twitter",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 84
+},
+{
+"slug": "todoist",
+"name": "Todoist",
+"logo": "https://logos.composio.dev/api/todoist",
+"category": "task management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 84
+},
+{
+"slug": "brex",
+"name": "Brex",
+"logo": "https://logos.composio.dev/api/brex",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 84
+},
+{
+"slug": "peec_ai_mcp",
+"name": "Peec AI MCP",
+"logo": "https://logos.composio.dev/api/peec_ai_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 84
+},
+{
+"slug": "zoho_inventory",
+"name": "Zoho Inventory",
+"logo": "https://logos.composio.dev/api/zoho_inventory",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 83
+},
+{
+"slug": "reddit_ads",
+"name": "Reddit Ads",
+"logo": "https://logos.composio.dev/api/reddit_ads",
+"category": "marketing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 83
+},
+{
+"slug": "ironclad",
+"name": "Ironclad",
+"logo": "https://logos.composio.dev/api/ironclad",
+"category": "documents",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 80
+},
+{
+"slug": "plain_mcp",
+"name": "Plain MCP",
+"logo": "https://logos.composio.dev/api/plain_mcp",
+"category": "customer support",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 80
+},
+{
+"slug": "googleads",
+"name": "Google Ads",
+"logo": "https://logos.composio.dev/api/googleads",
+"category": "ads & conversion",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 78
+},
+{
+"slug": "linear_mcp",
+"name": "Linear MCP",
+"logo": "https://logos.composio.dev/api/linear_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 78
+},
+{
+"slug": "paypal",
+"name": "Paypal",
+"logo": "https://logos.composio.dev/api/paypal",
+"category": "payment processing",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 78
+},
+{
+"slug": "ticket_tailor_mcp",
+"name": "Ticket Tailor MCP",
+"logo": "https://logos.composio.dev/api/ticket_tailor_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 77
+},
+{
+"slug": "clockify",
+"name": "Clockify",
+"logo": "https://clockify.me/assets/images/clockify-logo.svg",
+"category": "time tracking software",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 76
+},
+{
+"slug": "freeagent",
+"name": "Freeagent",
+"logo": "https://logos.composio.dev/api/freeagent",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 76
+},
+{
+"slug": "microsoft_entra_id",
+"name": "Microsoft Entra ID",
+"logo": "https://logos.composio.dev/api/microsoft_entra_id",
+"category": "security & identity tools",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 76
+},
+{
+"slug": "xero",
+"name": "Xero",
+"logo": "https://logos.composio.dev/api/xero",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 74
+},
+{
+"slug": "snyk",
+"name": "Snyk",
+"logo": "https://logos.composio.dev/api/snyk",
+"category": "security & identity tools",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 71
+},
+{
+"slug": "confluence",
+"name": "Confluence",
+"logo": "https://logos.composio.dev/api/confluence",
+"category": "team collaboration",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 70
+},
+{
+"slug": "google_analytics",
+"name": "Google Analytics",
+"logo": "https://logos.composio.dev/api/google_analytics",
+"category": "analytics",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 69
+},
+{
+"slug": "jibble",
+"name": "Jibble",
+"logo": "https://logos.composio.dev/api/jibble",
+"category": "human resources",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 68
+},
+{
+"slug": "vidiq_mcp",
+"name": "vidIQ MCP",
+"logo": "https://logos.composio.dev/api/vidiq_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 67
+},
+{
+"slug": "facebook",
+"name": "Facebook",
+"logo": "https://logos.composio.dev/api/facebook",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 64
+},
+{
+"slug": "lever",
+"name": "Lever",
+"logo": "https://logos.composio.dev/api/lever",
+"category": "hr talent & recruitment",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 64
+},
+{
+"slug": "gmail",
+"name": "Gmail",
+"logo": "https://logos.composio.dev/api/gmail",
+"category": "email",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 63
+},
+{
+"slug": "googlebigquery",
+"name": "Google BigQuery",
+"logo": "https://logos.composio.dev/api/googlebigquery",
+"category": "databases",
+"authSchemes": [
+"OAUTH2",
+"GOOGLE_SERVICE_ACCOUNT"
+],
+"managed": true,
+"toolCount": 63
+},
+{
+"slug": "google_classroom",
+"name": "Google Classroom",
+"logo": "https://logos.composio.dev/api/google_classroom",
+"category": "education",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 62
+},
+{
+"slug": "zoho_recruit",
+"name": "Zoho Recruit",
+"logo": "https://logos.composio.dev/api/zoho_recruit",
+"category": "hr talent & recruitment",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 62
+},
+{
+"slug": "youtube",
+"name": "YouTube",
+"logo": "https://logos.composio.dev/api/youtube",
+"category": "video & audio",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 61
+},
+{
+"slug": "brevo",
+"name": "Brevo",
+"logo": "https://logos.composio.dev/api/brevo",
+"category": "email newsletters",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 61
+},
+{
+"slug": "servicem8",
+"name": "Servicem8",
+"logo": "https://logos.composio.dev/api/servicem8",
+"category": "scheduling & booking",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 61
+},
+{
+"slug": "notion",
+"name": "Notion",
+"logo": "https://logos.composio.dev/api/notion",
+"category": "notes",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 60
+},
+{
+"slug": "webflow",
+"name": "Webflow",
+"logo": "https://logos.composio.dev/api/webflow",
+"category": "website builders",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 60
+},
+{
+"slug": "egnyte",
+"name": "Egnyte",
+"logo": "https://logos.composio.dev/api/egnyte",
+"category": "file management & storage",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 60
+},
+{
+"slug": "railway",
+"name": "Railway",
+"logo": "https://logos.composio.dev/api/railway",
+"category": "developer tools",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 59
+},
+{
+"slug": "googlesheets",
+"name": "Google Sheets",
+"logo": "https://logos.composio.dev/api/googlesheets",
+"category": "spreadsheets",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 58
+},
+{
+"slug": "whatsapp",
+"name": "WhatsApp",
+"logo": "https://logos.composio.dev/api/whatsapp",
+"category": "phone & sms",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 58
+},
+{
+"slug": "gong",
+"name": "Gong",
+"logo": "https://logos.composio.dev/api/gong",
+"category": "analytics",
+"authSchemes": [
+"BASIC",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 58
+},
+{
+"slug": "clickup_mcp",
+"name": "ClickUp MCP",
+"logo": "https://logos.composio.dev/api/clickup_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 58
+},
+{
+"slug": "calendly",
+"name": "Calendly",
+"logo": "https://logos.composio.dev/api/calendly",
+"category": "scheduling & booking",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 57
+},
+{
+"slug": "harvest",
+"name": "Harvest",
+"logo": "https://logos.composio.dev/api/harvest",
+"category": "time tracking software",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 57
+},
+{
+"slug": "zoho_calendar",
+"name": "Zoho Calendar",
+"logo": "https://logos.composio.dev/api/zoho_calendar",
+"category": "calendar",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 57
+},
+{
+"slug": "dropbox_sign",
+"name": "Dropbox Sign",
+"logo": "https://logos.composio.dev/api/dropbox_sign",
+"category": "signatures",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 56
+},
+{
+"slug": "google_business_profile",
+"name": "Google Business Profile",
+"logo": "https://logos.composio.dev/api/google_business_profile",
+"category": "marketing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 56
+},
+{
+"slug": "digital_ocean",
+"name": "DigitalOcean",
+"logo": "https://logos.composio.dev/api/digital_ocean",
+"category": "developer tools",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 55
+},
+{
+"slug": "kintone_rest",
+"name": "Kintone REST",
+"logo": "https://logos.composio.dev/api/kintone_rest",
+"category": "app builder",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 55
+},
+{
+"slug": "zettle",
+"name": "PayPal Zettle",
+"logo": "https://logos.composio.dev/api/zettle",
+"category": "commerce",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 55
+},
+{
+"slug": "zoho_bigin",
+"name": "Zoho Bigin",
+"logo": "https://logos.composio.dev/api/zoho_bigin",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 54
+},
+{
+"slug": "figma",
+"name": "Figma",
+"logo": "https://logos.composio.dev/api/figma",
+"category": "images & design",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 53
+},
+{
+"slug": "canva",
+"name": "Canva",
+"logo": "https://logos.composio.dev/api/canva",
+"category": "images & design",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 53
+},
+{
+"slug": "kommo",
+"name": "Kommo",
+"logo": "https://logos.composio.dev/api/kommo",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 53
+},
+{
+"slug": "clueso_mcp",
+"name": "Clueso MCP",
+"logo": "https://logos.composio.dev/api/clueso_mcp",
+"category": "video & audio",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 53
+},
+{
+"slug": "soundcloud",
+"name": "SoundCloud",
+"logo": "https://logos.composio.dev/api/soundcloud",
+"category": "video & audio",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 52
+},
+{
+"slug": "zernio_mcp",
+"name": "Zernio MCP",
+"logo": "https://logos.composio.dev/api/zernio_mcp",
+"category": "social media marketing",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 52
+},
+{
+"slug": "gorgias",
+"name": "Gorgias",
+"logo": "https://logos.composio.dev/api/gorgias",
+"category": "crm",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 51
+},
+{
+"slug": "adroll",
+"name": "AdRoll",
+"logo": "https://logos.composio.dev/api/adroll",
+"category": "marketing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 51
+},
+{
+"slug": "era_context_mcp",
+"name": "Era Context MCP",
+"logo": "https://logos.composio.dev/api/era_context_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 51
+},
+{
+"slug": "googlecalendar",
+"name": "Google Calendar",
+"logo": "https://logos.composio.dev/api/googlecalendar",
+"category": "scheduling & booking",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 50
+},
+{
+"slug": "zoho_mail",
+"name": "Zoho Mail",
+"logo": "https://logos.composio.dev/api/zoho_mail",
+"category": "email",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 50
+},
+{
+"slug": "vimeo",
+"name": "Vimeo",
+"logo": "https://logos.composio.dev/api/vimeo",
+"category": "video & audio",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 50
+},
+{
+"slug": "googledocs",
+"name": "Google Docs",
+"logo": "https://logos.composio.dev/api/googledocs",
+"category": "documents",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 48
+},
+{
+"slug": "linear",
+"name": "Linear",
+"logo": "https://logos.composio.dev/api/linear",
+"category": "project management",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 48
+},
+{
+"slug": "aircall",
+"name": "Aircall",
+"logo": "https://logos.composio.dev/api/aircall",
+"category": "communication",
+"authSchemes": [
+"OAUTH2",
+"BASIC"
+],
+"managed": true,
+"toolCount": 48
+},
+{
+"slug": "amplitude_mcp",
+"name": "Amplitude MCP",
+"logo": "https://logos.composio.dev/api/amplitude_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 48
+},
+{
+"slug": "pinecone",
+"name": "Pinecone",
+"logo": "https://logos.composio.dev/api/pinecone",
+"category": "artificial intelligence",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 48
+},
+{
+"slug": "todoist_mcp",
+"name": "Todoist MCP",
+"logo": "https://logos.composio.dev/api/todoist_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 47
+},
+{
+"slug": "ahrefs",
+"name": "Ahrefs",
+"logo": "https://logos.composio.dev/api/ahrefs",
+"category": "seo & ai visibility",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 46
+},
+{
+"slug": "clarify_mcp",
+"name": "Clarify MCP",
+"logo": "https://logos.composio.dev/api/clarify_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 46
+},
+{
+"slug": "google_chat",
+"name": "Google Chat",
+"logo": "https://logos.composio.dev/api/google_chat",
+"category": "productivity",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 46
+},
+{
+"slug": "railway_mcp",
+"name": "Railway MCP",
+"logo": "https://logos.composio.dev/api/railway_mcp",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 46
+},
+{
+"slug": "d2lbrightspace",
+"name": "D2L Brightspace",
+"logo": "https://logos.composio.dev/api/d2lbrightspace",
+"category": "education",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 45
+},
+{
+"slug": "motherduck_mcp",
+"name": "MotherDuck MCP",
+"logo": "https://logos.composio.dev/api/motherduck_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 45
+},
+{
+"slug": "zoom_chat",
+"name": "Zoom Team Chat",
+"logo": "https://logos.composio.dev/api/zoom",
+"category": "team chat",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 44
+},
+{
+"slug": "omnisend",
+"name": "Omnisend",
+"logo": "https://logos.composio.dev/api/omnisend",
+"category": "marketing automation",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 43
+},
+{
+"slug": "zoho_sign",
+"name": "Zoho Sign",
+"logo": "https://logos.composio.dev/api/zoho_sign",
+"category": "signatures",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 43
+},
+{
+"slug": "bamboohr",
+"name": "BambooHR",
+"logo": "https://logos.composio.dev/api/bamboohr",
+"category": "human resources",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 42
+},
+{
+"slug": "eraser_mcp",
+"name": "Eraser MCP",
+"logo": "https://logos.composio.dev/api/eraser_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 42
+},
+{
+"slug": "kit",
+"name": "Kit",
+"logo": "https://logos.composio.dev/api/kit",
+"category": "marketing automation",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 42
+},
+{
+"slug": "notion_mcp",
+"name": "Notion MCP",
+"logo": "https://logos.composio.dev/api/notion_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 42
+},
+{
+"slug": "razorpay",
+"name": "Razorpay",
+"logo": "https://logos.composio.dev/api/razorpay",
+"category": "payment processing",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 42
+},
+{
+"slug": "timely",
+"name": "Timely",
+"logo": "https://logos.composio.dev/api/timely",
+"category": "time tracking software",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 41
+},
+{
+"slug": "mongodb_mcp",
+"name": "MongoDB MCP",
+"logo": "https://logos.composio.dev/api/mongodb_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 41
+},
+{
+"slug": "mural",
+"name": "Mural",
+"logo": "https://logos.composio.dev/api/mural",
+"category": "team collaboration",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 40
+},
+{
+"slug": "instagram",
+"name": "Instagram",
+"logo": "https://logos.composio.dev/api/instagram",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 40
+},
+{
+"slug": "roam",
+"name": "Roam",
+"logo": "https://logos.composio.dev/api/roam",
+"category": "communication",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 39
+},
+{
+"slug": "zoho_campaigns",
+"name": "Zoho Campaigns",
+"logo": "https://logos.composio.dev/api/zoho_campaigns",
+"category": "marketing automation",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 39
+},
+{
+"slug": "cashfree_payments_mcp",
+"name": "Cashfree MCP",
+"logo": "https://logos.composio.dev/api/cashfree_payments_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 38
+},
+{
+"slug": "rd_station_marketing",
+"name": "RD Station Marketing",
+"logo": "https://logos.composio.dev/api/rd_station_marketing",
+"category": "marketing automation",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 38
+},
+{
+"slug": "vercel_mcp",
+"name": "Vercel MCP",
+"logo": "https://logos.composio.dev/api/vercel_mcp",
+"category": "developer tools",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 37
+},
+{
+"slug": "workable",
+"name": "Workable",
+"logo": "https://logos.composio.dev/api/workable",
+"category": "human resources",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 37
+},
+{
+"slug": "reddit",
+"name": "Reddit",
+"logo": "https://logos.composio.dev/api/reddit",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 36
+},
+{
+"slug": "zoho_desk",
+"name": "Zoho Desk",
+"logo": "https://logos.composio.dev/api/zoho_desk",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 36
+},
+{
+"slug": "calendly_mcp",
+"name": "Calendly MCP",
+"logo": "https://logos.composio.dev/api/calendly_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 36
+},
+{
+"slug": "jobber",
+"name": "Jobber",
+"logo": "https://logos.composio.dev/api/jobber",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 36
+},
+{
+"slug": "strava",
+"name": "Strava",
+"logo": "https://logos.composio.dev/api/strava",
+"category": "fitness",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 36
+},
+{
+"slug": "lucid_mcp",
+"name": "Lucid MCP",
+"logo": "https://logos.composio.dev/api/lucid_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 35
+},
+{
+"slug": "microsoft_bookings",
+"name": "Microsoft Bookings",
+"logo": "https://logos.composio.dev/api/microsoft_bookings",
+"category": "scheduling & booking",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 35
+},
+{
+"slug": "typeform",
+"name": "Typeform",
+"logo": "https://logos.composio.dev/api/typeform",
+"category": "forms & surveys",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 35
+},
+{
+"slug": "whop",
+"name": "Whop",
+"logo": "https://logos.composio.dev/api/whop",
+"category": "ecommerce",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 35
+},
+{
+"slug": "judge_me",
+"name": "Judge.me",
+"logo": "https://logos.composio.dev/api/judgeme",
+"category": "reviews",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 34
+},
+{
+"slug": "canva_mcp",
+"name": "Canva MCP",
+"logo": "https://logos.composio.dev/api/canva_mcp",
+"category": "content & files",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 33
+},
+{
+"slug": "google_adsense",
+"name": "Google AdSense",
+"logo": "https://logos.composio.dev/api/google_adsense",
+"category": "ads & conversion",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 33
+},
+{
+"slug": "honeycomb_mcp",
+"name": "Honeycomb MCP",
+"logo": "https://logos.composio.dev/api/honeycomb_mcp",
+"category": "developer tools",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 33
+},
+{
+"slug": "aweber",
+"name": "AWeber",
+"logo": "https://logos.composio.dev/api/aweber",
+"category": "marketing automation",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 32
+},
+{
+"slug": "clickhouse_mcp",
+"name": "ClickHouse MCP",
+"logo": "https://logos.composio.dev/api/clickhouse_mcp",
+"category": "databases",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 32
+},
+{
+"slug": "supabase_mcp",
+"name": "Supabase MCP",
+"logo": "https://logos.composio.dev/api/supabase_mcp",
+"category": "databases",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 32
+},
+{
+"slug": "ebay",
+"name": "eBay",
+"logo": "https://logos.composio.dev/api/ebay",
+"category": "ecommerce",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 31
+},
+{
+"slug": "lodgify",
+"name": "Lodgify",
+"logo": "https://logos.composio.dev/api/lodgify",
+"category": "scheduling & booking",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 30
+},
+{
+"slug": "mercury_mcp",
+"name": "Mercury MCP",
+"logo": "https://logos.composio.dev/api/mercury_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 30
+},
+{
+"slug": "microsoft_powerpoint",
+"name": "Microsoft PowerPoint",
+"logo": "https://logos.composio.dev/api/microsoft_powerpoint",
+"category": "documents",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 30
+},
+{
+"slug": "apaleo",
+"name": "Apaleo",
+"logo": "https://logos.composio.dev/api/apaleo",
+"category": "scheduling & booking",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 29
+},
+{
+"slug": "coinbase_agents_mcp",
+"name": "Coinbase Agents MCP",
+"logo": "https://logos.composio.dev/api/coinbase_agents_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 29
+},
+{
+"slug": "airtable",
+"name": "Airtable",
+"logo": "https://logos.composio.dev/api/airtable",
+"category": "productivity",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 28
+},
+{
+"slug": "discord",
+"name": "Discord",
+"logo": "https://logos.composio.dev/api/discord",
+"category": "team chat",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 28
+},
+{
+"slug": "epic_games",
+"name": "Epic Games",
+"logo": "https://logos.composio.dev/api/epic_games",
+"category": "gaming",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 28
+},
+{
+"slug": "carbon_voice_mcp",
+"name": "Carbon Voice MCP",
+"logo": "https://logos.composio.dev/api/carbon_voice_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 28
+},
+{
+"slug": "financial_datasets_ai_mcp",
+"name": "Financial Datasets AI MCP",
+"logo": "https://logos.composio.dev/api/financial_datasets_ai_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 28
+},
+{
+"slug": "go_to_training",
+"name": "GoTo Training",
+"logo": "https://logos.composio.dev/api/gototraining",
+"category": "education",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 28
+},
+{
+"slug": "linkedin_ads",
+"name": "Linkedin Ads",
+"logo": "https://logos.composio.dev/api/linkedin_ads",
+"category": "marketing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 28
+},
+{
+"slug": "ynab",
+"name": "YNAB",
+"logo": "https://logos.composio.dev/api/ynab",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 27
+},
+{
+"slug": "pinterest",
+"name": "Pinterest",
+"logo": "https://logos.composio.dev/api/pinterest",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 27
+},
+{
+"slug": "scheduleonce",
+"name": "Scheduleonce",
+"logo": "https://logos.composio.dev/api/scheduleonce",
+"category": "scheduling & booking",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 27
+},
+{
+"slug": "splitwise",
+"name": "Splitwise",
+"logo": "https://logos.composio.dev/api/splitwise",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 27
+},
+{
+"slug": "wix_mcp",
+"name": "Wix MCP",
+"logo": "https://logos.composio.dev/api/wix_mcp",
+"category": "ecommerce",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 27
+},
+{
+"slug": "toneden",
+"name": "Toneden",
+"logo": "https://logos.composio.dev/api/toneden",
+"category": "social media marketing",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 26
+},
+{
+"slug": "webex",
+"name": "Webex",
+"logo": "https://logos.composio.dev/api/webex",
+"category": "video conferencing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 26
+},
+{
+"slug": "sage_intacct",
+"name": "Sage Intacct",
+"logo": "https://logos.composio.dev/api/sage_intacct",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 26
+},
+{
+"slug": "linkedin",
+"name": "LinkedIn",
+"logo": "https://logos.composio.dev/api/linkedin",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 25
+},
+{
+"slug": "googlemeet",
+"name": "Google Meet",
+"logo": "https://logos.composio.dev/api/googlemeet",
+"category": "video conferencing",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 25
+},
+{
+"slug": "kernel_mcp",
+"name": "Kernel MCP",
+"logo": "https://logos.composio.dev/api/kernel_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 25
+},
+{
+"slug": "kick",
+"name": "Kick",
+"logo": "https://logos.composio.dev/api/kick",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 25
+},
+{
+"slug": "microsoft_todo",
+"name": "Microsoft To Do",
+"logo": "https://logos.composio.dev/api/microsoft_todo",
+"category": "task management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 25
+},
+{
+"slug": "gocardless_mcp",
+"name": "GoCardless MCP",
+"logo": "https://logos.composio.dev/api/gocardless_mcp",
+"category": "payment processing",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 24
+},
+{
+"slug": "googlecontacts",
+"name": "Googlecontacts",
+"logo": "https://logos.composio.dev/api/googlecontacts",
+"category": "productivity",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 24
+},
+{
+"slug": "salesforce_service_cloud",
+"name": "Salesforce Service Cloud",
+"logo": "https://logos.composio.dev/api/salesforce_service_cloud",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 24
+},
+{
+"slug": "threads",
+"name": "Threads",
+"logo": "https://logos.composio.dev/api/threads",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 24
+},
+{
+"slug": "zeplin",
+"name": "Zeplin",
+"logo": "https://logos.composio.dev/api/zeplin",
+"category": "images & design",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 24
+},
+{
+"slug": "google_maps",
+"name": "Google Maps",
+"logo": "https://logos.composio.dev/api/google_maps",
+"category": "places & weather",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 23
+},
+{
+"slug": "magic_patterns_mcp",
+"name": "Magic Patterns MCP",
+"logo": "https://logos.composio.dev/api/magic_patterns_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 23
+},
+{
+"slug": "microsoft_word",
+"name": "Microsoft Word",
+"logo": "https://logos.composio.dev/api/microsoft_word",
+"category": "documents",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 23
+},
+{
+"slug": "money_forward",
+"name": "Money Forward",
+"logo": "https://logos.composio.dev/api/money_forward",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 23
+},
+{
+"slug": "parma",
+"name": "Parma",
+"logo": "https://logos.composio.dev/api/parma",
+"category": "crm",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 23
+},
+{
+"slug": "recruitee",
+"name": "Recruitee",
+"logo": "https://logos.composio.dev/api/recruitee",
+"category": "hr talent & recruitment",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 23
+},
+{
+"slug": "ticktick",
+"name": "Ticktick",
+"logo": "https://logos.composio.dev/api/ticktick",
+"category": "productivity",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 23
+},
+{
+"slug": "survey_monkey",
+"name": "SurveyMonkey",
+"logo": "https://logos.composio.dev/api/survey_monkey",
+"category": "forms & surveys",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 22
+},
+{
+"slug": "glen_mcp",
+"name": "Glen MCP",
+"logo": "https://logos.composio.dev/api/glen_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 22
+},
+{
+"slug": "pandadoc_mcp",
+"name": "PandaDoc MCP",
+"logo": "https://logos.composio.dev/api/pandadoc_mcp",
+"category": "documents",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 22
+},
+{
+"slug": "prisma",
+"name": "Prisma",
+"logo": "https://logos.composio.dev/api/prisma",
+"category": "databases",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 22
+},
+{
+"slug": "quicknode_mcp",
+"name": "QuickNode MCP",
+"logo": "https://logos.composio.dev/api/quicknode_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 22
+},
+{
+"slug": "rebrandly",
+"name": "Rebrandly",
+"logo": "https://logos.composio.dev/api/rebrandly",
+"category": "url shortener",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 22
+},
+{
+"slug": "recraft_mcp",
+"name": "Recraft MCP",
+"logo": "https://logos.composio.dev/api/recraft_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 22
+},
+{
+"slug": "yandex",
+"name": "Yandex",
+"logo": "https://logos.composio.dev/api/yandex",
+"category": "email",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 21
+},
+{
+"slug": "box_mcp",
+"name": "Box MCP",
+"logo": "https://logos.composio.dev/api/box_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 21
+},
+{
+"slug": "contentsquare_mcp",
+"name": "Contentsquare MCP",
+"logo": "https://logos.composio.dev/api/contentsquare_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 21
+},
+{
+"slug": "gagelist",
+"name": "Gagelist",
+"logo": "https://logos.composio.dev/api/gagelist",
+"category": "developer tools",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 21
+},
+{
+"slug": "greptile_mcp",
+"name": "Greptile MCP",
+"logo": "https://logos.composio.dev/api/greptile_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 21
+},
+{
+"slug": "moneybird",
+"name": "Moneybird",
+"logo": "https://logos.composio.dev/api/moneybird",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 21
+},
+{
+"slug": "neo4j",
+"name": "Neo4J",
+"logo": "https://logos.composio.dev/api/neo4j",
+"category": "developer tools",
+"authSchemes": [
+"OAUTH2",
+"BASIC",
+"API_KEY",
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 21
+},
+{
+"slug": "stytch_mcp",
+"name": "Stytch MCP",
+"logo": "https://logos.composio.dev/api/stytch_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 21
+},
+{
+"slug": "supabase_read_mcp",
+"name": "Supabase Read MCP",
+"logo": "https://logos.composio.dev/api/supabase_read_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 21
+},
+{
+"slug": "audioscrape_mcp",
+"name": "Audioscrape MCP",
+"logo": "https://logos.composio.dev/api/audioscrape_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 20
+},
+{
+"slug": "dbt_cloud",
+"name": "dbt Cloud",
+"logo": "https://logos.composio.dev/api/dbt_cloud",
+"category": "developer tools",
+"authSchemes": [
+"BEARER_TOKEN",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 20
+},
+{
+"slug": "tinyfish_mcp",
+"name": "TinyFish MCP",
+"logo": "https://logos.composio.dev/api/tinyfish_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 20
+},
+{
+"slug": "fellow_ai_mcp",
+"name": "Fellow.ai MCP",
+"logo": "https://logos.composio.dev/api/fellow_ai_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 19
+},
+{
+"slug": "memelord_mcp",
+"name": "Memelord MCP",
+"logo": "https://www.memelord.com/favicon.ico",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH",
+"API_KEY"
+],
+"managed": false,
+"toolCount": 19
+},
+{
+"slug": "mintlify_mcp",
+"name": "Mintlify MCP",
+"logo": "https://logos.composio.dev/api/mintlify_mcp",
+"category": "developer tools",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 19
+},
+{
+"slug": "googletasks",
+"name": "Google Tasks",
+"logo": "https://logos.composio.dev/api/googletasks",
+"category": "task management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 18
+},
+{
+"slug": "dart",
+"name": "Dart",
+"logo": "https://logos.composio.dev/api/dart",
+"category": "project management",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 18
+},
+{
+"slug": "particl_mcp",
+"name": "Particl MCP",
+"logo": "https://logos.composio.dev/api/particl_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 18
+},
+{
+"slug": "sideshow_mcp",
+"name": "Sideshow MCP",
+"logo": "https://logos.composio.dev/api/composio",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 18
+},
+{
+"slug": "tally",
+"name": "Tally",
+"logo": "https://logos.composio.dev/api/tally",
+"category": "forms & surveys",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 18
+},
+{
+"slug": "snowflake",
+"name": "Snowflake",
+"logo": "https://logos.composio.dev/api/snowflake",
+"category": "databases",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 17
+},
+{
+"slug": "wakatime",
+"name": "WakaTime",
+"logo": "https://logos.composio.dev/api/wakatime",
+"category": "time tracking software",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 17
+},
+{
+"slug": "clay_mcp",
+"name": "Clay MCP",
+"logo": "https://logos.composio.dev/api/clay_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 17
+},
+{
+"slug": "dub",
+"name": "Dub",
+"logo": "https://logos.composio.dev/api/dub",
+"category": "url shortener",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 17
+},
+{
+"slug": "zoominfo",
+"name": "Zoominfo",
+"logo": "https://logos.composio.dev/api/zoominfo",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 16
+},
+{
+"slug": "fuseai_mcp",
+"name": "FuseAI MCP",
+"logo": "https://logos.composio.dev/api/fuseai_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 16
+},
+{
+"slug": "highlevel_agency",
+"name": "HighLevel Agency",
+"logo": "https://logos.composio.dev/api/highlevel_agency",
+"category": "crm",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 16
+},
+{
+"slug": "productnow_mcp",
+"name": "ProductNow MCP",
+"logo": "https://logos.composio.dev/api/productnow_mcp",
+"category": "documents",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 16
+},
+{
+"slug": "coinbase_wallet_mcp",
+"name": "Coinbase Wallet MCP",
+"logo": "https://logos.composio.dev/api/coinbase_wallet_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 15
+},
+{
+"slug": "modem_mcp",
+"name": "Modem MCP",
+"logo": "https://logos.composio.dev/api/modem_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 15
+},
+{
+"slug": "pushbullet",
+"name": "Pushbullet",
+"logo": "https://logos.composio.dev/api/pushbullet",
+"category": "notifications",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 15
+},
+{
+"slug": "ticketmaster",
+"name": "Ticketmaster",
+"logo": "https://logos.composio.dev/api/ticketmaster",
+"category": "event management",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 15
+},
+{
+"slug": "trello_mcp",
+"name": "Trello MCP",
+"logo": "https://logos.composio.dev/api/trello_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 15
+},
+{
+"slug": "googlephotos",
+"name": "Google Photos",
+"logo": "https://logos.composio.dev/api/googlephotos",
+"category": "images & design",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 14
+},
+{
+"slug": "boldsign",
+"name": "Boldsign",
+"logo": "https://logos.composio.dev/api/boldsign",
+"category": "signatures",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 14
+},
+{
+"slug": "descript_mcp",
+"name": "Descript MCP",
+"logo": "https://logos.composio.dev/api/descript_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 14
+},
+{
+"slug": "google_admin",
+"name": "Google Admin",
+"logo": "https://logos.composio.dev/api/google_admin",
+"category": "security & identity tools",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 14
+},
+{
+"slug": "microsoft_advertising",
+"name": "Microsoft Advertising",
+"logo": "https://logos.composio.dev/api/microsoft_advertising",
+"category": "ads & conversion",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 14
+},
+{
+"slug": "semrush_mcp",
+"name": "Semrush MCP",
+"logo": "https://logos.composio.dev/api/semrush_mcp",
+"category": "analytics",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 14
+},
+{
+"slug": "vibe_prospecting_mcp",
+"name": "Vibe Prospecting MCP",
+"logo": "https://logos.composio.dev/api/vibe_prospecting_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 14
+},
+{
+"slug": "wispr_flow_mcp",
+"name": "Wispr Flow MCP",
+"logo": "https://logos.composio.dev/api/wispr_flow_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 14
+},
+{
+"slug": "contacts_plus",
+"name": "Contacts+",
+"logo": "https://logos.composio.dev/api/contacts_plus",
+"category": "contact management",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 13
+},
+{
+"slug": "simplescraper_mcp",
+"name": "Simplescraper MCP",
+"logo": "https://logos.composio.dev/api/simplescraper_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 13
+},
+{
+"slug": "vibe",
+"name": "Vibe",
+"logo": "https://logos.composio.dev/api/vibe",
+"category": "ads & conversion",
+"authSchemes": [
+"OAUTH2",
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 13
+},
+{
+"slug": "exist",
+"name": "Exist",
+"logo": "https://logos.composio.dev/api/exist",
+"category": "analytics",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 12
+},
+{
+"slug": "adobe_marketing_agent_mcp",
+"name": "Adobe Marketing Agent MCP",
+"logo": "https://logos.composio.dev/api/adobe_marketing_agent_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 12
+},
+{
+"slug": "apify_mcp",
+"name": "Apify MCP",
+"logo": "https://logos.composio.dev/api/apify_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 12
+},
+{
+"slug": "dribbble",
+"name": "Dribbble",
+"logo": "https://logos.composio.dev/api/dribbble",
+"category": "images & design",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 12
+},
+{
+"slug": "pylon_mcp",
+"name": "Pylon MCP",
+"logo": "https://logos.composio.dev/api/pylon_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 12
+},
+{
+"slug": "buffer",
+"name": "Buffer",
+"logo": "https://logos.composio.dev/api/buffer",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 11
+},
+{
+"slug": "circleback_mcp",
+"name": "Circleback MCP",
+"logo": "https://logos.composio.dev/api/circleback_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 11
+},
+{
+"slug": "cradl_ai",
+"name": "Cradl AI",
+"logo": "https://logos.composio.dev/api/cradl_ai",
+"category": "documents & ocr",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 11
+},
+{
+"slug": "notebook_lm",
+"name": "NotebookLM",
+"logo": "https://logos.composio.dev/api/notebooklm",
+"category": "ai assistants",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 11
+},
+{
+"slug": "wordpress_com",
+"name": "WordPress.com",
+"logo": "https://logos.composio.dev/api/wordpress_com",
+"category": "content & files",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 11
+},
+{
+"slug": "freshbooks",
+"name": "FreshBooks",
+"logo": "https://logos.composio.dev/api/freshbooks",
+"category": "accounting",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 10
+},
+{
+"slug": "commerce_layer",
+"name": "Commerce Layer",
+"logo": "https://logos.composio.dev/api/commerce_layer",
+"category": "commerce",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 10
+},
+{
+"slug": "fathom",
+"name": "Fathom",
+"logo": "https://logos.composio.dev/api/fathom",
+"category": "ai meeting assistants",
+"authSchemes": [
+"OAUTH2",
+"API_KEY"
+],
+"managed": true,
+"toolCount": 10
+},
+{
+"slug": "googleforms",
+"name": "Googleforms",
+"logo": "https://logos.composio.dev/api/googleforms",
+"category": "productivity",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 10
+},
+{
+"slug": "personio",
+"name": "Personio",
+"logo": "https://logos.composio.dev/api/personio",
+"category": "human resources",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 10
+},
+{
+"slug": "pinterest_ads",
+"name": "Pinterest Ads",
+"logo": "https://logos.composio.dev/api/pinterest_ads",
+"category": "ads & conversion",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 10
+},
+{
+"slug": "reloadly",
+"name": "Reloadly",
+"logo": "https://logos.composio.dev/api/reloadly",
+"category": "commerce",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 10
+},
+{
+"slug": "storyblok",
+"name": "Storyblok",
+"logo": "https://logos.composio.dev/api/storyblok",
+"category": "developer tools",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 10
+},
+{
+"slug": "stripe_mcp",
+"name": "Stripe MCP",
+"logo": "https://logos.composio.dev/api/stripe_mcp",
+"category": "payment processing",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 10
+},
+{
+"slug": "wild_apricot",
+"name": "WildApricot",
+"logo": "https://logos.composio.dev/api/wildapricot",
+"category": "crm",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 10
+},
+{
+"slug": "bitwarden",
+"name": "Bitwarden",
+"logo": "https://logos.composio.dev/api/bitwarden",
+"category": "security & identity tools",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 9
+},
+{
+"slug": "deepl_mcp",
+"name": "DeepL MCP",
+"logo": "https://logos.composio.dev/api/deepl_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 9
+},
+{
+"slug": "dev_cycle",
+"name": "DevCycle",
+"logo": "https://logos.composio.dev/api/devcycle",
+"category": "developer tools",
+"authSchemes": [
+"S2S_OAUTH2"
+],
+"managed": false,
+"toolCount": 9
+},
+{
+"slug": "google_search_console",
+"name": "Google Search Console",
+"logo": "https://logos.composio.dev/api/google_search_console",
+"category": "analytics",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 9
+},
+{
+"slug": "lilt_mcp",
+"name": "LILT MCP",
+"logo": "https://logos.composio.dev/api/lilt_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 9
+},
+{
+"slug": "netlify_mcp",
+"name": "Netlify MCP",
+"logo": "https://logos.composio.dev/api/netlify_mcp",
+"category": "developer tools",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 9
+},
+{
+"slug": "sentry_mcp",
+"name": "Sentry MCP",
+"logo": "https://logos.composio.dev/api/sentry_mcp",
+"category": "server monitoring",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 9
+},
+{
+"slug": "tiktok",
+"name": "Tiktok",
+"logo": "https://logos.composio.dev/api/tiktok",
+"category": "social media accounts",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 9
+},
+{
+"slug": "customerio_mcp",
+"name": "Customer.io MCP",
+"logo": "https://logos.composio.dev/api/customerio_mcp",
+"category": "crm",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 8
+},
+{
+"slug": "googleslides",
+"name": "Google Slides",
+"logo": "https://logos.composio.dev/api/googleslides",
+"category": "documents",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 8
+},
+{
+"slug": "thoughtspot_spotter_mcp",
+"name": "ThoughtSpot Spotter MCP",
+"logo": "https://logos.composio.dev/api/thoughtspot_spotter_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 8
+},
+{
+"slug": "gumroad",
+"name": "Gumroad",
+"logo": "https://logos.composio.dev/api/gumroad",
+"category": "ecommerce",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 7
+},
+{
+"slug": "legal_data_hunter_mcp",
+"name": "Legal Data Hunter MCP",
+"logo": "https://logos.composio.dev/api/legal_data_hunter_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 7
+},
+{
+"slug": "lightspeed",
+"name": "Lightspeed Retail X-Series",
+"logo": "https://logos.composio.dev/api/lightspeed",
+"category": "commerce",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 7
+},
+{
+"slug": "midpage_mcp",
+"name": "Midpage MCP",
+"logo": "https://logos.composio.dev/api/midpage_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 7
+},
+{
+"slug": "candid_mcp",
+"name": "Candid MCP",
+"logo": "https://logos.composio.dev/api/candid_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 6
+},
+{
+"slug": "granola_mcp",
+"name": "Granola MCP",
+"logo": "https://logos.composio.dev/api/granola_mcp",
+"category": "productivity",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 6
+},
+{
+"slug": "matterport",
+"name": "Matterport",
+"logo": "https://logos.composio.dev/api/matterport",
+"category": "developer tools",
+"authSchemes": [
+"BASIC",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 6
+},
+{
+"slug": "splice_mcp",
+"name": "Splice MCP",
+"logo": "https://logos.composio.dev/api/splice_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 6
+},
+{
+"slug": "blackbaud",
+"name": "Blackbaud",
+"logo": "https://logos.composio.dev/api/blackbaud",
+"category": "fundraising",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 5
+},
+{
+"slug": "beeminder",
+"name": "Beeminder",
+"logo": "https://logos.composio.dev/api/beeminder",
+"category": "task management",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 5
+},
+{
+"slug": "common_room_mcp",
+"name": "Common Room MCP",
+"logo": "https://logos.composio.dev/api/common_room_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 5
+},
+{
+"slug": "google_data_studio",
+"name": "Google Data Studio",
+"logo": "https://logos.composio.dev/api/google_data_studio",
+"category": "business intelligence",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 5
+},
+{
+"slug": "marcopolo_mcp",
+"name": "MarcoPolo MCP",
+"logo": "https://logos.composio.dev/api/marcopolo_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 5
+},
+{
+"slug": "plaid_mcp",
+"name": "Plaid MCP",
+"logo": "https://logos.composio.dev/api/plaid_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 5
+},
+{
+"slug": "sendloop",
+"name": "Sendloop",
+"logo": "https://logos.composio.dev/api/sendloop",
+"category": "email newsletters",
+"authSchemes": [
+"API_KEY",
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 5
+},
+{
+"slug": "synthesize_bio_mcp",
+"name": "Synthesize Bio MCP",
+"logo": "https://logos.composio.dev/api/synthesize_bio_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 5
+},
+{
+"slug": "tavily_mcp",
+"name": "Tavily MCP",
+"logo": "https://logos.composio.dev/api/tavily_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 5
+},
+{
+"slug": "linkhut",
+"name": "Linkhut",
+"logo": "https://logos.composio.dev/api/linkhut",
+"category": "bookmark managers",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 4
+},
+{
+"slug": "jentic_mcp",
+"name": "Jentic MCP",
+"logo": "https://logos.composio.dev/api/jentic_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 4
+},
+{
+"slug": "octagon_mcp",
+"name": "Octagon MCP",
+"logo": "https://logos.composio.dev/api/octagon_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 4
+},
+{
+"slug": "parallel_task_mcp",
+"name": "Parallel Task MCP",
+"logo": "https://logos.composio.dev/api/parallel_task_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 4
+},
+{
+"slug": "read_ai_mcp",
+"name": "Read AI MCP",
+"logo": "https://logos.composio.dev/api/read_ai_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 4
+},
+{
+"slug": "cloudflare_mcp",
+"name": "Cloudflare MCP",
+"logo": "https://logos.composio.dev/api/cloudflare_mcp",
+"category": "developer tools",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 3
+},
+{
+"slug": "craft_mcp",
+"name": "Craft MCP",
+"logo": "https://logos.composio.dev/api/craft_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 3
+},
+{
+"slug": "mobbin_mcp",
+"name": "Mobbin MCP",
+"logo": "https://logos.composio.dev/api/mobbin_mcp",
+"category": "images & design",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 3
+},
+{
+"slug": "otter_ai_mcp",
+"name": "Otter.ai MCP",
+"logo": "https://logos.composio.dev/api/otter_ai_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 3
+},
+{
+"slug": "azure_monitor_activity_log",
+"name": "Azure Monitor Activity Log",
+"logo": "https://logos.composio.dev/api/azure_monitor_activity_log",
+"category": "it operations",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": false,
+"toolCount": 2
+},
+{
+"slug": "ignav_flights_mcp",
+"name": "Ignav Flights MCP",
+"logo": "https://logos.composio.dev/api/ignav_flights_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 2
+},
+{
+"slug": "scorecard_mcp",
+"name": "Scorecard MCP",
+"logo": "https://logos.composio.dev/api/scorecard_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 2
+},
+{
+"slug": "consensus_mcp",
+"name": "Consensus MCP",
+"logo": "https://logos.composio.dev/api/consensus_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 1
+},
+{
+"slug": "posthog_mcp",
+"name": "PostHog MCP",
+"logo": "https://logos.composio.dev/api/posthog_mcp",
+"category": "analytics",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 1
+},
+{
+"slug": "searchapi_mcp",
+"name": "SearchAPI MCP",
+"logo": "https://logos.composio.dev/api/searchapi_mcp",
+"category": "model context protocol",
+"authSchemes": [
+"DCR_OAUTH"
+],
+"managed": false,
+"toolCount": 1
+},
+{
+"slug": "amazon",
+"name": "Amazon",
+"logo": "https://logos.composio.dev/api/amazon",
+"category": "ecommerce",
+"authSchemes": [
+"OAUTH2"
+],
+"managed": true,
+"toolCount": 0
+}
+]

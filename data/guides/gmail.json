@@ -1,0 +1,1017 @@
+{
+  "slug": "gmail",
+  "schema_version": 1,
+  "generated_at": "2026-11-07T04:53:34.168Z",
+  "generation_seconds": 113,
+  "models": {
+    "research": "gpt-5.5",
+    "writer": "gpt-5.5"
+  },
+  "input": "Gmail (Google Cloud OAuth client, Gmail API)",
+  "app": {
+    "name": "Gmail",
+    "provider": "Google",
+    "website": "https://mail.google.com/",
+    "category": "email / Google Workspace API",
+    "developer_portal_url": "https://console.cloud.google.com/apis/credentials",
+    "one_liner": "Easy to create; hard to ship broadly if you need Gmail read/modify scopes."
+  },
+  "oauth_supported": "yes",
+  "headline": "You can create and test a Google Cloud OAuth client for Gmail in under an hour, but production access for real Gmail scopes is review-gated. Send-only apps usually face sensitive-scope verification; read/modify/compose/settings AI agents usually hit restricted-scope verification, possible annual security assessment, and about 2–6+ weeks of calendar time.",
+  "factors": {
+    "production_review": {
+      "value": "required_for_some_scopes",
+      "detail": "Apps using only basic identity scopes do not need OAuth app verification, but Gmail API sensitive or restricted scopes cannot be used in production without Google review. A Gmail AI agent that reads, drafts, modifies, or manages settings will usually need restricted-scope verification; send-only with gmail.send needs sensitive-scope verification.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S4",
+          "S7"
+        ]
+      }
+    },
+    "review_wait": {
+      "min_days": 14,
+      "max_days": 46,
+      "detail": "Google publishes estimates of 10 business days for sensitive-scope verification and 6 weeks for restricted-scope verification; brand verification can add 2–3 business days when required. These are estimates, not guaranteed SLAs, and reviewer back-and-forth can extend them.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5",
+          "S6"
+        ]
+      }
+    },
+    "security_assessment": {
+      "value": "conditional",
+      "detail": "If you request restricted Gmail scopes and store or transmit restricted-scope data on your servers, Google says you must complete a security assessment by a Google-designated assessor using the App Defense Alliance/CASA framework. Send-only gmail.send is sensitive, not restricted, so this assessment is not automatically triggered by that scope alone.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6",
+          "S7"
+        ]
+      }
+    },
+    "business_verification": {
+      "value": "yes",
+      "detail": "For production OAuth branding and restricted-scope review, Google requires accurate app branding and ownership verification for authorized domains in Google Search Console. Production OAuth apps also need a public homepage on a verified domain with app functionality, terms, and privacy policy links.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S6"
+        ]
+      }
+    },
+    "gated_access": {
+      "value": "none",
+      "detail": "No paid Google Cloud or Google Workspace plan is stated as required to create an external Gmail API OAuth client. Internal apps require the project to belong to a Google Workspace or Cloud Identity organization, but external apps are the path for independent Google Accounts and other Workspace organizations.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    },
+    "dev_mode_limits": {
+      "value": "user_cap",
+      "detail": "External apps in Testing status are limited to explicitly added test users, up to 100, unless they request only basic identity scopes. Published but unverified apps using sensitive or restricted scopes show an unverified-app warning and are capped at 100 total users over the project lifetime.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S5"
+        ]
+      }
+    },
+    "customer_admin_approval": {
+      "value": "sometimes",
+      "detail": "Consumer Gmail users can authorize directly, but Google Workspace administrators can block any OAuth app regardless of whether it is internal, external, testing, published, verified, or unverified. Admins can restrict high-risk Gmail scopes such as mail.google.com, gmail.readonly, gmail.modify, gmail.compose, gmail.metadata, gmail.settings.*, and gmail.send.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S8"
+        ]
+      }
+    }
+  },
+  "effort": {
+    "time_to_first_test_minutes": 45,
+    "active_hours_min": 8,
+    "active_hours_max": 60,
+    "production_days_min": 14,
+    "production_days_max": 70,
+    "explanation": "Creating the Cloud project, enabling Gmail API, configuring consent, creating a web OAuth client, and testing your own account is usually under an hour if you already have redirect URIs and a Google account. Production effort depends almost entirely on scopes: gmail.send can be a smaller sensitive-scope verification package, while read/modify/compose/settings scopes require restricted-scope verification, domain ownership, polished public policy pages, demo/video materials, and possibly a security assessment. Calendar time uses Google’s 10-business-day sensitive and 6-week restricted estimates, with extra buffer for brand verification and reviewer questions."
+  },
+  "start_here": {
+    "action": "Decide the minimum Gmail scopes your AI agent truly needs before creating the OAuth consent screen.",
+    "url": "https://developers.google.com/workspace/gmail/api/auth/scopes",
+    "why": "Scope choice determines whether you avoid review, need sensitive-scope verification, or trigger restricted-scope verification and a possible security assessment."
+  },
+  "phases": [
+    {
+      "name": "Prepare",
+      "goal": "Choose the lowest-risk Gmail OAuth design before you create credentials.",
+      "steps": [
+        {
+          "title": "Map each AI-agent feature to the narrowest Gmail scope",
+          "detail": "Use gmail.send for send-only. Avoid https://mail.google.com/ unless you truly need full mailbox access; Google explicitly says broad mail access for SMTP-only sending violates minimum-scope policy.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/workspace/gmail/api/auth/scopes",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2",
+              "S5",
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Choose separate Google Cloud projects for dev, staging, and production",
+          "detail": "Google OAuth policy requires separate Cloud projects for each deployment tier. Do not burn the production project’s 100-user cap during experiments.",
+          "owner": "you",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/policies",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2",
+              "S5"
+            ]
+          }
+        },
+        {
+          "title": "Prepare public app pages on your domain",
+          "detail": "Create a public homepage that describes the app, plus privacy policy and terms links. The domain must be one you can verify in Google Search Console for production review.",
+          "owner": "you",
+          "effort_minutes": 180,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/policies",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2",
+              "S6"
+            ]
+          }
+        },
+        {
+          "title": "Decide whether restricted Gmail data touches your servers",
+          "detail": "If restricted-scope data is stored or transmitted through your backend, plan for Google’s security assessment path. For a server-side AI agent that reads or modifies Gmail, assume this may apply until Google review says otherwise.",
+          "owner": "you",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6",
+              "S7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register the app",
+      "goal": "Create the Google Cloud project, OAuth consent screen, and OAuth client.",
+      "steps": [
+        {
+          "title": "Open Google Cloud Console credentials",
+          "detail": "Go to APIs & Services → Credentials in Google Cloud Console. The portal requires a Google sign-in before you can create credentials.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://console.cloud.google.com/apis/credentials",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P4"
+            ]
+          }
+        },
+        {
+          "title": "Enable the Gmail API",
+          "detail": "In the production Cloud project, enable Gmail API before testing OAuth calls that use Gmail scopes.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://console.cloud.google.com/apis/library/gmail.googleapis.com",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Configure the OAuth consent screen",
+          "detail": "Set User type to External for an app used by independent Google Accounts or customer Workspace organizations. Fill app name, support email, developer contact, homepage URI, privacy policy URI, and authorized domains.",
+          "owner": "you",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://console.cloud.google.com/apis/credentials/consent",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3",
+              "S6"
+            ]
+          }
+        },
+        {
+          "title": "Create a Web application OAuth client",
+          "detail": "In APIs & Services → Credentials → Create Credentials → OAuth client ID, choose Web application and add every Authorized redirect URI exactly, including scheme, host, path, and environment.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://console.cloud.google.com/apis/credentials",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1",
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Store the client ID and client secret outside source control",
+          "detail": "Copy the generated OAuth client ID and client secret into your secrets manager or local .env file. Every app using Google OAuth must have at least one registered OAuth client, and each platform needs its own client.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/policies",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Configure and test with your own account",
+      "goal": "Complete an authorization-code flow and confirm token refresh behavior.",
+      "steps": [
+        {
+          "title": "Add yourself as a test user",
+          "detail": "For an External app in Testing status, add your Google account under test users. Testing status is limited to explicitly added users, up to 100, unless the app requests only openid, email, and profile.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://console.cloud.google.com/apis/credentials/consent",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Build the authorization URL",
+          "detail": "Use https://accounts.google.com/o/oauth2/v2/auth with response_type=code, your client_id, exact redirect_uri, requested Gmail scopes, state, and access_type=offline to request a refresh token.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/web-server",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Exchange the code at the token endpoint",
+          "detail": "POST the authorization code to https://oauth2.googleapis.com/token with grant_type=authorization_code, client_id, client_secret, redirect_uri, and code. The endpoint is live and rejects fake clients with invalid_client.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://oauth2.googleapis.com/token",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P3"
+            ]
+          }
+        },
+        {
+          "title": "Persist refresh tokens safely",
+          "detail": "Google returns refresh_token only when access_type=offline is used in the initial authorization request. Access tokens include expires_in; refresh tokens remain valid until revoked or expired, with refresh_token_expires_in only for time-based grants.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/web-server",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Use PKCE if your client type supports it",
+          "detail": "Google’s discovery metadata advertises PKCE methods plain and S256. For a confidential web-server client, Google’s web-server flow still uses a client secret; use a Google OAuth client library where possible.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://accounts.google.com/.well-known/openid-configuration",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get approved for production",
+      "goal": "Remove the 100-user cap and unverified-app warnings for the scopes you need.",
+      "steps": [
+        {
+          "title": "Submit sensitive or restricted scopes for verification",
+          "detail": "From the OAuth consent screen in Google Cloud Console, submit the Gmail scopes your production app needs. Apps requesting sensitive or restricted scopes must complete OAuth app verification before broad production use.",
+          "owner": "you",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://support.google.com/cloud/answer/13463073?hl=en",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2",
+              "S4"
+            ]
+          }
+        },
+        {
+          "title": "Complete brand and domain verification if requested",
+          "detail": "Verify ownership of authorized domains in Google Search Console and make sure app name, logo, support email, homepage, privacy policy, and developer contacts are accurate.",
+          "owner": "you",
+          "effort_minutes": 120,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6"
+            ]
+          }
+        },
+        {
+          "title": "Provide feature documentation and a demo video",
+          "detail": "For restricted-scope review, prepare documentation links, additional app information, and a demo video. For automation/task-platform apps, show how workflows are created and automated.",
+          "owner": "you",
+          "effort_minutes": 240,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6"
+            ]
+          }
+        },
+        {
+          "title": "Complete a security assessment if Google requires it",
+          "detail": "If your restricted-scope Gmail data is accessed from or through third-party servers, Google says the app must undergo an annual security assessment by a Google-designated assessor.",
+          "owner": "you",
+          "effort_minutes": 1200,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6",
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Wait for Google review",
+          "detail": "Plan for about 10 business days for sensitive-scope verification or about 6 weeks for restricted-scope verification, plus possible brand verification and follow-up questions.",
+          "owner": "provider",
+          "effort_minutes": null,
+          "wait_days_max": 46,
+          "url": "https://support.google.com/cloud/answer/13463817?hl=en",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5",
+              "S6"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Launch and maintain",
+      "goal": "Keep production access working for consumers and Workspace customers.",
+      "steps": [
+        {
+          "title": "Publish only after verification for Gmail scopes",
+          "detail": "An external published app that is unverified can be attempted by any Google user, but sensitive/restricted apps show an unverified-app warning and are capped at 100 total users over the project lifetime.",
+          "owner": "you",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/production-readiness/overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3",
+              "S5"
+            ]
+          }
+        },
+        {
+          "title": "Document Workspace admin allowlisting",
+          "detail": "Tell Workspace customers that their admin may need to trust the app in Admin console API Controls, especially for high-risk Gmail scopes. Google verification does not override admin blocks.",
+          "owner": "agent",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://knowledge.workspace.google.com/admin/apps/control-which-apps-access-google-workspace-data",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3",
+              "S8"
+            ]
+          }
+        },
+        {
+          "title": "Monitor OAuth policy changes and unused clients",
+          "detail": "Google’s OAuth policy changelog includes unused-client deletion, continuous-improvements, and security-signals-handling policies added in 2025–2026. Keep owners and contact emails current.",
+          "owner": "you",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://developers.google.com/identity/protocols/oauth2/policies",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "item": "Google Cloud project per deployment tier",
+      "detail": "Create separate Google Cloud projects for development, staging, and production under Google OAuth policy.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2"
+        ]
+      }
+    },
+    {
+      "item": "OAuth client per platform",
+      "detail": "Every app using Google OAuth needs at least one registered OAuth client; create separate clients for web server, Android, iOS, limited-input devices, and other platforms.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2"
+        ]
+      }
+    },
+    {
+      "item": "Public homepage, privacy policy, terms, and verified domain",
+      "detail": "Production apps need a public homepage describing functionality, linked privacy policy and terms, and domain ownership verification for authorized domains.",
+      "when": "before_review",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S6"
+        ]
+      }
+    },
+    {
+      "item": "OAuth verification submission",
+      "detail": "Required for Gmail sensitive and restricted scopes before broad production use.",
+      "when": "for_sensitive_scopes",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S4",
+          "S7"
+        ]
+      }
+    },
+    {
+      "item": "Demo video and feature documentation",
+      "detail": "Restricted-scope submission can require documentation links, additional app information, and a demonstration video; automation platforms must show workflow creation and automation.",
+      "when": "before_review",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    {
+      "item": "Security assessment for restricted data on servers",
+      "detail": "If restricted Gmail data is stored or transmitted through servers, Google requires a security assessment by a Google-designated assessor.",
+      "when": "for_sensitive_scopes",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6",
+          "S7"
+        ]
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "scope": "https://www.googleapis.com/auth/gmail.send",
+      "purpose": "Send email on behalf of the user; use this instead of broad mail access for send-only features.",
+      "tier": "sensitive",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5",
+          "S7"
+        ]
+      }
+    },
+    {
+      "scope": "https://www.googleapis.com/auth/gmail.readonly",
+      "purpose": "Read Gmail messages and metadata without modifying mailbox state.",
+      "tier": "restricted",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S7"
+        ]
+      }
+    },
+    {
+      "scope": "https://www.googleapis.com/auth/gmail.modify",
+      "purpose": "Read and modify Gmail messages, labels, and state such as archive/read status.",
+      "tier": "restricted",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S7"
+        ]
+      }
+    },
+    {
+      "scope": "https://www.googleapis.com/auth/gmail.compose",
+      "purpose": "Create, read, update, and send drafts and messages for compose workflows.",
+      "tier": "restricted",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S7"
+        ]
+      }
+    },
+    {
+      "scope": "https://www.googleapis.com/auth/gmail.metadata",
+      "purpose": "Read message metadata such as labels and headers without message bodies.",
+      "tier": "restricted",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S7"
+        ]
+      }
+    },
+    {
+      "scope": "https://www.googleapis.com/auth/gmail.labels",
+      "purpose": "Create, read, update, and delete Gmail labels; lowest-risk Gmail API scope listed as non-sensitive.",
+      "tier": "basic",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S7"
+        ]
+      }
+    },
+    {
+      "scope": "https://mail.google.com/",
+      "purpose": "Full Gmail mailbox access; avoid unless no narrower Gmail API scope satisfies the feature.",
+      "tier": "restricted",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S7"
+        ]
+      }
+    }
+  ],
+  "gotchas": [
+    {
+      "title": "Gmail read/modify features are restricted, not just sensitive",
+      "detail": "Scopes such as gmail.readonly, gmail.modify, gmail.compose, gmail.metadata, gmail.settings.basic, and https://mail.google.com/ require restricted-scope OAuth verification and can trigger a security assessment when data touches servers.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6",
+          "S7"
+        ]
+      }
+    },
+    {
+      "title": "The 100-user cap is lifetime and cannot be reset",
+      "detail": "Testing and unverified sensitive/restricted production flows can consume a project’s 100-user cap; Google’s FAQ says the cap applies over the entire project lifetime and cannot be reset or changed.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S5"
+        ]
+      }
+    },
+    {
+      "title": "Google Workspace admins can still block verified apps",
+      "detail": "Verification removes Google’s unverified-app and cap barriers, but Workspace administrators can mark apps blocked or limit access to specific Google data. Customer admin trust may still be needed.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S8"
+        ]
+      }
+    },
+    {
+      "title": "Using https://mail.google.com/ for send-only is a policy violation",
+      "detail": "Google says SMTP-only sending with the broad mail.google.com scope violates the minimum-scope policy; send-only apps should use the Gmail API with gmail.send.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S5"
+        ]
+      }
+    },
+    {
+      "title": "Internal is not for public SaaS unless all users are in your Workspace org",
+      "detail": "Internal apps require the project to be part of a Google Workspace or Cloud Identity organization. External user type is the relevant setting for independent Google Accounts and customer Workspace organizations.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    }
+  ],
+  "blockers": [
+    {
+      "symptom": "Users see an unverified app warning and you cannot grow past 100 users.",
+      "likely_cause": "The app is published but unverified while requesting sensitive or restricted Gmail scopes.",
+      "what_to_do": "Submit the OAuth consent screen for verification for the exact scopes you need; for restricted scopes, prepare brand/domain verification, feature documentation, demo video, and possibly security assessment.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S4",
+          "S5",
+          "S6"
+        ]
+      }
+    },
+    {
+      "symptom": "A Workspace customer reports that authorization is blocked even though your app is verified.",
+      "likely_cause": "Their Google Workspace admin has blocked or restricted the OAuth app or Gmail high-risk scopes in Admin console API Controls.",
+      "what_to_do": "Ask the customer’s Workspace admin to mark the app Trusted or allow the required Gmail data access in API Controls.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S8"
+        ]
+      }
+    },
+    {
+      "symptom": "Token endpoint returns `invalid_client` with `The OAuth client was not found.`",
+      "likely_cause": "The client_id/client_secret are wrong, from another project/environment, deleted, or not the OAuth client you are using in the authorization request.",
+      "what_to_do": "Check the Google Cloud project and OAuth client ID in APIs & Services → Credentials, and make sure each environment uses its own matching client ID, secret, and redirect URI.",
+      "evidence": {
+        "type": "tested",
+        "refs": [
+          "P3"
+        ]
+      }
+    },
+    {
+      "symptom": "Google review rejects or challenges broad Gmail scope usage.",
+      "likely_cause": "The requested scopes are broader than the feature requires, violating Google’s minimum-scope policy.",
+      "what_to_do": "Replace https://mail.google.com/ with narrower Gmail API scopes such as gmail.send, gmail.readonly, gmail.metadata, gmail.compose, or gmail.modify, and update your demo and justification.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2",
+          "S5",
+          "S7"
+        ]
+      }
+    },
+    {
+      "symptom": "Refresh token is missing from the token response.",
+      "likely_cause": "The initial authorization request did not include access_type=offline, or the grant conditions did not produce a refresh token.",
+      "what_to_do": "Start a new authorization flow with access_type=offline and persist the refresh_token the first time Google returns it.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    }
+  ],
+  "agent_split": {
+    "agent_can": [
+      "Draft a least-privilege scope matrix and one-line justification for each Gmail feature.",
+      "Generate authorization URLs, token-exchange scripts, .env templates, and redirect URI validation checks.",
+      "Draft privacy-policy data-use language, review-form answers, demo-video script, and Workspace admin allowlisting instructions.",
+      "Check Google discovery metadata and endpoint configuration, including authorization and token endpoints.",
+      "Create a launch checklist for separate dev/staging/production Cloud projects."
+    ],
+    "you_must": [
+      "Sign in to Google Cloud Console, create projects, enable Gmail API, accept terms, and create OAuth clients.",
+      "Verify domain ownership in Google Search Console and publish legal pages under your controlled domain.",
+      "Choose final scopes and data-retention behavior because this affects review, policy compliance, and security-assessment exposure.",
+      "Record or approve demo videos and submit OAuth verification materials to Google.",
+      "Complete any Google-designated security assessment and handle assessor/legal/payment work if required."
+    ]
+  },
+  "artifacts": [
+    {
+      "title": "Gmail OAuth .env template",
+      "kind": "env",
+      "content": "GOOGLE_CLIENT_ID=<CLIENT_ID>\nGOOGLE_CLIENT_SECRET=<CLIENT_SECRET>\nGOOGLE_REDIRECT_URI=https://<YOUR_APP_DOMAIN>/oauth/google/callback\nGOOGLE_AUTH_URL=https://accounts.google.com/o/oauth2/v2/auth\nGOOGLE_TOKEN_URL=https://oauth2.googleapis.com/token\nGOOGLE_SCOPES=\"https://www.googleapis.com/auth/gmail.send\"\nGOOGLE_OAUTH_ACCESS_TYPE=offline",
+      "note": "Replace GOOGLE_SCOPES with the minimum scopes your feature needs; avoid broad mail.google.com unless required."
+    },
+    {
+      "title": "Review-form-ready Gmail scope justification",
+      "kind": "text",
+      "content": "https://www.googleapis.com/auth/gmail.send — Required to send user-approved email messages from the AI agent; no mailbox read access is requested.\nhttps://www.googleapis.com/auth/gmail.readonly — Required only if the agent must read message content to summarize, classify, or answer user questions about Gmail.\nhttps://www.googleapis.com/auth/gmail.modify — Required only if the agent must apply labels, archive, mark read/unread, or otherwise change existing messages.\nhttps://www.googleapis.com/auth/gmail.compose — Required only if the agent must create or manage Gmail drafts before the user sends them.\nhttps://www.googleapis.com/auth/gmail.metadata — Required only if the agent can operate on headers/labels without reading message bodies.\nhttps://mail.google.com/ — Full mailbox access; request only if narrower Gmail API scopes cannot implement the documented feature.",
+      "note": "Delete scopes you do not request before pasting into Google’s verification form."
+    },
+    {
+      "title": "Example authorization URL",
+      "kind": "url",
+      "content": "https://accounts.google.com/o/oauth2/v2/auth?client_id=<CLIENT_ID>&redirect_uri=https%3A%2F%2F<YOUR_APP_DOMAIN>%2Foauth%2Fgoogle%2Fcallback&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.send&access_type=offline&state=<CSRF_STATE>",
+      "note": "Add prompt=consent only when you intentionally need to force a consent screen; use URL-encoded space-separated scopes for multiple scopes."
+    }
+  ],
+  "oauth": {
+    "authorize_url": "https://accounts.google.com/o/oauth2/v2/auth",
+    "token_url": "https://oauth2.googleapis.com/token",
+    "pkce": "supported",
+    "refresh_tokens": "For web-server flows, request access_type=offline in the initial authorization request. Refresh tokens are valid until the user revokes access or the token expires; refresh_token_expires_in appears only for time-based grants.",
+    "access_token_lifetime": "Token responses include expires_in, the remaining access-token lifetime in seconds.",
+    "evidence": {
+      "type": "sourced",
+      "refs": [
+        "S1",
+        "P1"
+      ]
+    }
+  },
+  "uncertainties": [
+    "The exact security-assessment tier, cost, and whether Google will require a paid CASA assessor for your specific Gmail AI-agent design cannot be determined from public docs; confirm after restricted-scope submission or with Google’s verification team.",
+    "Whether your exact AI-agent use case is an allowed restricted-scope use case is review-dependent; Google tells uncertain developers to submit and let the verification team determine the app type.",
+    "Google’s review times are estimates, not guaranteed SLAs; actual timing depends on reviewer questions and how fast you respond.",
+    "The exact materials Google asks for can vary by app, scopes, and data handling; be ready with branding, privacy policy, homepage, domain verification, feature docs, demo video, and security documentation."
+  ],
+  "score": {
+    "total": 10,
+    "max": 15,
+    "level": 5,
+    "label": "Very hard",
+    "blurb": "Partnerships, audits or approvals that can take months.",
+    "breakdown": [
+      {
+        "key": "production_review",
+        "label": "Provider review before external users",
+        "value": "required_for_some_scopes",
+        "points": 2
+      },
+      {
+        "key": "review_wait",
+        "label": "Approval wait",
+        "value": "up to 46 days",
+        "points": 3
+      },
+      {
+        "key": "security_assessment",
+        "label": "Security assessment",
+        "value": "conditional",
+        "points": 2
+      },
+      {
+        "key": "business_verification",
+        "label": "Business / identity verification",
+        "value": "yes",
+        "points": 1
+      },
+      {
+        "key": "gated_access",
+        "label": "Gated API access",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "dev_mode_limits",
+        "label": "Limits before approval",
+        "value": "user_cap",
+        "points": 1
+      },
+      {
+        "key": "customer_admin_approval",
+        "label": "Customer admin approval",
+        "value": "sometimes",
+        "points": 1
+      }
+    ]
+  },
+  "confidence": {
+    "level": "high",
+    "supported_pct": 100,
+    "official_sources": 8,
+    "tested": 4,
+    "sourced": 49,
+    "inferred": 0,
+    "downgraded": 0
+  },
+  "composio": {
+    "in_catalog": true,
+    "managed": true,
+    "toolkit": "gmail",
+    "name": "Gmail",
+    "logo": "https://logos.composio.dev/api/gmail",
+    "tool_count": 63
+  },
+  "research": {
+    "searches": 1,
+    "pages_read": 8,
+    "facts": 32,
+    "open_questions": [
+      "Exact security-assessment tier, cost, and whether Google will require a paid CASA assessor for a given Gmail AI-agent app cannot be determined from public docs alone; Google says the tier depends on data sensitivity, user counts, and internal risk indicators.",
+      "Whether a specific AI-agent use case is an allowed restricted-scope use case requires Google review; Google tells uncertain developers to submit and let the verification team determine the app type.",
+      "Google’s public docs give estimated review times, not guaranteed SLAs; actual timelines can vary with reviewer questions and developer responsiveness.",
+      "The exact list of materials Google will request after submission can vary by app, scopes, and data handling; public docs mention branding, privacy policy, homepage, domain ownership, feature documentation, demo video, and possibly annual security assessment."
+    ]
+  },
+  "probes": [
+    {
+      "id": "P1",
+      "kind": "discovery",
+      "target": "https://accounts.google.com/.well-known/openid-configuration",
+      "ok": true,
+      "summary": "Metadata published. PKCE methods: plain, S256.",
+      "data": {
+        "issuer": "https://accounts.google.com",
+        "authorization_endpoint": "https://accounts.google.com/o/oauth2/v2/auth",
+        "token_endpoint": "https://oauth2.googleapis.com/token",
+        "code_challenge_methods_supported": [
+          "plain",
+          "S256"
+        ],
+        "grant_types_supported": [
+          "authorization_code",
+          "refresh_token",
+          "urn:ietf:params:oauth:grant-type:device_code",
+          "urn:ietf:params:oauth:grant-type:jwt-bearer"
+        ],
+        "scopes_supported_count": 3
+      },
+      "at": "2026-11-07T04:52:32.463Z"
+    },
+    {
+      "id": "P2",
+      "kind": "authorize_endpoint",
+      "target": "https://accounts.google.com/o/oauth2/v2/auth",
+      "ok": true,
+      "summary": "Endpoint is live and handles an unregistered client: HTTP 302 → redirects to accounts.google.com/signin/oauth/error.",
+      "data": {
+        "status": 302,
+        "location": "https://accounts.google.com/signin/oauth/error?authError=Cg9pbnZhbGlkX3JlcXVlc3QSIU1pc3NpbmcgcmVxdWlyZWQgcGFyYW1ldGVyOiBzY29wZRo3aHR0cHM6Ly9kZXZlbG9wZXJzLmdvb2d",
+        "body_excerpt": null
+      },
+      "at": "2026-11-07T04:52:32.463Z"
+    },
+    {
+      "id": "P3",
+      "kind": "token_endpoint",
+      "target": "https://oauth2.googleapis.com/token",
+      "ok": true,
+      "summary": "Token endpoint is live and rejects fake credentials: HTTP 401 \"invalid_client\".",
+      "data": {
+        "status": 401,
+        "error": "invalid_client",
+        "body_excerpt": "{ \"error\": \"invalid_client\", \"error_description\": \"The OAuth client was not found.\" }"
+      },
+      "at": "2026-11-07T04:52:32.463Z"
+    },
+    {
+      "id": "P4",
+      "kind": "developer_portal",
+      "target": "https://console.cloud.google.com/apis/credentials",
+      "ok": true,
+      "summary": "Portal is reachable and redirects to a sign-in page (accounts.google.com). You need a provider account to create the app.",
+      "data": {
+        "status": 200,
+        "final_url": "https://accounts.google.com/v3/signin/identifier?continue=https://console.cloud.google.com/apis/credentials&followup=https://console.cloud.google.com/apis/credentials&osid=1&passive=1209600&service=cloudconsole&flowName=WebLiteSignIn&flowEntry=ServiceLogin&dsh=S1329031412:1794027152250404"
+      },
+      "at": "2026-11-07T04:52:32.463Z"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://developers.google.com/identity/protocols/oauth2/web-server",
+      "title": "developers.google.com",
+      "kind": "official_docs",
+      "id": "S1",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.google.com/identity/protocols/oauth2/policies",
+      "title": "developers.google.com",
+      "kind": "official_docs",
+      "id": "S2",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.google.com/identity/protocols/oauth2/production-readiness/overview",
+      "title": "developers.google.com",
+      "kind": "official_docs",
+      "id": "S3",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://support.google.com/cloud/answer/13463073?hl=en",
+      "title": "support.google.com",
+      "kind": "official_docs",
+      "id": "S4",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://support.google.com/cloud/answer/13463817?hl=en",
+      "title": "support.google.com",
+      "kind": "official_docs",
+      "id": "S5",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification",
+      "title": "developers.google.com",
+      "kind": "official_docs",
+      "id": "S6",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.google.com/workspace/gmail/api/auth/scopes",
+      "title": "developers.google.com",
+      "kind": "official_docs",
+      "id": "S7",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://knowledge.workspace.google.com/admin/apps/control-which-apps-access-google-workspace-data",
+      "title": "knowledge.workspace.google.com",
+      "kind": "official_docs",
+      "id": "S8",
+      "http_status": 200,
+      "reachable": "yes"
+    }
+  ],
+  "editorial": [
+    {
+      "path": "app.name",
+      "from": "Gmail API (Google Cloud OAuth client)",
+      "to": "Gmail",
+      "reason": "Display name"
+    }
+  ],
+  "reviewed_at": "2026-11-07T04:58:59.654Z"
+}

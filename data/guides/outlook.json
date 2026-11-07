@@ -1,0 +1,1087 @@
+{
+  "slug": "outlook",
+  "schema_version": 1,
+  "generated_at": "2026-11-07T04:53:29.748Z",
+  "generation_seconds": 116,
+  "models": {
+    "research": "gpt-5.5",
+    "writer": "gpt-5.5"
+  },
+  "input": "Microsoft Outlook / Microsoft Graph (Entra ID app registration)",
+  "app": {
+    "name": "Microsoft Outlook",
+    "provider": "Microsoft",
+    "website": "https://www.microsoft.com/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook",
+    "category": "email, calendar, contacts, Microsoft 365 API",
+    "developer_portal_url": "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade",
+    "one_liner": "Easy app registration; real friction is publisher verification and customer tenant consent policies."
+  },
+  "oauth_supported": "yes",
+  "headline": "Microsoft Graph OAuth is straightforward to register and test, but external Microsoft 365 tenants may block unverified multitenant apps or require admin consent. Expect under an hour to first login, 4–12 hands-on hours to production if your Microsoft Partner/publisher prerequisites are ready, and no universal Microsoft OAuth review queue.",
+  "factors": {
+    "production_review": {
+      "value": "none",
+      "detail": "There is no general Microsoft Graph OAuth app-review submission that must approve the app before outside tenants can use it. External use is instead constrained by customer tenant consent settings, admin-consent requirements, and publisher verification status; separate Microsoft 365 Publisher Attestation, App Certification, and gallery listing are not baseline OAuth gates.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S4"
+        ]
+      }
+    },
+    "review_wait": {
+      "min_days": 1,
+      "max_days": 5,
+      "detail": "No app review, but publisher verification needs a verified Microsoft AI Cloud Partner Program account. Partner verification typically takes a few business days.",
+      "evidence": {
+        "type": "inferred",
+        "refs": []
+      }
+    },
+    "security_assessment": {
+      "value": "none",
+      "detail": "No third-party security assessment is required for baseline Microsoft Graph OAuth connectivity. Microsoft explicitly distinguishes publisher verification from Publisher Attestation, App Certification, and gallery listing; those may matter for marketplace/procurement, not for ordinary OAuth token issuance.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    "business_verification": {
+      "value": "yes",
+      "detail": "For a customer-facing multitenant app, publisher verification is the practical production requirement because many tenants or risk-based consent controls block user consent for newly registered unverified multitenant apps requesting more than basic sign-in/profile permissions. To become publisher verified, you need a verified Microsoft AI Cloud Partner Program account, Partner One ID, non-onmicrosoft publisher domain, required Entra/Partner Center roles, and MFA.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    "gated_access": {
+      "value": "none",
+      "detail": "Microsoft Graph app registration is not gated by a separate API-product application or partner approval. Microsoft’s current quickstart lists an Azure account with an active subscription and sufficient Entra role, but that is an account/portal prerequisite rather than a Graph API access review.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2"
+        ]
+      }
+    },
+    "dev_mode_limits": {
+      "value": "none",
+      "detail": "Microsoft Entra app registrations do not have a separate development-mode user cap like some consumer platforms. The limiting factor before publisher verification is external tenant consent policy: users in other tenants may be unable to consent, especially for newly registered multitenant apps requesting more than basic profile/sign-in scopes.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S4"
+        ]
+      }
+    },
+    "customer_admin_approval": {
+      "value": "sometimes",
+      "detail": "Admin approval depends on the requested permissions and the customer tenant’s user-consent policy. Many delegated Outlook scopes do not inherently require admin consent, but tenants can disable user consent, allow only low-impact scopes from verified publishers, or require admin-consent workflow review.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S6"
+        ]
+      }
+    }
+  },
+  "effort": {
+    "time_to_first_test_minutes": 45,
+    "active_hours_min": 4,
+    "active_hours_max": 12,
+    "production_days_min": 0,
+    "production_days_max": 5,
+    "explanation": "A competent developer can register an app, add a redirect URI, create a client secret, and test auth-code flow in roughly 30–60 minutes. Production effort is mostly choosing least-privilege Graph scopes, handling refresh-token rotation/revocation, adding admin-consent flows, setting publisher domain, and completing publisher verification. If your Microsoft AI Cloud Partner Program account and domain are already verified, production can be same-day; if Partner Center verification or internal legal/domain access is not ready, calendar time can stretch several days even though Microsoft does not impose a general OAuth review queue."
+  },
+  "start_here": {
+    "action": "Register a multitenant app in Microsoft Entra admin center using a work or school tenant, not a personal Microsoft account.",
+    "url": "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade",
+    "why": "A SaaS Outlook/Graph integration for many customer organizations should use the multitenant account type, and only work/school-registered apps can later become publisher verified."
+  },
+  "phases": [
+    {
+      "name": "Prepare",
+      "goal": "Decide the tenant, account type, redirect URIs, and least-privilege Graph scopes before touching production customers.",
+      "steps": [
+        {
+          "title": "Choose the sign-in audience",
+          "detail": "Use a Microsoft Entra work or school tenant and plan for “Accounts in any organizational directory” for a Microsoft 365 SaaS integration. Add personal Microsoft accounts only if you intentionally support consumer Outlook.com accounts.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Confirm you can create app registrations",
+          "detail": "Sign in to Microsoft Entra admin center with an account that is at least Application Developer. Microsoft’s quickstart also lists an Azure account with an active subscription as a prerequisite.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Draft the minimum delegated scope set",
+          "detail": "For a user-connected AI agent, start with delegated permissions, not application permissions: User.Read, offline_access, and only the Outlook scopes your features need, such as Mail.Read, Mail.ReadWrite, Mail.Send, Calendars.Read, Calendars.ReadWrite, or Contacts.Read.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/graph/permissions-reference",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1",
+              "S5"
+            ]
+          }
+        },
+        {
+          "title": "Decide whether shared mailbox/calendar access is required",
+          "detail": "Only add shared permissions such as Mail.ReadWrite.Shared or Calendars.ReadWrite.Shared if your product explicitly supports delegated access to mailboxes/calendars the signed-in user can access.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/graph/permissions-reference",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register the app",
+      "goal": "Create the Microsoft identity platform application object and capture client credentials.",
+      "steps": [
+        {
+          "title": "Create a new app registration",
+          "detail": "In Microsoft Entra admin center, browse to Identity > Applications > App registrations > New registration. Enter the app name users will see on the consent screen.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1",
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Set supported account types",
+          "detail": "Choose “Accounts in any organizational directory” for a B2B SaaS Microsoft 365 integration. This is Microsoft’s recommended audience for SaaS applications provided to multiple organizations.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Add the web redirect URI",
+          "detail": "Under Redirect URI, choose Web and enter your exact callback URL, for example https://app.example.com/oauth/microsoft/callback. Use HTTPS for production and keep local development URIs separate.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Create a client credential",
+          "detail": "For a server-side confidential client, open Certificates & secrets and create either a client secret or certificate. Store the value immediately; do not put it in frontend code.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/graph/auth/auth-concepts",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Configure Graph permissions and consent behavior",
+      "goal": "Make the app request the right Graph permissions and be consentable by real customer tenants.",
+      "steps": [
+        {
+          "title": "Add delegated Microsoft Graph permissions",
+          "detail": "In API permissions, add Microsoft Graph delegated permissions matching your scope plan. Avoid application permissions unless you are building an admin-installed background service, because application permissions commonly require admin consent.",
+          "owner": "you",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/graph/auth/auth-concepts",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1",
+              "S5",
+              "S6"
+            ]
+          }
+        },
+        {
+          "title": "Use incremental consent where possible",
+          "detail": "Request basic sign-in and the smallest Outlook scope first; request write/send scopes only when the user enables features that need them. Microsoft recommends least-privileged permissions, and excessive permissions reduce consent rates.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/graph/permissions-reference",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5"
+            ]
+          }
+        },
+        {
+          "title": "Implement auth code flow with PKCE",
+          "detail": "Use the v2 authorization endpoint and include code_challenge/code_challenge_method. PKCE is required for SPAs and recommended for all client types.",
+          "owner": "agent",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Request offline_access for refresh tokens",
+          "detail": "Include offline_access when you need the agent to keep working after the user leaves. Handle refresh-token replacement and revocation by storing the newest refresh token and sending users through interactive sign-in when refresh fails.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/refresh-tokens",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S7",
+              "S9"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Test with your own account",
+      "goal": "Prove the OAuth redirect, token exchange, and a basic Graph Outlook API call work before external rollout.",
+      "steps": [
+        {
+          "title": "Build an authorization URL",
+          "detail": "Use https://login.microsoftonline.com/common/oauth2/v2.0/authorize for mixed organizational/consumer audiences, https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize for work/school accounts only, or a tenant ID for tenant-specific testing.",
+          "owner": "agent",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Open the consent flow with your test account",
+          "detail": "Sign in and consent with a test Microsoft 365 account. The authorization endpoint is live and returns the Microsoft sign-in page even before a real client is supplied.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P2"
+            ]
+          }
+        },
+        {
+          "title": "Exchange the code for tokens",
+          "detail": "POST to https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token with grant_type=authorization_code, client_id, redirect_uri, code, code_verifier, and client_secret for confidential clients. The token endpoint is live and rejects malformed/fake requests with HTTP 400 invalid_grant.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P3"
+            ]
+          }
+        },
+        {
+          "title": "Call a minimal Graph endpoint",
+          "detail": "Use the access token against Microsoft Graph, for example GET https://graph.microsoft.com/v1.0/me for User.Read, then a minimal Outlook endpoint matching your chosen scope. Delegated access requires both the app permission and the signed-in user’s own mailbox/calendar permission.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/graph/auth/auth-concepts",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Prepare for external tenants",
+      "goal": "Reduce consent blocks and make customer admin approval predictable.",
+      "steps": [
+        {
+          "title": "Set and verify the publisher domain",
+          "detail": "Configure a real publisher domain for the app. The publisher domain cannot be an *.onmicrosoft.com domain if you want publisher verification.",
+          "owner": "you",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/publisher-verification-overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S4"
+            ]
+          }
+        },
+        {
+          "title": "Complete Microsoft publisher verification",
+          "detail": "Use a verified Microsoft AI Cloud Partner Program account, associate the verified Partner One ID with the app registration, sign in with required Entra and Partner Center roles, and use Microsoft Entra MFA. Do this before broad customer rollout.",
+          "owner": "you",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/publisher-verification-overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S4"
+            ]
+          }
+        },
+        {
+          "title": "Wait for verification processing if prerequisites are ready",
+          "detail": "Microsoft says developers who already meet the prerequisites can be verified in minutes and that there are no charges for publisher verification or its prerequisites.",
+          "owner": "provider",
+          "effort_minutes": null,
+          "wait_days_max": 1,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/publisher-verification-overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S4"
+            ]
+          }
+        },
+        {
+          "title": "Prepare an admin-consent URL and customer instructions",
+          "detail": "Some tenants disable user consent or allow it only for low-impact permissions from verified publishers. Provide customer admins with a clear admin-consent path and a list of requested scopes with justifications.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/configure-user-consent",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Launch and maintain",
+      "goal": "Keep customer connections working as Microsoft tokens rotate and tenant policies change.",
+      "steps": [
+        {
+          "title": "Store replacement refresh tokens atomically",
+          "detail": "Refresh tokens replace themselves on use. Microsoft does not revoke the old refresh token immediately when a new one is issued, so securely delete the old token after storing the new one.",
+          "owner": "agent",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/refresh-tokens",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S9"
+            ]
+          }
+        },
+        {
+          "title": "Handle refresh-token revocation",
+          "detail": "Refresh tokens can be revoked before expiration due to credential changes, user action, or admin action. Treat invalid_grant on refresh as a reconnect-required state and redirect the user to interactive sign-in.",
+          "owner": "agent",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity-platform/refresh-tokens",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S9"
+            ]
+          }
+        },
+        {
+          "title": "Monitor tenant admin-consent failures",
+          "detail": "Log tenant ID, requested scopes, and Microsoft error details when consent fails. Some failures mean the customer admin must approve the app or adjust Identity > Applications > Enterprise apps > Consent and permissions > User consent settings.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/configure-user-consent",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "item": "Microsoft Entra app registration",
+      "detail": "Register the app before calling Microsoft Graph; Microsoft identity platform must know the app before it can be authorized.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "item": "Application Developer or higher role",
+      "detail": "The person creating the registration must sign in to Microsoft Entra admin center as at least Application Developer.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2"
+        ]
+      }
+    },
+    {
+      "item": "Azure account with active subscription",
+      "detail": "Microsoft’s app-registration quickstart lists an Azure account with an active subscription as a prerequisite.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2"
+        ]
+      }
+    },
+    {
+      "item": "Work or school tenant registration for publisher verification",
+      "detail": "Apps registered using a personal Microsoft account cannot be publisher verified.",
+      "when": "before_review",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "item": "Verified Microsoft AI Cloud Partner Program account and Partner One ID",
+      "detail": "Required to become publisher verified and show the verified publisher badge in consent prompts.",
+      "when": "before_review",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "item": "Publisher domain that is not *.onmicrosoft.com",
+      "detail": "Publisher verification requires a publisher domain, and the app publisher domain cannot be an *.onmicrosoft.com domain.",
+      "when": "before_review",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "item": "Microsoft Entra MFA and required Entra/Partner Center roles",
+      "detail": "The user initiating publisher verification must have the required roles and sign in with Microsoft Entra multifactor authentication.",
+      "when": "before_review",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "item": "Least-privilege Graph permission plan",
+      "detail": "Microsoft recommends requesting only the least-privileged Microsoft Graph permissions your app needs.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "scope": "User.Read",
+      "purpose": "Sign in the user and read basic profile for account identity.",
+      "tier": "basic",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "offline_access",
+      "purpose": "Receive refresh tokens so the agent can continue working after the user is no longer present.",
+      "tier": "basic",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S7",
+          "S9"
+        ]
+      }
+    },
+    {
+      "scope": "Mail.Read",
+      "purpose": "Read the signed-in user’s mailbox for summarization, search, triage, and context retrieval.",
+      "tier": "sensitive",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5",
+          "S6"
+        ]
+      }
+    },
+    {
+      "scope": "Mail.ReadWrite",
+      "purpose": "Read and modify mail, such as marking messages, moving messages, or creating drafts.",
+      "tier": "sensitive",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5",
+          "S6"
+        ]
+      }
+    },
+    {
+      "scope": "Mail.Send",
+      "purpose": "Send mail as the signed-in user when the agent sends replies or outbound messages.",
+      "tier": "sensitive",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5",
+          "S6"
+        ]
+      }
+    },
+    {
+      "scope": "Calendars.Read",
+      "purpose": "Read events and availability context for scheduling workflows.",
+      "tier": "sensitive",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "Calendars.ReadWrite",
+      "purpose": "Create, update, and delete calendar events for scheduling workflows.",
+      "tier": "sensitive",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5",
+          "S6"
+        ]
+      }
+    },
+    {
+      "scope": "Contacts.Read",
+      "purpose": "Read contacts for recipient suggestions and relationship context.",
+      "tier": "sensitive",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "Mail.ReadWrite.Shared",
+      "purpose": "Access shared mailboxes where the signed-in user already has mailbox permissions.",
+      "tier": "sensitive",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "Calendars.ReadWrite.Shared",
+      "purpose": "Access and modify shared calendars where the signed-in user already has calendar permissions.",
+      "tier": "sensitive",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    }
+  ],
+  "gotchas": [
+    {
+      "title": "No universal OAuth review does not mean frictionless customer consent",
+      "detail": "Microsoft does not run a single pre-distribution OAuth review for Graph apps, but tenants can block user consent, require admin workflow, or allow only verified-publisher/low-impact consent. Treat publisher verification and admin-consent support as production work.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S4"
+        ]
+      }
+    },
+    {
+      "title": "Publisher verification is not security certification",
+      "detail": "The blue verified publisher badge identifies the publisher; it does not mean Microsoft has certified the app’s security quality. Publisher Attestation, App Certification, and Entra application gallery listing are separate programs.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "title": "Personal-account app registrations cannot be publisher verified",
+      "detail": "If you register with a personal Microsoft account, you can block yourself from publisher verification. Use a Microsoft Entra work or school account from the start.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "title": "National cloud apps cannot currently be publisher verified",
+      "detail": "Apps registered in national cloud tenants cannot be publisher verified at this time. If you need the verified badge for commercial Microsoft 365 customers, register in a supported tenant.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "title": "Delegated permission is not enough if the user lacks mailbox/calendar rights",
+      "detail": "For delegated Graph access, both the app’s delegated scopes and the signed-in user’s own resource permissions must authorize the action.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "title": "SPA refresh tokens are short-lived",
+      "detail": "Default refresh-token lifetime is 24 hours for single-page applications and email one-time-passcode flows, but 90 days for other scenarios. A server-side confidential OAuth callback is usually better for an agent that needs durable background access.",
+      "impact": "delay",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S9"
+        ]
+      }
+    }
+  ],
+  "blockers": [
+    {
+      "symptom": "Users in external tenants cannot consent to the app, especially when requesting more than basic sign-in/profile permissions.",
+      "likely_cause": "The app is a newly registered multitenant app that is not publisher verified, and risk-based step-up consent or tenant consent restrictions block end-user consent.",
+      "what_to_do": "Complete publisher verification and provide an admin-consent flow for tenants whose policies still require administrator approval.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S4"
+        ]
+      }
+    },
+    {
+      "symptom": "A customer user sees that administrator approval is required or cannot grant the requested permissions.",
+      "likely_cause": "The tenant disabled user consent, the permission is admin-restricted, or the app requests permissions outside the tenant’s allowed low-impact policy.",
+      "what_to_do": "Ask a customer admin to approve through admin consent workflow or tenant-wide admin consent; reduce scopes if possible.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S7"
+        ]
+      }
+    },
+    {
+      "symptom": "Publisher verification cannot be completed for the app.",
+      "likely_cause": "The app was registered with a personal Microsoft account, the publisher domain is *.onmicrosoft.com, the Partner One ID is not associated, required roles are missing, or MFA is not satisfied.",
+      "what_to_do": "Re-register or transfer setup into a work/school Entra tenant, set a real publisher domain, verify the Microsoft AI Cloud Partner Program account, assign required roles, and sign in with Entra MFA.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "symptom": "Token exchange returns HTTP 400 invalid_grant.",
+      "likely_cause": "Malformed token request, invalid or expired authorization code, redirect URI mismatch, wrong tenant endpoint, reused code, missing PKCE verifier, or revoked refresh token.",
+      "what_to_do": "Log the full AADSTS error, verify redirect_uri exactly matches the registration, use the same code_verifier, exchange codes only once, and send the user through interactive sign-in when refresh tokens are revoked.",
+      "evidence": {
+        "type": "tested",
+        "refs": [
+          "P3"
+        ]
+      }
+    },
+    {
+      "symptom": "Graph call succeeds for one user but fails for another user in the same app.",
+      "likely_cause": "Delegated access depends on the signed-in user’s own mailbox/calendar/resource permissions in addition to the app’s scopes.",
+      "what_to_do": "Check the user’s Microsoft 365 permissions and whether the workflow needs shared mailbox/calendar scopes or admin-granted application permissions.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S5"
+        ]
+      }
+    }
+  ],
+  "agent_split": {
+    "agent_can": [
+      "Draft the least-privilege Microsoft Graph scope plan and one-line justifications for each requested scope.",
+      "Generate authorization URLs, token-exchange code, PKCE helpers, and Graph smoke-test scripts.",
+      "Prepare admin-consent customer instructions and troubleshooting text for tenant consent failures.",
+      "Create .env templates, callback route configuration, and refresh-token rotation handling.",
+      "Review redirect URI consistency and flag use of SPA vs confidential-client token lifetimes."
+    ],
+    "you_must": [
+      "Sign in to Microsoft Entra admin center and create the app registration, because this requires your Microsoft tenant/account and acceptance of Microsoft portal prompts.",
+      "Create and store client secrets or certificates in your secret manager, because they are production credentials.",
+      "Choose the legal/business publisher identity and complete Microsoft AI Cloud Partner Program/publisher verification, because it requires organizational authority, roles, domain ownership, and MFA.",
+      "Make DNS/domain changes for publisher domain verification if needed.",
+      "Work with customer admins when their tenant policies require admin consent or restrict user consent."
+    ]
+  },
+  "artifacts": [
+    {
+      "title": ".env template",
+      "kind": "env",
+      "content": "MICROSOFT_CLIENT_ID=<APPLICATION_CLIENT_ID>\nMICROSOFT_CLIENT_SECRET=<CLIENT_SECRET_OR_CERT_BACKED_SECRET>\nMICROSOFT_TENANT=common\nMICROSOFT_AUTHORITY=https://login.microsoftonline.com/${MICROSOFT_TENANT}\nMICROSOFT_AUTHORIZE_URL=https://login.microsoftonline.com/${MICROSOFT_TENANT}/oauth2/v2.0/authorize\nMICROSOFT_TOKEN_URL=https://login.microsoftonline.com/${MICROSOFT_TENANT}/oauth2/v2.0/token\nMICROSOFT_REDIRECT_URI=https://app.example.com/oauth/microsoft/callback\nMICROSOFT_SCOPES=\"openid profile User.Read offline_access Mail.Read Calendars.Read\"",
+      "note": "Use organizations instead of common if you only support work/school Microsoft 365 accounts."
+    },
+    {
+      "title": "Review-form-ready scope justification list",
+      "kind": "text",
+      "content": "User.Read — identify the signed-in Microsoft account and display basic profile information.\noffline_access — maintain the user-authorized connection and refresh tokens for background agent tasks.\nMail.Read — read mailbox content for user-requested summarization, search, and triage.\nMail.ReadWrite — create drafts, move messages, and update message state only when the user enables write actions.\nMail.Send — send messages only when the user explicitly asks the agent to send or reply.\nCalendars.Read — read events and availability for scheduling assistance.\nCalendars.ReadWrite — create or update calendar events when the user asks the agent to schedule meetings.\nContacts.Read — read contacts for recipient lookup and disambiguation.",
+      "note": "Remove scopes your product does not use before launch."
+    },
+    {
+      "title": "Example authorization URL with PKCE placeholders",
+      "kind": "url",
+      "content": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=<CLIENT_ID>&response_type=code&redirect_uri=https%3A%2F%2Fapp.example.com%2Foauth%2Fmicrosoft%2Fcallback&response_mode=query&scope=openid%20profile%20User.Read%20offline_access%20Mail.Read%20Calendars.Read&state=<CSRF_STATE>&code_challenge=<BASE64URL_SHA256_CODE_VERIFIER>&code_challenge_method=S256",
+      "note": "Use organizations or a specific tenant ID instead of common when appropriate."
+    },
+    {
+      "title": "Admin-consent URL template",
+      "kind": "url",
+      "content": "https://login.microsoftonline.com/<CUSTOMER_TENANT_ID>/adminconsent?client_id=<CLIENT_ID>&redirect_uri=https%3A%2F%2Fapp.example.com%2Foauth%2Fmicrosoft%2Fadmin-consent-callback&state=<STATE>",
+      "note": "Give this to customer admins when tenant policy prevents ordinary user consent."
+    }
+  ],
+  "oauth": {
+    "authorize_url": "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize",
+    "token_url": "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token",
+    "pkce": "supported",
+    "refresh_tokens": "Request offline_access. Refresh tokens replace themselves on use; default lifetime is 24 hours for SPAs and email one-time-passcode flows, and 90 days for other scenarios. They can be revoked early and should trigger interactive reauth.",
+    "access_token_lifetime": "Not established in the provided research; design as short-lived and refresh as needed.",
+    "evidence": {
+      "type": "sourced",
+      "refs": [
+        "S7",
+        "S8",
+        "S9"
+      ]
+    }
+  },
+  "uncertainties": [
+    "Microsoft does not publish a single general OAuth app-review SLA because there is no universal Graph OAuth review; confirm your exact customer rollout path by testing with an external tenant and its consent policy.",
+    "Exact Microsoft AI Cloud Partner Program business-verification turnaround varies by account status and was not found as a stable official SLA in the provided identity-platform docs.",
+    "Whether Microsoft 365 Publisher Attestation, Microsoft 365 App Certification, or an Entra application gallery listing is commercially necessary depends on procurement and distribution channel, not baseline Graph OAuth. Confirm with target enterprise customers.",
+    "The provided discovery probe used the literal {tenant} placeholder and failed; use common, organizations, consumers, or a real tenant ID when checking https://login.microsoftonline.com/{tenant}/v2.0/.well-known/openid-configuration."
+  ],
+  "score": {
+    "total": 3,
+    "max": 15,
+    "level": 2,
+    "label": "Moderate",
+    "blurb": "Self-serve with a few settings or limits to plan around.",
+    "breakdown": [
+      {
+        "key": "production_review",
+        "label": "Provider review before external users",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "review_wait",
+        "label": "Approval wait",
+        "value": "up to 5 days",
+        "points": 1
+      },
+      {
+        "key": "security_assessment",
+        "label": "Security assessment",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "business_verification",
+        "label": "Business / identity verification",
+        "value": "yes",
+        "points": 1
+      },
+      {
+        "key": "gated_access",
+        "label": "Gated API access",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "dev_mode_limits",
+        "label": "Limits before approval",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "customer_admin_approval",
+        "label": "Customer admin approval",
+        "value": "sometimes",
+        "points": 1
+      }
+    ]
+  },
+  "confidence": {
+    "level": "high",
+    "supported_pct": 100,
+    "official_sources": 9,
+    "tested": 3,
+    "sourced": 57,
+    "inferred": 0,
+    "downgraded": 0
+  },
+  "composio": {
+    "in_catalog": true,
+    "managed": true,
+    "toolkit": "outlook",
+    "name": "Outlook",
+    "logo": "https://logos.composio.dev/api/outlook",
+    "tool_count": 331
+  },
+  "research": {
+    "searches": 2,
+    "pages_read": 8,
+    "facts": 38,
+    "open_questions": [
+      "Microsoft does not publish a single general OAuth app-review SLA for Microsoft Graph app registrations because there is no universal pre-distribution OAuth review analogous to some consumer platforms; customer tenant admin approval and publisher verification govern most external-use friction.",
+      "Exact Microsoft AI Cloud Partner Program business-verification turnaround can vary by account status and was not found as a stable official SLA in the fetched Microsoft identity-platform docs.",
+      "Whether Microsoft 365 Publisher Attestation or Microsoft 365 App Certification is necessary depends on the app’s distribution channel and customer procurement requirements, not on baseline Microsoft Graph OAuth connectivity; this investigation did not fetch those program docs because they are separate from OAuth app enablement."
+    ]
+  },
+  "probes": [
+    {
+      "id": "P1",
+      "kind": "discovery",
+      "target": "https://login.microsoftonline.com/{tenant}/v2.0/.well-known/openid-configuration",
+      "ok": false,
+      "summary": "No OIDC/OAuth metadata document found at standard locations.",
+      "at": "2026-11-07T04:52:22.031Z"
+    },
+    {
+      "id": "P2",
+      "kind": "authorize_endpoint",
+      "target": "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize",
+      "ok": true,
+      "summary": "Endpoint is live and handles an unregistered client: HTTP 200.",
+      "data": {
+        "status": 200,
+        "location": null,
+        "body_excerpt": "Sign in to your account"
+      },
+      "at": "2026-11-07T04:52:22.031Z"
+    },
+    {
+      "id": "P3",
+      "kind": "token_endpoint",
+      "target": "https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token",
+      "ok": true,
+      "summary": "Token endpoint is live and rejects fake credentials: HTTP 400 \"invalid_grant\".",
+      "data": {
+        "status": 400,
+        "error": "invalid_grant",
+        "body_excerpt": "{\"error\":\"invalid_grant\",\"error_description\":\"AADSTS9002313: Invalid request. Request is malformed or invalid. Trace ID: 888cc03e-b962-4588-9b5f-44da2ec6a500 Co"
+      },
+      "at": "2026-11-07T04:52:22.031Z"
+    },
+    {
+      "id": "P4",
+      "kind": "developer_portal",
+      "target": "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade",
+      "ok": true,
+      "summary": "Portal is reachable (HTTP 200).",
+      "data": {
+        "status": 200,
+        "final_url": "https://entra.microsoft.com/"
+      },
+      "at": "2026-11-07T04:52:22.031Z"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/graph/auth/auth-concepts",
+      "title": "learn.microsoft.com",
+      "kind": "official_docs",
+      "id": "S1",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app",
+      "title": "learn.microsoft.com",
+      "kind": "official_docs",
+      "id": "S2",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/configure-user-consent",
+      "title": "learn.microsoft.com",
+      "kind": "official_docs",
+      "id": "S3",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/entra/identity-platform/publisher-verification-overview",
+      "title": "learn.microsoft.com",
+      "kind": "official_docs",
+      "id": "S4",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/graph/permissions-reference",
+      "title": "learn.microsoft.com",
+      "kind": "official_docs",
+      "id": "S5",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://learn.microsoft.com/graph/permissions-reference?view=graph-rest-1.0",
+      "title": "learn.microsoft.com",
+      "kind": "official_docs",
+      "id": "S6",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow",
+      "title": "learn.microsoft.com",
+      "kind": "official_docs",
+      "id": "S7",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc",
+      "title": "learn.microsoft.com",
+      "kind": "official_docs",
+      "id": "S8",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/entra/identity-platform/refresh-tokens",
+      "title": "learn.microsoft.com",
+      "kind": "official_docs",
+      "id": "S9",
+      "http_status": 200,
+      "reachable": "yes"
+    }
+  ],
+  "editorial": [
+    {
+      "path": "app.name",
+      "from": "Microsoft Outlook / Microsoft Graph",
+      "to": "Microsoft Outlook",
+      "reason": "Display name"
+    },
+    {
+      "path": "factors.review_wait",
+      "from": "0–0 days",
+      "to": "1–5 days",
+      "reason": "Rubric counts every provider-side wait on the production path, including verification, not just formal app reviews."
+    }
+  ],
+  "reviewed_at": "2026-11-07T04:58:59.656Z"
+}

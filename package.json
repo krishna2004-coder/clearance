@@ -1,0 +1,14 @@
+{
+  "name": "clearance",
+  "version": "1.0.0",
+  "description": "OAuth app setup & approval guides for agent builders — library + live agent generation.",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server.js",
+    "build:library": "node scripts/build-library.js && node scripts/bundle-data.js",
+    "editorial": "node scripts/editorial.js && node scripts/bundle-data.js",
+    "bundle": "node scripts/bundle-data.js"
+  }
+}

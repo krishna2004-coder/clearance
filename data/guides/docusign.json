@@ -1,0 +1,1081 @@
+{
+  "slug": "docusign",
+  "schema_version": 1,
+  "generated_at": "2026-11-07T04:54:07.054Z",
+  "generation_seconds": 125,
+  "models": {
+    "research": "gpt-5.5",
+    "writer": "gpt-5.5"
+  },
+  "input": "DocuSign eSignature API",
+  "app": {
+    "name": "DocuSign",
+    "provider": "Docusign",
+    "website": "https://www.docusign.com",
+    "category": "e-signature / agreement workflow API",
+    "developer_portal_url": "https://developers.docusign.com/",
+    "one_liner": "Free demo setup is easy; production requires Go-Live, a production account, and often partner handling."
+  },
+  "oauth_supported": "yes",
+  "headline": "Docusign OAuth is straightforward to test in the developer/demo environment, but production is gated by eSignature Go-Live promotion of your integration key. Plan on under an hour for first OAuth testing, several hands-on hours for a real integration, and 0–2 days of Docusign waiting for ordinary Go-Live review after you have the required production/partner setup.",
+  "factors": {
+    "production_review": {
+      "value": "required",
+      "detail": "You cannot use the same demo integration key directly in production: it must be promoted from a developer account to a production Docusign account through Go-Live. Some integrations are automatically promoted, but others enter “Pending approval” for Docusign review before the key becomes live.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6",
+          "S7"
+        ]
+      }
+    },
+    "review_wait": {
+      "min_days": 0,
+      "max_days": 2,
+      "detail": "Automatic promotion can complete with no manual wait. If Docusign requires manual review or more information, its general Go-Live docs say manual reviews are typically completed within 24–48 hours.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6",
+          "S7"
+        ]
+      }
+    },
+    "security_assessment": {
+      "value": "none",
+      "detail": "The supplied docs do not describe a CASA-like third-party security assessment or pentest requirement for ordinary eSignature OAuth Go-Live. Docusign Partner application review can require questionnaires, a demo video, a partner solution listing, and a sales battlecard, but that is not described as an external security audit.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S10"
+        ]
+      }
+    },
+    "business_verification": {
+      "value": "no",
+      "detail": "The docs do not state that every developer must prove a legal entity, domain, or publisher identity before production. However, if Go-Live shows “Declined” with a “Verification required” link, the production account must complete Docusign’s one-time identity verification before automatic promotion can proceed.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    "gated_access": {
+      "value": "partner_program",
+      "detail": "Development access for the eSignature REST API only requires a free developer/demo account, but launching a multi-customer public integration requires joining the Docusign Partner Program. Go-Live also requires a paid production account as the management account, unless an ISV partner receives a free integration-key management account through the partner program.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S6",
+          "S10"
+        ]
+      }
+    },
+    "dev_mode_limits": {
+      "value": "other",
+      "detail": "Development happens in a separate Docusign developer/demo environment. External production users cannot use the integration key until it is promoted through Go-Live to production; the docs found do not state a simple pre-approval external-user cap.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S6"
+        ]
+      }
+    },
+    "customer_admin_approval": {
+      "value": "sometimes",
+      "detail": "Most Docusign auth workflows require each user to grant explicit consent. A customer’s Docusign Admin can instead grant consent to an external app for users in reserved domains, but Docusign Admin is not enabled for all accounts.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5",
+          "S9"
+        ]
+      }
+    }
+  },
+  "effort": {
+    "time_to_first_test_minutes": 45,
+    "active_hours_min": 5,
+    "active_hours_max": 12,
+    "production_days_min": 1,
+    "production_days_max": 3,
+    "explanation": "First test is fast if you already have redirect handling and can create a free developer account. Production time is driven by implementing Authorization Code/PKCE, storing refresh tokens, using userinfo.base_uri, proving you obey Docusign API polling limits, obtaining a paid production management account or partner path, and completing Go-Live. Calendar wait is usually 0–2 days for Docusign review once submitted; joining the Partner Program or completing partner app-review materials can add additional business-process time not specified in the supplied docs."
+  },
+  "start_here": {
+    "action": "Create a free Docusign developer account and add an eSignature app on Apps and Keys.",
+    "url": "https://developers.docusign.com/platform/build-integration/",
+    "why": "The developer account gives you the demo environment and creates the integration key GUID, which is the OAuth client ID you will later promote through Go-Live."
+  },
+  "phases": [
+    {
+      "name": "Prepare",
+      "goal": "Decide the OAuth flow, account path, and production classification before writing code.",
+      "steps": [
+        {
+          "title": "Choose Authorization Code for user-connected accounts",
+          "detail": "For an AI agent whose end-users connect their own Docusign accounts, use Public Authorization Code Grant with PKCE for a public/native or SPA-style client, or Confidential Authorization Code Grant for a backend that can protect a client secret. Do not use JWT unless you are acting through a system account with impersonation consent.",
+          "owner": "you",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/build-integration/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1",
+              "S3",
+              "S5"
+            ]
+          }
+        },
+        {
+          "title": "Plan your minimum scopes",
+          "detail": "Start with `signature` for eSignature REST API operations such as creating and sending envelopes. Add `extended` if you need refresh tokens that receive a full new lifetime when refreshed; avoid `impersonation` for this user-facing Authorization Code flow because Docusign states it is only used by JWT authentication.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S4",
+              "S5",
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Identify your production path",
+          "detail": "If this is a multi-customer SaaS/AI-agent integration where customers authorize directly with their own Docusign accounts, treat it as a public integration and plan for the Docusign Partner Program. Also identify the paid production account that will manage the promoted key, unless Docusign provisions a special production account through a partner path.",
+          "owner": "you",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/docs/esign-rest-api/go-live/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6",
+              "S10"
+            ]
+          }
+        },
+        {
+          "title": "Design around Go-Live limits",
+          "detail": "Use Docusign Connect webhooks or conservative polling. Excessive GET envelope-status polling can cause Go-Live review failure; Docusign recommends Connect or polling at 20-minute intervals rather than 15.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/docs/esign-rest-api/esign101/rules-and-limits/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S8"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register the app in the developer environment",
+      "goal": "Create the demo integration key and OAuth redirect configuration.",
+      "steps": [
+        {
+          "title": "Sign in to the Docusign developer portal",
+          "detail": "Create or sign in to a free Docusign developer/demo account. This account is separate from production and is used to develop and test integrations.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Open Apps and Keys",
+          "detail": "In the Docusign account UI, go to the Apps and Keys page and add an app manually, or use Quickstart if you want Docusign to scaffold a sample.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/build-integration/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Create the app and record the integration key",
+          "detail": "After app creation, Docusign assigns a GUID integration key. Treat this GUID as your OAuth `client_id`. If using Confidential Authorization Code Grant, generate and store a secret key as your `client_secret`.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/build-integration/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Add demo redirect URIs",
+          "detail": "Configure exact redirect URIs for your local or staging callback, for example `http://localhost:3000/oauth/docusign/callback` and your HTTPS staging callback. Also add optional privacy policy and terms-of-use links if you have them ready.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/build-integration/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Configure OAuth and API calls",
+      "goal": "Wire the correct demo endpoints, token exchange, refresh handling, and account base URI lookup.",
+      "steps": [
+        {
+          "title": "Use demo OAuth endpoints while testing",
+          "detail": "In demo, send users to `https://account-d.docusign.com/oauth/auth` and exchange codes at `https://account-d.docusign.com/oauth/token`. Switch to `https://account.docusign.com/oauth/auth` and `https://account.docusign.com/oauth/token` only after production Go-Live.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/reference/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Implement PKCE for public clients",
+          "detail": "For Public Authorization Code Grant, generate a `code_verifier`, derive an S256 `code_challenge`, send the challenge in the authorization request, and send the verifier to the token endpoint. The authorization code is only valid for two minutes.",
+          "owner": "agent",
+          "effort_minutes": 90,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/public-authcode-get-token/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Persist refresh-token metadata",
+          "detail": "Authorization Code Grant can return refresh tokens. Docusign says refresh-token lifetime is typically around 30 days but can vary; with `extended`, refreshed refresh tokens receive a full new lifetime, while SPA configurations get shorter 24-hour refresh tokens that cannot be extended.",
+          "owner": "agent",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/public-authcode-get-token/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Call userinfo after token exchange",
+          "detail": "Call `GET /oauth/userinfo` on the same auth-service host to discover the user’s accounts and `base_uri`. Use that `base_uri` to build eSignature REST API calls such as `https://{server}.docusign.net/restapi/v2.1/`.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/reference/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2",
+              "S6"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Test with your own account",
+      "goal": "Prove the consent flow and eSignature API behavior before Go-Live.",
+      "steps": [
+        {
+          "title": "Run a demo authorization request",
+          "detail": "Use your demo integration key, demo authorize endpoint, exact redirect URI, `response_type=code`, requested scopes such as `signature extended`, and PKCE parameters if using Public Authorization Code Grant.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/public-authcode-get-token/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3",
+              "S4"
+            ]
+          }
+        },
+        {
+          "title": "Exchange the code immediately",
+          "detail": "Exchange the code within two minutes at the demo token endpoint. If you see `invalid_grant`, check for an expired code, wrong environment, wrong redirect URI, wrong verifier, or reused code.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/public-authcode-get-token/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Create and send a minimal envelope in demo",
+          "detail": "Use the account ID and base URI from userinfo, then call the eSignature REST API with the `signature` scope to create/send a test envelope or generate a signing-session link.",
+          "owner": "agent",
+          "effort_minutes": 90,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2",
+              "S4",
+              "S5"
+            ]
+          }
+        },
+        {
+          "title": "Verify rate-limit-safe status handling",
+          "detail": "Do not build tight polling loops around envelope status. Use Connect webhooks where possible, or poll no more frequently than Docusign’s Go-Live-safe guidance.",
+          "owner": "agent",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/docs/esign-rest-api/esign101/rules-and-limits/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S8"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Go live",
+      "goal": "Promote the integration key to production and configure production-only settings.",
+      "steps": [
+        {
+          "title": "Choose the production management account",
+          "detail": "Use a paid production Docusign account where you have administrator or developer access. If you are going through the partner path, use the special production account if Docusign provisions one after partner application review.",
+          "owner": "you",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/docs/esign-rest-api/go-live/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6",
+              "S10"
+            ]
+          }
+        },
+        {
+          "title": "Select the correct integration classification",
+          "detail": "For a multi-customer app that customers authorize directly with their own Docusign accounts, select the public integration classification. Docusign says public integration launch requires joining the Docusign Partner Program.",
+          "owner": "you",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/docs/esign-rest-api/go-live/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6"
+            ]
+          }
+        },
+        {
+          "title": "Submit the integration key for Go-Live",
+          "detail": "From the Developer Console/Go-Live flow, promote the integration key from the developer account to the selected production account. The key may be automatically promoted or may move to `Pending approval` for Docusign review.",
+          "owner": "you",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/docs/esign-rest-api/go-live/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6",
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Wait for Docusign if the status is Pending approval",
+          "detail": "If Docusign requires review, wait for the approval email and status change to `App is live`. Docusign says manual reviews are typically completed within 24–48 hours.",
+          "owner": "provider",
+          "effort_minutes": null,
+          "wait_days_max": 2,
+          "url": "https://developers.docusign.com/platform/go-live/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6",
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Recreate production secrets and redirect URIs",
+          "detail": "After promotion, the integration key is duplicated into production, but secrets and redirect URIs are not duplicated. Add production client secrets and production redirect URIs separately before sending real users through OAuth.",
+          "owner": "you",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/docs/esign-rest-api/go-live/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Launch and maintain",
+      "goal": "Operate the production connection flow reliably for customer accounts.",
+      "steps": [
+        {
+          "title": "Switch environment variables to production hosts",
+          "detail": "Use `https://account.docusign.com/oauth/auth`, `https://account.docusign.com/oauth/token`, and `https://account.docusign.com/oauth/userinfo` for production OAuth. Build REST calls from the `base_uri` returned by userinfo, not from a hardcoded data center.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/reference/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S2",
+              "S6"
+            ]
+          }
+        },
+        {
+          "title": "Handle individual and admin consent paths",
+          "detail": "Default to individual user consent. For enterprise customers that want tenant-wide consent, document Docusign Admin external-app consent, while noting Docusign Admin is not enabled for all accounts and customers may need to contact sales.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/consent/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5",
+              "S9"
+            ]
+          }
+        },
+        {
+          "title": "Refresh access tokens before expiry",
+          "detail": "Use the token response `expires_in` and refresh when the token is close to expiring, for example within 30 minutes as Docusign recommends. Rotate and persist the new refresh token according to whether `extended` applies.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/platform/auth/public-authcode-get-token/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Monitor API usage for Go-Live rule regressions",
+          "detail": "Keep envelope-status polling and other GET-heavy operations within Docusign’s limits. A pattern that would fail Go-Live review is also a production reliability risk.",
+          "owner": "agent",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://developers.docusign.com/docs/esign-rest-api/esign101/rules-and-limits/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S8"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "item": "Free Docusign developer/demo account",
+      "detail": "Required to develop and test the eSignature REST API integration and create the demo integration key.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "item": "Integration key GUID",
+      "detail": "Created when you add an app in Apps and Keys; this GUID is the OAuth client ID.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "item": "Redirect URIs",
+      "detail": "Configure exact callback URLs in the app. Production redirect URIs must be configured separately after Go-Live because they are not copied from demo.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S6"
+        ]
+      }
+    },
+    {
+      "item": "Paid production management account or partner-provisioned equivalent",
+      "detail": "Go-Live requires a paid production account to serve as the management account, though ISV partners may apply for a free integration-key management account through the partner program.",
+      "when": "before_review",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6",
+          "S10"
+        ]
+      }
+    },
+    {
+      "item": "Docusign Partner Program for public integrations",
+      "detail": "For an app built for multiple Docusign customers who authorize it directly, Docusign classifies it as a public integration and says you need to join the Docusign Partner Program to launch it.",
+      "when": "before_review",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    {
+      "item": "OAuth 2.0 authentication and resource-limit compliance",
+      "detail": "Go-Live criteria include OAuth 2.0 authentication, applicable API resource limits, and the correct integration classification.",
+      "when": "before_review",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S7"
+        ]
+      }
+    },
+    {
+      "item": "Partner review materials, if using partner application review",
+      "detail": "Docusign Partners developing General Connectors must undergo app review for each integration and submit materials such as a technical questionnaire, demo video, partner solution listing, and sales battlecard.",
+      "when": "before_review",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S10"
+        ]
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "scope": "signature",
+      "purpose": "Main eSignature REST API scope; required for most operations such as creating/sending envelopes and obtaining signing-session links.",
+      "tier": "basic",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4",
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "extended",
+      "purpose": "Use with Authorization Code flow when you need refreshed refresh tokens to receive a full new lifetime, typically around 30 days; without it, new refresh tokens keep the original expiration date.",
+      "tier": "basic",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "impersonation",
+      "purpose": "Allows acting on a user’s behalf when the user is not present, but Docusign states it is only used by JWT authentication; do not request it for a normal end-user Authorization Code connection.",
+      "tier": "basic",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    }
+  ],
+  "gotchas": [
+    {
+      "title": "Demo and production are separate OAuth environments",
+      "detail": "Use `account-d.docusign.com` for demo and `account.docusign.com` for production. Mixing demo client IDs, production endpoints, and production redirect URIs commonly leads to failed token exchange or consent confusion.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S2",
+          "S6"
+        ]
+      }
+    },
+    {
+      "title": "Production promotion duplicates the key but not secrets or redirect URIs",
+      "detail": "After Go-Live, the integration key is duplicated into production. Secrets and redirect URIs are not copied, so you must create production secrets and production callbacks separately.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    {
+      "title": "Public multi-customer launch is not just a toggle",
+      "detail": "Docusign says a public integration is for multiple Docusign customers authorizing directly, and launching one requires the Docusign Partner Program. This is separate from the technical Go-Live promotion step.",
+      "impact": "delay",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    {
+      "title": "Go-Live eligibility is not fully predictable from public docs",
+      "detail": "Docusign says some integrations are automatically promoted and others go to manual review, but the supplied public docs do not enumerate exactly which integrations qualify for automatic promotion. The status appears after selecting a production account.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    {
+      "title": "Envelope-status polling can fail Go-Live review",
+      "detail": "Docusign warns that excessive GET envelope-status calls can cause Go-Live review failure. Prefer Connect webhooks or polling at 20-minute intervals rather than 15.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S8"
+        ]
+      }
+    },
+    {
+      "title": "Customer-wide admin consent depends on Docusign Admin availability",
+      "detail": "Customers can use Docusign Admin to grant external-app consent across reserved domains, but Docusign Admin is not enabled for all accounts. Some customers may need to contact their Docusign sales representative.",
+      "impact": "delay",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5",
+          "S9"
+        ]
+      }
+    },
+    {
+      "title": "OAuth discovery exists but is not documented in the supplied docs",
+      "detail": "A probe found metadata at `https://account.docusign.com/.well-known/openid-configuration`, but the supplied public docs did not list a discovery URL, and PKCE methods were not advertised in that metadata.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "tested",
+        "refs": [
+          "P1"
+        ]
+      }
+    }
+  ],
+  "blockers": [
+    {
+      "symptom": "Go-Live status shows `Pending approval`.",
+      "likely_cause": "Your integration was not eligible for automatic promotion, or Docusign needs additional review/information.",
+      "what_to_do": "Wait for Docusign review and approval email; Docusign says manual reviews are typically completed within 24–48 hours. Be ready to show OAuth usage, correct integration classification, and API-limit compliance.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6",
+          "S7"
+        ]
+      }
+    },
+    {
+      "symptom": "Go-Live shows `Declined` with a `Verification required` link.",
+      "likely_cause": "The production account must complete Docusign’s one-time identity verification before automatic promotion can proceed.",
+      "what_to_do": "Have the production-account owner complete the linked identity verification, then retry the Go-Live process.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    {
+      "symptom": "You cannot launch a multi-customer public integration.",
+      "likely_cause": "Docusign classifies direct multi-customer authorization as a public integration, and public integration launch requires the Docusign Partner Program.",
+      "what_to_do": "Start the Docusign Partner Program path and prepare partner/app-review materials if applicable. If your integration is not actually public, re-check the Go-Live classification.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6",
+          "S10"
+        ]
+      }
+    },
+    {
+      "symptom": "Token exchange returns `invalid_grant`.",
+      "likely_cause": "The authorization code expired, was reused, was issued in the wrong environment, or the PKCE verifier/redirect URI does not match. A probe confirmed the token endpoint is live and returns `invalid_grant` for invalid requests.",
+      "what_to_do": "Exchange the code within two minutes, use the same demo/production host throughout, send the exact redirect URI, and verify the S256 PKCE verifier/challenge pair.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3",
+          "P3"
+        ]
+      }
+    },
+    {
+      "symptom": "Production users cannot complete OAuth after Go-Live.",
+      "likely_cause": "Secrets and redirect URIs were not recreated in the production app configuration after the integration key was promoted.",
+      "what_to_do": "Open the production app settings, create a production secret if using a confidential client, and add every production callback URL exactly.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    {
+      "symptom": "Go-Live review fails because of API usage patterns.",
+      "likely_cause": "Excessive polling or GET envelope-status calls violate Docusign rules and limits.",
+      "what_to_do": "Replace polling with Docusign Connect webhooks where possible, or poll at Docusign’s recommended cadence such as 20-minute intervals rather than 15.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S8"
+        ]
+      }
+    }
+  ],
+  "agent_split": {
+    "agent_can": [
+      "Draft the OAuth implementation plan for Public vs Confidential Authorization Code Grant.",
+      "Generate PKCE helper code, token-exchange code, refresh-token rotation logic, and userinfo/base_uri handling.",
+      "Prepare a scope-justification table for `signature` and `extended`.",
+      "Check that demo vs production endpoints and redirect URIs are not mixed.",
+      "Draft Go-Live review answers, partner technical questionnaire responses, and a demo-script outline.",
+      "Add webhook-first or low-polling envelope-status logic to avoid Go-Live rule failures."
+    ],
+    "you_must": [
+      "Create and sign in to the Docusign developer/demo account because it requires account ownership and terms acceptance.",
+      "Create the app in Apps and Keys and securely copy the integration key/client secret.",
+      "Choose and pay for the production management account, or work through Docusign’s partner path.",
+      "Join the Docusign Partner Program if launching a multi-customer public integration.",
+      "Submit Go-Live and respond to any Docusign review or identity-verification prompts.",
+      "Record any required demo video and provide partner/business materials, because these involve your product, legal, and sales context."
+    ]
+  },
+  "artifacts": [
+    {
+      "title": "Docusign OAuth .env template",
+      "kind": "env",
+      "content": "# Demo environment\nDOCUSIGN_ENV=demo\nDOCUSIGN_AUTH_BASE_URL=https://account-d.docusign.com\nDOCUSIGN_AUTHORIZE_URL=https://account-d.docusign.com/oauth/auth\nDOCUSIGN_TOKEN_URL=https://account-d.docusign.com/oauth/token\nDOCUSIGN_USERINFO_URL=https://account-d.docusign.com/oauth/userinfo\n\n# Production values after Go-Live\n# DOCUSIGN_ENV=production\n# DOCUSIGN_AUTH_BASE_URL=https://account.docusign.com\n# DOCUSIGN_AUTHORIZE_URL=https://account.docusign.com/oauth/auth\n# DOCUSIGN_TOKEN_URL=https://account.docusign.com/oauth/token\n# DOCUSIGN_USERINFO_URL=https://account.docusign.com/oauth/userinfo\n\nDOCUSIGN_CLIENT_ID=<INTEGRATION_KEY_GUID>\nDOCUSIGN_CLIENT_SECRET=<CLIENT_SECRET_IF_CONFIDENTIAL_CLIENT>\nDOCUSIGN_REDIRECT_URI=https://<YOUR_APP_DOMAIN>/oauth/docusign/callback\nDOCUSIGN_SCOPES=signature extended\n\n# Store per connected user/account after OAuth\n# DOCUSIGN_ACCOUNT_ID=<ACCOUNT_ID_FROM_USERINFO>\n# DOCUSIGN_BASE_URI=<BASE_URI_FROM_USERINFO>",
+      "note": "Use demo hosts before Go-Live and production hosts only after the integration key is live in production."
+    },
+    {
+      "title": "Review-form-ready scope justifications",
+      "kind": "text",
+      "content": "signature — Required for the core eSignature REST API operations our users request, including creating and sending envelopes and generating signing-session links.\nextended — Required so the app can maintain a user-authorized connection using refresh tokens without asking the user to reconnect every time the access token expires. We store refresh tokens securely and rotate them on refresh.\n\nNot requested: impersonation — Docusign states this scope is only used by JWT authentication; this integration uses user-facing Authorization Code consent.",
+      "note": "Keep the requested scope set minimal for Go-Live and customer trust."
+    },
+    {
+      "title": "Example demo authorization URL with PKCE placeholders",
+      "kind": "url",
+      "content": "https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20extended&client_id=<INTEGRATION_KEY_GUID>&redirect_uri=https%3A%2F%2F<YOUR_APP_DOMAIN>%2Foauth%2Fdocusign%2Fcallback&state=<OPAQUE_CSRF_STATE>&code_challenge=<BASE64URL_SHA256_CODE_VERIFIER>&code_challenge_method=S256",
+      "note": "For production, change the host to `https://account.docusign.com` and use a redirect URI configured on the production app."
+    },
+    {
+      "title": "Minimal connected-account record",
+      "kind": "json",
+      "content": "{\n  \"provider\": \"docusign\",\n  \"docusign_user_id\": \"<SUB_FROM_USERINFO_OR_USER_ID>\",\n  \"account_id\": \"<ACCOUNT_ID_FROM_USERINFO>\",\n  \"account_name\": \"<ACCOUNT_NAME_FROM_USERINFO>\",\n  \"base_uri\": \"<BASE_URI_FROM_USERINFO>\",\n  \"access_token_expires_at\": \"<ISO_TIMESTAMP_FROM_EXPIRES_IN>\",\n  \"refresh_token_expires_at\": \"<ISO_TIMESTAMP_IF_KNOWN>\",\n  \"scopes\": [\"signature\", \"extended\"]\n}",
+      "note": "Docusign API calls should use the connected account’s `base_uri`, not a hardcoded server."
+    }
+  ],
+  "oauth": {
+    "authorize_url": "https://account.docusign.com/oauth/auth",
+    "token_url": "https://account.docusign.com/oauth/token",
+    "pkce": "supported",
+    "refresh_tokens": "Authorization Code Grant can return refresh tokens. Lifetime is typically around 30 days but can vary; `extended` gives refreshed refresh tokens a full new lifetime, while SPA refresh tokens are shorter-lived at 24 hours and cannot be extended.",
+    "access_token_lifetime": "Use the `expires_in` value returned by the token endpoint; the supplied docs do not state a fixed lifetime and recommend refreshing when close to expiration, for example within 30 minutes.",
+    "evidence": {
+      "type": "sourced",
+      "refs": [
+        "S2",
+        "S3"
+      ]
+    }
+  },
+  "uncertainties": [
+    "The supplied public docs do not clearly enumerate which integrations receive automatic Go-Live promotion versus mandatory manual review; confirm by running Go-Live against your selected production account.",
+    "Exact paid production plan/SKU requirements for the management account are not stated in the supplied developer docs; confirm with Docusign Sales or your account representative before committing launch dates.",
+    "Partner Program approval timelines are not specified in the supplied docs; ask Docusign for the expected timeline if your integration is a public multi-customer app.",
+    "The supplied docs do not list an official OAuth/OIDC discovery metadata URL, although a probe found one at `https://account.docusign.com/.well-known/openid-configuration`. Do not depend on discovery behavior without testing in your target environment.",
+    "The docs found do not state a general maximum number of external users for an unpromoted developer-mode app; treat demo as non-production and plan Go-Live before any real customer use."
+  ],
+  "score": {
+    "total": 8,
+    "max": 15,
+    "level": 4,
+    "label": "Hard",
+    "blurb": "Formal review, verification or gated access; plan weeks.",
+    "breakdown": [
+      {
+        "key": "production_review",
+        "label": "Provider review before external users",
+        "value": "required",
+        "points": 3
+      },
+      {
+        "key": "review_wait",
+        "label": "Approval wait",
+        "value": "up to 2 days",
+        "points": 0
+      },
+      {
+        "key": "security_assessment",
+        "label": "Security assessment",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "business_verification",
+        "label": "Business / identity verification",
+        "value": "no",
+        "points": 0
+      },
+      {
+        "key": "gated_access",
+        "label": "Gated API access",
+        "value": "partner_program",
+        "points": 3
+      },
+      {
+        "key": "dev_mode_limits",
+        "label": "Limits before approval",
+        "value": "other",
+        "points": 1
+      },
+      {
+        "key": "customer_admin_approval",
+        "label": "Customer admin approval",
+        "value": "sometimes",
+        "points": 1
+      }
+    ]
+  },
+  "confidence": {
+    "level": "high",
+    "supported_pct": 100,
+    "official_sources": 10,
+    "tested": 1,
+    "sourced": 55,
+    "inferred": 0,
+    "downgraded": 0
+  },
+  "composio": {
+    "in_catalog": true,
+    "managed": false,
+    "toolkit": "docusign",
+    "name": "DocuSign",
+    "logo": "https://logos.composio.dev/api/docusign",
+    "tool_count": 338
+  },
+  "research": {
+    "searches": 2,
+    "pages_read": 8,
+    "facts": 43,
+    "open_questions": [
+      "Docusign’s public docs do not list an OAuth/OpenID Connect discovery metadata URL; discovery_url is therefore unknown/null.",
+      "The current public docs do not clearly enumerate exactly which integrations qualify for automatic promotion versus mandatory Go-Live review; Docusign says the status appears after selecting a production account.",
+      "The public docs found do not state a general maximum number of external users for an unreviewed developer-mode app; developer/demo environment is separate from production and production requires Go-Live.",
+      "The public docs found do not specify a Docusign-specific security assessment, pentest, or CASA-like review for ordinary eSignature public integrations beyond Partner application review materials and identity verification where prompted.",
+      "Exact pricing/plan SKU requirements for the required paid production management account are not stated in the developer docs; Docusign directs developers to production plan details, Sales, or an account representative."
+    ]
+  },
+  "probes": [
+    {
+      "id": "P1",
+      "kind": "discovery",
+      "target": "https://account.docusign.com/.well-known/openid-configuration",
+      "ok": true,
+      "summary": "Metadata published. PKCE methods: not advertised.",
+      "data": {
+        "issuer": "https://account.docusign.com/",
+        "authorization_endpoint": "https://account.docusign.com/oauth/auth",
+        "token_endpoint": "https://account.docusign.com/oauth/token",
+        "code_challenge_methods_supported": null,
+        "grant_types_supported": [
+          "authorization_code",
+          "implicit"
+        ],
+        "scopes_supported_count": 347
+      },
+      "at": "2026-11-07T04:52:51.937Z"
+    },
+    {
+      "id": "P2",
+      "kind": "authorize_endpoint",
+      "target": "https://account.docusign.com/oauth/auth",
+      "ok": true,
+      "summary": "Endpoint is live and handles an unregistered client: HTTP 200 (mentions \"client_id\").",
+      "data": {
+        "status": 200,
+        "location": null,
+        "body_excerpt": "Docusign"
+      },
+      "at": "2026-11-07T04:52:51.937Z"
+    },
+    {
+      "id": "P3",
+      "kind": "token_endpoint",
+      "target": "https://account.docusign.com/oauth/token",
+      "ok": true,
+      "summary": "Token endpoint is live and rejects fake credentials: HTTP 400 \"invalid_grant\".",
+      "data": {
+        "status": 400,
+        "error": "invalid_grant",
+        "body_excerpt": "{\"error\":\"invalid_grant\"}"
+      },
+      "at": "2026-11-07T04:52:51.937Z"
+    },
+    {
+      "id": "P4",
+      "kind": "developer_portal",
+      "target": "https://developers.docusign.com/",
+      "ok": true,
+      "summary": "Portal is reachable (HTTP 200).",
+      "data": {
+        "status": 200,
+        "final_url": "https://developers.docusign.com/"
+      },
+      "at": "2026-11-07T04:52:51.937Z"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://developers.docusign.com/platform/build-integration/",
+      "title": "developers.docusign.com",
+      "kind": "official_docs",
+      "id": "S1",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.docusign.com/platform/auth/reference/",
+      "title": "developers.docusign.com",
+      "kind": "official_docs",
+      "id": "S2",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.docusign.com/platform/auth/public-authcode-get-token/",
+      "title": "developers.docusign.com",
+      "kind": "official_docs",
+      "id": "S3",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.docusign.com/platform/auth/",
+      "title": "developers.docusign.com",
+      "kind": "official_docs",
+      "id": "S4",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.docusign.com/platform/auth/consent/obtaining-admin-consent-external/",
+      "title": "developers.docusign.com",
+      "kind": "official_docs",
+      "id": "S5",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.docusign.com/docs/esign-rest-api/go-live/",
+      "title": "developers.docusign.com",
+      "kind": "official_docs",
+      "id": "S6",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.docusign.com/platform/go-live/",
+      "title": "developers.docusign.com",
+      "kind": "official_docs",
+      "id": "S7",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.docusign.com/docs/esign-rest-api/esign101/rules-and-limits/",
+      "title": "developers.docusign.com",
+      "kind": "official_docs",
+      "id": "S8",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.docusign.com/platform/auth/consent/",
+      "title": "developers.docusign.com",
+      "kind": "official_docs",
+      "id": "S9",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.docusign.com/partner/app-review-process/",
+      "title": "developers.docusign.com",
+      "kind": "official_docs",
+      "id": "S10",
+      "http_status": 200,
+      "reachable": "yes"
+    }
+  ],
+  "editorial": [
+    {
+      "path": "app.name",
+      "from": "Docusign eSignature API",
+      "to": "DocuSign",
+      "reason": "Display name"
+    }
+  ],
+  "reviewed_at": "2026-11-07T04:58:59.655Z"
+}

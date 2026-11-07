@@ -1,0 +1,1023 @@
+{
+  "slug": "notion",
+  "schema_version": 1,
+  "generated_at": "2026-11-07T04:51:34.141Z",
+  "generation_seconds": 113,
+  "models": {
+    "research": "gpt-5.5",
+    "writer": "gpt-5.5"
+  },
+  "input": "Notion (public integration)",
+  "app": {
+    "name": "Notion",
+    "provider": "Notion Labs, Inc.",
+    "website": "https://www.notion.com",
+    "category": "workspace / notes / collaboration",
+    "developer_portal_url": "https://www.notion.so/developers",
+    "one_liner": "Create a public OAuth integration; no provider review unless you want Marketplace listing."
+  },
+  "oauth_supported": "yes",
+  "headline": "Notion is a low-friction OAuth provider: a public integration can be installed by external workspaces without a mandatory production review. Expect roughly 2–5 hands-on hours and no Notion approval wait, with the main gates being workspace-owner access, immutable install-scope choice, and customer Enterprise admin controls.",
+  "factors": {
+    "production_review": {
+      "value": "none",
+      "detail": "For ordinary public OAuth distribution, Notion says Marketplace submission or review is not required after client credentials and redirect URIs are configured. Marketplace/listing review is separate and only matters if you want discoverability in Notion’s connections gallery.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S2"
+        ]
+      }
+    },
+    "review_wait": {
+      "min_days": 0,
+      "max_days": 0,
+      "detail": "There is no provider approval wait for a plain public OAuth integration. If you separately pursue a Marketplace/gallery listing, the fetched docs did not expose a review SLA.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    "security_assessment": {
+      "value": "none",
+      "detail": "The official docs found do not require a third-party audit, pentest, CASA-style assessment, or formal security review for ordinary public OAuth installation. Treat this as separate from any optional Marketplace/listing expectations.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    "business_verification": {
+      "value": "no",
+      "detail": "The fetched docs require configuring OAuth redirect URIs but do not state legal-entity verification, publisher verification, or domain verification for a non-Marketplace public OAuth integration. Notion also explicitly says domain verification is not required for Enterprise page-access management.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S3"
+        ]
+      }
+    },
+    "gated_access": {
+      "value": "none",
+      "detail": "The docs found do not say a paid Notion plan is required to create a public OAuth integration. Customer-side rate budgets vary by the installing workspace’s plan, but that is runtime quota, not a developer access gate.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S4"
+        ]
+      }
+    },
+    "dev_mode_limits": {
+      "value": "none",
+      "detail": "A public connection whose installation scope is set to “Any workspace” can be installed by anyone in their own workspace. Notion does not describe a user cap or sandbox-only mode before review for public OAuth integrations.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S2"
+        ]
+      }
+    },
+    "customer_admin_approval": {
+      "value": "sometimes",
+      "detail": "Most installs depend on the installing user selecting pages/databases they have full access to. On Enterprise plans, workspace owners can restrict which connections members may install and maintain an approved connections list, so some customers may need admin allowlisting.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S3"
+        ]
+      }
+    }
+  },
+  "effort": {
+    "time_to_first_test_minutes": 30,
+    "active_hours_min": 2,
+    "active_hours_max": 5,
+    "production_days_min": 0,
+    "production_days_max": 0,
+    "explanation": "A competent developer can create the integration, choose capabilities, add redirect URIs, exchange an authorization code, and make a Notion API call in the same day. The range grows if you need multi-tenant token storage, re-auth flows after capability changes, page-picker UX, rate-limit handling, or Enterprise-admin install documentation. There is no Notion production review wait for ordinary public OAuth distribution."
+  },
+  "start_here": {
+    "action": "Sign in to the Notion Developer portal and create a new OAuth integration with installation scope set to “Any workspace.”",
+    "url": "https://www.notion.so/developers",
+    "why": "The installation scope cannot be changed after creation, and “Any workspace” is the setting that allows end-users outside your own workspace to install it."
+  },
+  "phases": [
+    {
+      "name": "Prepare",
+      "goal": "Decide the install model, callback URL, and minimum Notion capabilities before creating the immutable integration settings.",
+      "steps": [
+        {
+          "title": "Choose “Any workspace” for a public agent integration",
+          "detail": "Use “Any workspace” if end-users from arbitrary Notion workspaces should connect. Do not choose selected workspaces unless this is a private/customer-specific integration, because Notion says the installation scope cannot be changed after creation.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/guides/authorization/overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1",
+              "S2"
+            ]
+          }
+        },
+        {
+          "title": "Draft the minimum capability set",
+          "detail": "Map each agent feature to Notion capabilities: Read content for retrieval, Insert content for creating pages/blocks, Update content for edits, Read comments or Insert comments for comments, and a user-information capability only if you need user lookup or email. Avoid over-requesting because Notion recommends minimum capabilities to improve installability.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/reference/capabilities",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5"
+            ]
+          }
+        },
+        {
+          "title": "Decide your production redirect URI",
+          "detail": "Pick the exact HTTPS callback URL your backend will handle, for example https://app.example.com/oauth/notion/callback. You will register this in the OAuth configuration section and must send the same redirect_uri during authorization and token exchange.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/guides/authorization/overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1",
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Plan per-user authorization, not workspace-wide blanket access",
+          "detail": "Design your UX so each prospective user can run the OAuth flow. Notion says after OAuth, only the authorizing user can interact with or share pages/databases with the connection, and multiple users must individually complete the flow.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/guides/authorization/overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Register the app",
+      "goal": "Create the Notion public OAuth integration and collect credentials.",
+      "steps": [
+        {
+          "title": "Open the Notion Developer portal",
+          "detail": "Go to https://www.notion.so/developers while signed in to the Notion account that owns the workspace you will use for development. The portal is reachable and is the official place to create OAuth integrations.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://www.notion.so/developers",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P4"
+            ]
+          }
+        },
+        {
+          "title": "Create a new OAuth integration",
+          "detail": "In the Developer portal, create a new OAuth integration. Notion’s authorization guide says to create the OAuth integration there and configure redirect URIs and installation scope.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/guides/authorization/overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Set the installation scope before saving",
+          "detail": "Choose “Any workspace” for public distribution, or selected workspaces only for a restricted integration. This setting cannot be changed after creation, so recreate the integration if you picked the wrong one.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/guides/authorization/overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Save the client ID and client secret securely",
+          "detail": "Copy the OAuth client credentials into your secret manager or local .env. Notion uses a token endpoint at https://api.notion.com/v1/oauth/token and rejected fake credentials with HTTP 401 invalid_client in probing, so expect confidential-client behavior unless current docs say otherwise.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://api.notion.com/v1/oauth/token",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P3"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Configure OAuth and capabilities",
+      "goal": "Make the Notion authorization page accept your app and show the right permission prompt.",
+      "steps": [
+        {
+          "title": "Add redirect URIs under OAuth configuration",
+          "detail": "Enter every callback URL you will use, including local development if supported by your setup and production HTTPS. The authorization request requires redirect_uri, and redirect mismatches can surface as invalid_grant during token exchange.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/guides/authorization/overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1",
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Configure content, comment, and user capabilities",
+          "detail": "Set only the capabilities your agent needs: for example, Read content plus Insert content for a RAG agent that can create notes, and Update content only if it edits existing pages. Add Read comments or Insert comments only for comment features.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/reference/capabilities",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5"
+            ]
+          }
+        },
+        {
+          "title": "Store the current Notion API version in config",
+          "detail": "Set NOTION_VERSION=2026-03-11 and send it as the Notion-Version header on REST API requests. Notion says this header is required, and current docs show 2026-03-11 as the latest version.",
+          "owner": "agent",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/reference/versioning",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S6"
+            ]
+          }
+        },
+        {
+          "title": "Generate the authorization URL builder",
+          "detail": "Build URLs against https://api.notion.com/v1/oauth/authorize with client_id, redirect_uri, response_type=code, owner=user, and a state value for CSRF protection and restoring app state.",
+          "owner": "agent",
+          "effort_minutes": 20,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/guides/authorization/overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Test with your own account",
+      "goal": "Complete one OAuth install, exchange the code, and verify a real Notion API request.",
+      "steps": [
+        {
+          "title": "Open the generated authorization URL",
+          "detail": "Use your real client_id and registered redirect_uri. The authorization endpoint is live; a probe with an invalid client redirected to Notion’s install-integration flow.",
+          "owner": "you",
+          "effort_minutes": 5,
+          "wait_days_max": null,
+          "url": "https://api.notion.com/v1/oauth/authorize",
+          "evidence": {
+            "type": "tested",
+            "refs": [
+              "P2"
+            ]
+          }
+        },
+        {
+          "title": "Select the workspace pages or databases to share",
+          "detail": "During installation, select the pages/databases your agent should access. The picker only displays resources for which the authorizing user has full access, so missing pages usually mean the user lacks full access or the page was not selected.",
+          "owner": "you",
+          "effort_minutes": 10,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/guides/authorization/overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Exchange the authorization code for tokens",
+          "detail": "POST to https://api.notion.com/v1/oauth/token from your backend using the temporary code returned to your redirect_uri. Handle invalid_client and invalid_grant errors explicitly.",
+          "owner": "agent",
+          "effort_minutes": 30,
+          "wait_days_max": null,
+          "url": "https://api.notion.com/v1/oauth/token",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1",
+              "S7"
+            ]
+          }
+        },
+        {
+          "title": "Call a Notion API endpoint with required headers",
+          "detail": "Send Authorization: Bearer <ACCESS_TOKEN> and Notion-Version: 2026-03-11. Add rate-limit handling for 180 requests/minute on non-Business/Enterprise workspaces and 600 requests/minute on Business/Enterprise workspaces.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/reference/versioning",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S4",
+              "S6"
+            ]
+          }
+        },
+        {
+          "title": "Test re-auth after changing capabilities",
+          "detail": "If you change public connection capabilities after a user authenticates, rerun OAuth for that user. Notion states users must re-authenticate when capabilities change.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/reference/capabilities",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S5"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Launch and maintain",
+      "goal": "Make the integration safe for external customers without a Notion review step.",
+      "steps": [
+        {
+          "title": "Ship without Marketplace review",
+          "detail": "After client credentials and redirect URIs are configured, distribute your OAuth connect button directly. Notion says Marketplace submission or review is not required for authorization.",
+          "owner": "you",
+          "effort_minutes": 15,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/guides/authorization/overview",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S1"
+            ]
+          }
+        },
+        {
+          "title": "Document Enterprise admin setup for customers",
+          "detail": "Tell Enterprise customers that workspace owners can restrict which connections members may install, maintain an approved connections list, view connected members, and disconnect members. Provide your integration name and requested capabilities for allowlisting.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://www.notion.com/help/add-and-manage-connections-with-the-api",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S3"
+            ]
+          }
+        },
+        {
+          "title": "Implement quota-aware retries",
+          "detail": "Respect per-connection and shared workspace limits. Current docs list 600 requests/minute for Business and Enterprise, 180 requests/minute for other plans, and a separate approximately 3 requests/second/connection limit for data-source query.",
+          "owner": "agent",
+          "effort_minutes": 60,
+          "wait_days_max": null,
+          "url": "https://developers.notion.com/reference/request-limits",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S4"
+            ]
+          }
+        },
+        {
+          "title": "Monitor token and install-path failures",
+          "detail": "Log invalid_client, invalid_grant, token-exchange failures, and the path users took to install. A 2026 community report described OAuth/token-exchange instability on a duplicate-template path; treat that as an operational risk to test, not an official policy requirement.",
+          "owner": "agent",
+          "effort_minutes": 45,
+          "wait_days_max": null,
+          "url": "https://www.reddit.com/r/Notion/comments/1ulmc0t/is_notion_oauth_struggling_today/",
+          "evidence": {
+            "type": "sourced",
+            "refs": [
+              "S8"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "item": "Notion account and workspace",
+      "detail": "You need a Notion account and a workspace to create and test the integration. Notion’s help flow says only workspace owners can access the Connections tab and create integrations.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S2"
+        ]
+      }
+    },
+    {
+      "item": "Installation scope: Any workspace",
+      "detail": "Required if arbitrary end-users should install your public integration in their own workspaces. Only integrations installable by any workspace can also be listed in the connections gallery.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S2"
+        ]
+      }
+    },
+    {
+      "item": "Registered OAuth redirect URI",
+      "detail": "You must configure redirect URI(s) under the OAuth configuration section and send the same redirect_uri in the authorization request.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "item": "Minimum Notion capabilities",
+      "detail": "Notion uses integration capabilities rather than OAuth scope strings. Request the least content/comment/user capabilities your agent needs.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "item": "Notion-Version request header",
+      "detail": "REST API calls must include a Notion-Version header. Current docs show Notion-Version: 2026-03-11.",
+      "when": "always",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    {
+      "item": "Marketplace/listing submission",
+      "detail": "Only needed for gallery discoverability. It is not required to start OAuth authorization for external users.",
+      "when": "for_listing",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1",
+          "S2"
+        ]
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "scope": "Read content",
+      "purpose": "Let the agent read shared pages, databases, blocks, and related content for retrieval or summarization.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "Insert content",
+      "purpose": "Let the agent create new content, such as pages or blocks, in locations the user shared with the connection.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "Update content",
+      "purpose": "Let the agent edit existing Notion content. Request only if your product actually modifies existing pages or databases.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "Read comments",
+      "purpose": "Let the agent read page comments if comment context is part of the workflow.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "Insert comments",
+      "purpose": "Let the agent add comments to Notion pages where comment-writing is a product feature.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "scope": "User information capability",
+      "purpose": "Let the agent look up users; include email-level access only if your workflow needs user email addresses.",
+      "tier": "unknown",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    }
+  ],
+  "gotchas": [
+    {
+      "title": "Marketplace review is optional for OAuth distribution",
+      "detail": "Notion’s authorization docs explicitly say Marketplace submission or review is not required. Do not block your launch waiting for a listing unless gallery discoverability is a product requirement.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "title": "Installation scope cannot be changed later",
+      "detail": "The “Any workspace” versus selected-workspaces choice is fixed after creation. If you choose the wrong scope, plan to create a new integration and migrate users.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "title": "Capabilities are not OAuth scope strings",
+      "detail": "The authorization URL does not carry conventional scope strings. Capabilities are configured on the Notion connection, and changing them later forces existing users to re-authenticate.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    },
+    {
+      "title": "Page access is selected during install",
+      "detail": "Your token only sees pages/databases shared with the connection. The picker only shows resources where the installing user has full access, so support docs should explain how to re-share or reconnect.",
+      "impact": "delay",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "title": "Enterprise customers may block member installs",
+      "detail": "Enterprise workspace owners can restrict which connections members are allowed to install and control page-level connect/disconnect actions. Your customer may need an owner to approve or allowlist the connection.",
+      "impact": "delay",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    },
+    {
+      "title": "Rate limits vary by customer workspace plan",
+      "detail": "Per-connection limits are 600 requests/minute on Business and Enterprise workspaces and 180 requests/minute on other plans, plus shared workspace limits. Your app should back off and queue work per workspace.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "title": "Notion-Version is required",
+      "detail": "API calls without the required Notion-Version header can fail or behave unexpectedly against a moving API. Current docs show 2026-03-11 as the latest version.",
+      "impact": "blocker",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S6"
+        ]
+      }
+    },
+    {
+      "title": "No standard OAuth discovery document was found",
+      "detail": "A probe did not find metadata at a standard OIDC/OAuth discovery URL. Hard-code the documented authorize and token endpoints unless Notion later publishes metadata.",
+      "impact": "nuance",
+      "evidence": {
+        "type": "inferred",
+        "refs": [
+          "P1"
+        ]
+      }
+    }
+  ],
+  "blockers": [
+    {
+      "symptom": "HTTP 401 with body {\"error\":\"invalid_client\", ...} from /v1/oauth/token",
+      "likely_cause": "Wrong client ID/secret, missing client authentication, or credentials from a different Notion integration.",
+      "what_to_do": "Re-copy the client credentials from the Notion Developer portal, confirm you are using the public OAuth integration’s credentials, and keep the token exchange on your backend.",
+      "evidence": {
+        "type": "tested",
+        "refs": [
+          "P3"
+        ]
+      }
+    },
+    {
+      "symptom": "invalid_grant during token exchange or refresh",
+      "likely_cause": "The authorization code or refresh token is invalid, expired, revoked, redirect-URI-mismatched, or issued to another client.",
+      "what_to_do": "Exchange codes immediately, send the exact registered redirect_uri, use the matching client credentials, and restart OAuth if the grant was already used or revoked.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S7"
+        ]
+      }
+    },
+    {
+      "symptom": "A page or database is missing after the user connects",
+      "likely_cause": "The user did not have full access when installing, or did not select/share that page or database with the connection.",
+      "what_to_do": "Ask the user to ensure they have full access, then reconnect or share the specific page/database with the integration from Notion.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S1"
+        ]
+      }
+    },
+    {
+      "symptom": "Customer says members cannot install the connection",
+      "likely_cause": "An Enterprise workspace owner restricted connection installation or requires an approved connections list.",
+      "what_to_do": "Send the customer admin your integration name, requested capabilities, and setup instructions; have a workspace owner allowlist or install the connection.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S3"
+        ]
+      }
+    },
+    {
+      "symptom": "Requests start failing or slowing under load",
+      "likely_cause": "The integration is hitting per-connection, data-source query, or shared workspace rate limits that vary by customer plan.",
+      "what_to_do": "Add per-workspace throttling, exponential backoff, and queueing. Budget for 180 requests/minute on non-Business/Enterprise workspaces unless you detect otherwise.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S4"
+        ]
+      }
+    },
+    {
+      "symptom": "Existing users lose access to newly added features",
+      "likely_cause": "You changed the public connection’s capabilities after users authenticated.",
+      "what_to_do": "Trigger a re-auth flow and explain the newly requested capabilities in-product.",
+      "evidence": {
+        "type": "sourced",
+        "refs": [
+          "S5"
+        ]
+      }
+    }
+  ],
+  "agent_split": {
+    "agent_can": [
+      "Draft the minimum Notion capability list and one-line justifications for your review/security docs.",
+      "Generate the authorization URL builder, callback handler skeleton, token-exchange code, and Notion-Version header middleware.",
+      "Validate that configured redirect URIs match the URLs your backend sends.",
+      "Write retry and throttling logic for Notion’s per-connection and per-workspace limits.",
+      "Prepare Enterprise customer admin instructions and troubleshooting copy.",
+      "Create copy-paste .env, cURL, and test artifacts without real secrets."
+    ],
+    "you_must": [
+      "Sign in to the Notion Developer portal and create the OAuth integration, because this requires your Notion account/workspace access.",
+      "Choose and confirm the immutable installation scope, because the wrong choice can require a new integration.",
+      "Copy and store the client secret in your real secret manager, because an agent should not handle production secrets unattended.",
+      "Accept any provider terms or workspace prompts shown in the Notion UI.",
+      "Run at least one real OAuth install with your own workspace and select actual Notion pages/databases to share.",
+      "Coordinate with Enterprise customer admins when their workspace policies block installation."
+    ]
+  },
+  "artifacts": [
+    {
+      "title": "Notion OAuth .env template",
+      "kind": "env",
+      "content": "NOTION_CLIENT_ID=<CLIENT_ID>\nNOTION_CLIENT_SECRET=<CLIENT_SECRET>\nNOTION_REDIRECT_URI=https://app.example.com/oauth/notion/callback\nNOTION_AUTHORIZE_URL=https://api.notion.com/v1/oauth/authorize\nNOTION_TOKEN_URL=https://api.notion.com/v1/oauth/token\nNOTION_VERSION=2026-03-11\nNOTION_OAUTH_STATE_SECRET=<RANDOM_32_BYTE_SECRET>",
+      "note": "Use a real secret manager in production; do not expose NOTION_CLIENT_SECRET in browser code."
+    },
+    {
+      "title": "Capability justification list",
+      "kind": "text",
+      "content": "Read content — Required so the agent can read user-selected Notion pages/databases for retrieval, summarization, and answering questions.\nInsert content — Required only if the agent creates new pages, blocks, or database entries.\nUpdate content — Required only if the agent edits existing Notion content; omit for read-only agents.\nRead comments — Required only if the agent uses Notion comments as context.\nInsert comments — Required only if the agent posts comments back into Notion.\nUser information capability — Required only for user lookup; request email-level access only when email addresses are necessary.",
+      "note": "Notion calls these capabilities, not OAuth scope strings. Request the minimum set needed."
+    },
+    {
+      "title": "Example authorization URL",
+      "kind": "url",
+      "content": "https://api.notion.com/v1/oauth/authorize?client_id=<CLIENT_ID>&redirect_uri=https%3A%2F%2Fapp.example.com%2Foauth%2Fnotion%2Fcallback&response_type=code&owner=user&state=<SIGNED_CSRF_STATE>",
+      "note": "The redirect_uri must exactly match a URI registered in the Notion OAuth configuration."
+    },
+    {
+      "title": "Token exchange cURL skeleton",
+      "kind": "text",
+      "content": "curl -X POST 'https://api.notion.com/v1/oauth/token' \\\n  -H 'Content-Type: application/json' \\\n  -u '<CLIENT_ID>:<CLIENT_SECRET>' \\\n  --data '{\n    \"grant_type\": \"authorization_code\",\n    \"code\": \"<AUTHORIZATION_CODE>\",\n    \"redirect_uri\": \"https://app.example.com/oauth/notion/callback\"\n  }'",
+      "note": "Confirm the current token endpoint request format in Notion’s Create a token reference before final implementation."
+    }
+  ],
+  "oauth": {
+    "authorize_url": "https://api.notion.com/v1/oauth/authorize",
+    "token_url": "https://api.notion.com/v1/oauth/token",
+    "pkce": "unknown",
+    "refresh_tokens": "Notion status-code docs mention refresh tokens in invalid_grant cases, implying refresh-token semantics exist for relevant OAuth flows; exact lifetime and rotation behavior were not confirmed from the fetched pages.",
+    "access_token_lifetime": "Unknown from the fetched official pages; confirm against the current token reference before relying on expiry behavior.",
+    "evidence": {
+      "type": "sourced",
+      "refs": [
+        "S1",
+        "S7"
+      ]
+    }
+  },
+  "uncertainties": [
+    "Exact OAuth token response fields, access-token lifetime, refresh-token lifetime, and refresh-token rotation policy were not fully visible in the fetched pages; confirm in Notion’s current Create a token reference before implementation.",
+    "PKCE support or requirement was not confirmed in the fetched docs. Because Notion exposes a client secret and the token endpoint rejected invalid clients, treat your integration as a confidential-client backend flow unless current docs say otherwise.",
+    "No standard OIDC/OAuth discovery metadata URL was found in probing, so endpoint metadata should be treated as manually configured unless Notion publishes discovery later.",
+    "Marketplace/listing submission checklist and SLA were not available in the fetched docs; this matters only if you want a Notion gallery listing, not for direct public OAuth distribution.",
+    "No explicit fetched-doc statement described privacy-policy URL, terms URL, demo-video, pentest, or formal security-assessment requirements for non-Marketplace public OAuth integrations; verify in the Developer portal UI if your app requests unusually broad capabilities."
+  ],
+  "score": {
+    "total": 1,
+    "max": 15,
+    "level": 1,
+    "label": "Easy",
+    "blurb": "Self-serve. Create the app and ship the same day.",
+    "breakdown": [
+      {
+        "key": "production_review",
+        "label": "Provider review before external users",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "review_wait",
+        "label": "Approval wait",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "security_assessment",
+        "label": "Security assessment",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "business_verification",
+        "label": "Business / identity verification",
+        "value": "no",
+        "points": 0
+      },
+      {
+        "key": "gated_access",
+        "label": "Gated API access",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "dev_mode_limits",
+        "label": "Limits before approval",
+        "value": "none",
+        "points": 0
+      },
+      {
+        "key": "customer_admin_approval",
+        "label": "Customer admin approval",
+        "value": "sometimes",
+        "points": 1
+      }
+    ]
+  },
+  "confidence": {
+    "level": "high",
+    "supported_pct": 98,
+    "official_sources": 9,
+    "tested": 4,
+    "sourced": 50,
+    "inferred": 1,
+    "downgraded": 1
+  },
+  "composio": {
+    "in_catalog": true,
+    "managed": true,
+    "toolkit": "notion",
+    "name": "Notion",
+    "logo": "https://logos.composio.dev/api/notion",
+    "tool_count": 60
+  },
+  "research": {
+    "searches": 2,
+    "pages_read": 8,
+    "facts": 28,
+    "open_questions": [
+      "Official docs fetched did not expose a detailed Marketplace/listing submission checklist, review SLA, or review timeline; Marketplace listing appears separate from external OAuth distribution.",
+      "Exact OAuth token response fields, access-token lifetime, refresh-token lifetime, and refresh-token rotation policy were not fully visible in the fetched official pages; confirm from the current Create a token reference before implementation.",
+      "No official OpenID Connect discovery or RFC 8414 metadata URL was found for Notion OAuth.",
+      "No official statement was found in the fetched pages on PKCE support/requirement for public clients; because Notion provides a client secret in the Developer portal, treat integrations as confidential unless current docs say otherwise.",
+      "No explicit official statement was found about privacy-policy/terms URLs, domain verification, business verification, demo-video, pentest, or security-assessment requirements for non-Marketplace public OAuth integrations."
+    ]
+  },
+  "probes": [
+    {
+      "id": "P1",
+      "kind": "discovery",
+      "target": "https://api.notion.com/.well-known/openid-configuration",
+      "ok": false,
+      "summary": "No OIDC/OAuth metadata document found at standard locations.",
+      "at": "2026-11-07T04:50:25.431Z"
+    },
+    {
+      "id": "P2",
+      "kind": "authorize_endpoint",
+      "target": "https://api.notion.com/v1/oauth/authorize",
+      "ok": true,
+      "summary": "Endpoint is live and handles an unregistered client: HTTP 302 → redirects to app.notion.com/install-integration.",
+      "data": {
+        "status": 302,
+        "location": "https://app.notion.com/install-integration?response_type=code&client_id=clearance-probe-invalid-client&redirect_uri=https%3A%2F%2Fexample.com%2Foauth%2Fcallback",
+        "body_excerpt": null
+      },
+      "at": "2026-11-07T04:50:25.431Z"
+    },
+    {
+      "id": "P3",
+      "kind": "token_endpoint",
+      "target": "https://api.notion.com/v1/oauth/token",
+      "ok": true,
+      "summary": "Token endpoint is live and rejects fake credentials: HTTP 401 \"invalid_client\".",
+      "data": {
+        "status": 401,
+        "error": "invalid_client",
+        "body_excerpt": "{\"error\":\"invalid_client\",\"request_id\":\"63b902b6-98d7-44db-9a56-4621215c6672\"}"
+      },
+      "at": "2026-11-07T04:50:25.431Z"
+    },
+    {
+      "id": "P4",
+      "kind": "developer_portal",
+      "target": "https://www.notion.so/developers",
+      "ok": true,
+      "summary": "Portal is reachable (HTTP 200).",
+      "data": {
+        "status": 200,
+        "final_url": "https://www.notion.so/developers"
+      },
+      "at": "2026-11-07T04:50:25.431Z"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://developers.notion.com/guides/authorization/overview",
+      "title": "developers.notion.com",
+      "kind": "official_docs",
+      "id": "S1",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://www.notion.com/help/create-integrations-with-the-notion-api",
+      "title": "notion.com",
+      "kind": "official_docs",
+      "id": "S2",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://www.notion.com/help/add-and-manage-connections-with-the-api",
+      "title": "notion.com",
+      "kind": "official_docs",
+      "id": "S3",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.notion.com/reference/request-limits",
+      "title": "developers.notion.com",
+      "kind": "official_docs",
+      "id": "S4",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.notion.com/reference/capabilities",
+      "title": "developers.notion.com",
+      "kind": "official_docs",
+      "id": "S5",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.notion.com/reference/versioning",
+      "title": "developers.notion.com",
+      "kind": "official_docs",
+      "id": "S6",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.notion.com/reference/status-codes",
+      "title": "developers.notion.com",
+      "kind": "official_docs",
+      "id": "S7",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://www.reddit.com/r/Notion/comments/1ulmc0t/is_notion_oauth_struggling_today/",
+      "title": "reddit.com",
+      "kind": "community_report",
+      "id": "S8",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.notion.com/docs/authorization",
+      "title": "Notion API authorization",
+      "kind": "official_docs",
+      "id": "S9",
+      "http_status": 200,
+      "reachable": "yes"
+    },
+    {
+      "url": "https://developers.notion.com/docs/create-a-notion-integration",
+      "title": "Notion API quickstart",
+      "kind": "official_docs",
+      "id": "S10",
+      "http_status": 200,
+      "reachable": "yes"
+    }
+  ],
+  "editorial": [
+    {
+      "path": "app.name",
+      "from": "Notion public integration",
+      "to": "Notion",
+      "reason": "Display name"
+    }
+  ],
+  "reviewed_at": "2026-11-07T04:58:59.655Z"
+}
