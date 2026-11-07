@@ -2,7 +2,7 @@
 
 **Composio APM Integrations take-home.** A working product that tells agent builders how hard it is to get a provider OAuth app approved, how long it takes, what can block them, and exactly what an agent can do for them vs. where they must take over. It has a library of ready-made guides plus a live agent that generates a guide for any app.
 
-**Live:** https://clearance-sigma-nine.vercel.app
+**Live:** https://clearance-sigma-nine.vercel.app · **Source:** https://github.com/krishna2004-coder/clearance
 
 ### Try the live agent
 1. Open **Generate** and paste your own **OpenAI** (`sk-…`) or **OpenRouter** (`sk-or-…`) API key. The hosted demo holds no key of its own. Your key is used for that run only: it goes to the server over HTTPS and then to the model provider, and is never stored or written into guides.
